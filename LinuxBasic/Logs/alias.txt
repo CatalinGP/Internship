@@ -1,0 +1,37 @@
+Pasul 1: Deschide fisierul de configurare al profilului shell-ului tau (de exemplu, ~/.bashrc sau ~/.zshrc)
+Pasul 2: Adauga urmatoarele definitii de aliasuri in fisier si salveaza
+
+Alias pentru listarea fisierelor cu format lung si dimensiuni usor de citit
+alias ll='ls -lh'
+
+Alias pentru a naviga la directorul parinte
+alias ..='cd ..'
+
+Alias pentru a ajunge rapid in directorul home
+alias ~='cd ~'
+
+Alias pentru a curata ecranul terminalului
+alias cls='clear'
+
+Alias pentru afisarea listei de directoare colorata si paginata
+alias l='ls --color=auto | less -R'
+
+Alias pentru a edita rapid fisierul de configurare al profilului
+alias editrc='vim ~/.bashrc'
+
+Alias pentru a actualiza liste de pachete si a face upgrade la pachetele instalate
+alias update='sudo apt update && sudo apt upgrade'
+
+Alias pentru a gasi rapid un fisier sau director
+alias ffind='find . -type f -name'
+
+Alias pentru a afisa procesele de top care utilizeaza cele mai multe resurse CPU
+alias topcpu='ps aux --sort=-%cpu | head'
+
+Alias pentru a afisa procesele de top care utilizeaza cele mai multe resurse de memorie
+alias topmem='ps aux --sort=-%mem | head'
+
+Alias pentru a deschide un fisier text cu editorul de text implicit
+alias edit='xdg-open'
+
+Pasul 3: Source la fisierul de profil pentru a aplica aliasurile (de exemplu, source ~/.bashrc sau source ~/.zshrc)
