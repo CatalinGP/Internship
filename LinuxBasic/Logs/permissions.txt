@@ -1,35 +1,35 @@
-Pasul 1: Creeaza un fisier text de exemplu pentru testare
+Creeaza un fisier text de exemplu pentru testare
 echo "Acesta este un fisier de exemplu." > sample.txt
 
-Pasul 2: Afiseaza permisiunile actuale ale fisierului de exemplu
+Afiseaza permisiunile actuale ale fisierului de exemplu
 ls -l sample.txt
 
-Pasul 3: Schimba proprietarul fisierului la un alt utilizator (inlocuieste 'noul_proprietar' cu numele real de utilizator)
+Schimba proprietarul fisierului la un alt utilizator (inlocuieste 'noul_proprietar' cu numele real de utilizator)
 sudo chown noul_proprietar sample.txt
 
-Pasul 4: Schimba grupul fisierului la un alt grup (inlocuieste 'noul_grup' cu numele real de grup)
+Schimba grupul fisierului la un alt grup (inlocuieste 'noul_grup' cu numele real de grup)
 sudo chgrp noul_grup sample.txt
 
-Pasul 5: Adauga permisiuni de citire, scriere si executie pentru proprietarul fisierului
+Adauga permisiuni de citire, scriere si executie pentru proprietarul fisierului
 chmod u+rwx sample.txt
 
-Pasul 6: Adauga permisiunea de citire pentru grupul fisierului
+Adauga permisiunea de citire pentru grupul fisierului
 chmod g+r sample.txt
 
-Pasul 7: Elimina permisiunea de scriere pentru ceilalti (lume)
+Elimina permisiunea de scriere pentru ceilalti (lume)
 chmod o-w sample.txt
 
-Pasul 8: Afiseaza permisiunile actualizate ale fisierului de exemplu
+Afiseaza permisiunile actualizate ale fisierului de exemplu
 ls -l sample.txt
 
-Pasul 9: Adauga permisiuni de citire si scriere pentru proprietar, grup si ceilalti
+Adauga permisiuni de citire si scriere pentru proprietar, grup si ceilalti
 chmod a+rw sample.txt
 
-Pasul 10: Afiseaza permisiunile actualizate ale fisierului de exemplu
+Afiseaza permisiunile actualizate ale fisierului de exemplu
 ls -l sample.txt
 
-Pasul 11: Elimina permisiunile de citire si scriere pentru ceilalti
+Elimina permisiunile de citire si scriere pentru ceilalti
 chmod o-rw sample.txt
 
-Pasul 12: Afiseaza permisiunile finale ale fisierului de exemplu
+Afiseaza permisiunile finale ale fisierului de exemplu
 ls -l sample.txt
