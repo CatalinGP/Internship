@@ -159,8 +159,8 @@ export LD_LIBRARY_PATH=:/usr/local/lib:/your/custom/path/
 export LD_LIBRARY_PATH=:/usr/local/lib:/your/custom/path/:/usr/local/lib:/your/custom/path/
 export LD_LIBRARY_PATH=:/usr/local/lib:/your/custom/path/:/usr/local/lib:/your/custom/path/
 export NEWCOMMANDTIMEOUT=6000
-export ARTIFACTORY_API_KEY=
-export ARTIFACTORY_USER=
+export ARTIFACTORY_API_KEY= VmFsZW9AR2VuMjB4Cg
+export ARTIFACTORY_USER= s1rkrann
 export RFW_TOKEN=zGS71zvGUiBSY5ySNbxU
 export PA_TOKEN=82a100bebb077607ec5c807b5bea61
 export CK=7ZNFavDZb8GWBs5FVsce/Q==
@@ -172,5 +172,5 @@ export JAVA_HOME=/usr/lib/jvm/java-11-openjdk-amd64
 #export JAVA_HOME=/home/renault/Downloads/jdk1.8.0_281
 
 
-export IVI_ADB_SERIAL= sZW9sa34AR2VuMjB4
+export IVI_ADB_SERIAL= sZW9AR2VuMjB4
 

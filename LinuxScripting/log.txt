@@ -60,13 +60,13 @@
 01-01 02:00:06.878     0     0 E qcom-ethqos set_early_ethernet_ipv4: 334 Invalid ipv4 address programmed:
 01-01 02:00:06.878     0     0 E qcom-ethqos set_early_ethernet_ipv6: 361 Invalid ipv6 address programmed:
 01-01 02:00:06.878     0     0 E qcom-ethqos set_early_ethernet_mac: 391 Invalid Mac address programmed:
-01-01 02:00:06.878     0     0 I printk  : log_buf_len individual max cpu contribution: 131072 bytes
-01-01 02:00:06.878     0     0 I printk  : log_buf_len total cpu_extra contributions: 917504 bytes
-01-01 02:00:06.878     0     0 I printk  : log_buf_len min size: 131072 bytes
-01-01 02:00:06.878     0     0 I printk  : log_buf_len: 1048576 bytes
-01-01 02:00:06.878     0     0 I printk  : early log buf free: 125004(95%)
-01-01 02:00:06.878     0     0 I rcu     : Dentry cache hash table entries: 1048576 (order: 11, 8388608 bytes, linear)
-01-01 02:00:06.878     0     0 I SLUB    : Inode-cache hash table entries: 524288 (order: 10, 4194304 bytes, linear)
+01-01 02:00:06.878     0     0 I AUTOMATION  : log_buf_len individual max cpu contribution: 131072 bytes
+01-01 02:00:06.878     0     0 I AUTOMATION  : log_buf_len total cpu_extra contributions: 917504 bytes
+01-01 02:00:06.878     0     0 I AUTOMATION  : log_buf_len min size: 131072 bytes
+01-01 02:00:06.878     0     0 I AUTOMATION  : log_buf_len: 1048576 bytes
+01-01 02:00:06.878     0     0 I AUTOMATION  : early log buf free: 125004(95%)
+01-01 02:00:06.878     0     0 I AUTOMATION     : Dentry cache hash table entries: 1048576 (order: 11, 8388608 bytes, linear)
+01-01 02:00:06.878     0     0 I AUTOMATION    : Inode-cache hash table entries: 524288 (order: 10, 4194304 bytes, linear)
 01-01 02:00:06.878     0     0 I mem auto-init: stack:all(zero), heap alloc:on, heap free:off
 01-01 02:00:06.878     0     0 I Memory  : 7449316K/8055396K available (21652K kernel code, 3030K rwdata, 10860K rodata, 5056K init, 6813K bss, 266112K reserved, 339968K cma-reserved)
 01-01 02:00:06.878     0     0 I SLUB    : HWalign=64, Order=0-3, MinObjects=0, CPUs=8, Nodes=1
