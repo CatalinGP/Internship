@@ -2,7 +2,7 @@
 
 INPUT_FILE="log.txt"
 OUTPUT_FILE="update_log.txt"
-REPLACEMENT="AUTOMATION"
+REPLACEMENT="A U T O M A T I O N"
 
 if [ ! -f "$INPUT_FILE" ]; then
     echo "Error: File $INPUT_FILE does not exist."
