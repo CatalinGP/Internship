@@ -1,0 +1,49 @@
+$ dmesg: Afiseaza mesajele din buffer-ul inelar al kernel-ului, util pentru depanarea problemelor legate de hardware si drivere.
+
+$ lsusb: Listeaza dispozitivele USB conectate la sistem, oferind detalii despre bus-ul USB, dispozitive si specificatiile lor.
+
+$ pwd: Afiseaza calea directorului de lucru curent, aratand unde va aflati in sistemul de fisiere.
+
+$ cat: Concateneaza si afiseaza continutul fisierelor, folosit adesea pentru vizualizarea fisierelor text.
+
+$ rm -rf: Elimina fisierele si directoarele recursiv si fortat, stergandu-le fara a solicita confirmare.
+
+$ mkdir: Creeaza un director nou in locatia specificata.
+
+$ vim: Deschide editorul de text Vim, un editor puternic, bazat pe linia de comanda, utilizat pentru crearea sau editarea fisierelor text.
+
+$ chown: Schimba proprietarul fisierelor sau directoarelor, specificand ce utilizator si grup ar trebui sa le detina.
+
+$ sudo: Permite unui utilizator permis sa execute o comanda ca superutilizator sau ca un alt utilizator, asa cum este specificat de politica de securitate.
+
+$ chmod: Schimba modul fisierului (permisiunile) unui fisier sau director, specificand cine poate citi, scrie sau executa fisierul.
+
+$ man ls: Afiseaza pagina de manual pentru comanda `ls`, oferind informatii detaliate despre utilizarea si optiunile acesteia.
+
+$ ifconfig: Afiseaza sau configureaza parametrii interfetei de retea; folosit frecvent pentru configurarea si vizualizarea informatiilor despre interfata de retea.
+
+$ ps aux: Listeaza procesele in executie cu informatii detaliate, inclusiv utilizatorul, utilizarea CPU si a memoriei.
+
+$ top: Arata o vedere in timp real a proceselor de sistem in executie, inclusiv utilizarea resurselor, cum ar fi CPU si memoria.
+
+$ htop: Un vizualizator interactiv de procese similar cu `top`, dar cu o interfata mai prietenoasa pentru utilizator si caracteristici suplimentare.
+
+$ grep: Cauta modele in text, folosit frecvent pentru a gasi siruri specifice in fisiere sau iesiri de comenzi.
+
+$ tar: Arhiveaza fisierele intr-un singur fisier sau extrage fisiere dintr-o arhiva, folosit frecvent pentru backup-uri de fisiere si transferuri.
+
+$ cut: Elimina sectiuni din fiecare linie a fisierelor, folosit in mod tipic pentru extragerea anumitor coloane de text.
+
+$ more: Un program de paginare a fisierelor care va permite sa vizualizati fisierele text ecran cu ecran.
+
+$ less: Similar cu `more`, dar permite miscarea inapoi in fisier, precum si inainte.
+
+$ awk: Un limbaj de programare si utilitar puternic pentru prelucrarea si analizarea fisierelor text, deosebit de util pentru manipularea datelor tabulare.
+
+$ sed: Un editor de flux care efectueaza transformari de text de baza pe un flux de intrare (un fisier sau intrare dintr-un pipeline).
+
+$ wc: Numara numarul de linii, cuvinte si caractere intr-un fisier sau intrare standard.
+
+$ sort: Sorteaza liniile fisierelor text, cu optiuni pentru a specifica sortarea numerica, sortarea inversa si alte criterii de sortare.
+
+$ gnuplot: Un utilitar pentru linia de comanda pentru generarea de grafice bidimensionale si tridimensionale ale functiilor matematice si datelor.

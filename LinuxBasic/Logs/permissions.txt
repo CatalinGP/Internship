@@ -1,0 +1,35 @@
+Creeaza un fisier text de exemplu pentru testare
+echo "Acesta este un fisier de exemplu." > sample.txt
+
+Afiseaza permisiunile actuale ale fisierului de exemplu
+ls -l sample.txt
+
+Schimba proprietarul fisierului la un alt utilizator (inlocuieste 'noul_proprietar' cu numele real de utilizator)
+sudo chown noul_proprietar sample.txt
+
+Schimba grupul fisierului la un alt grup (inlocuieste 'noul_grup' cu numele real de grup)
+sudo chgrp noul_grup sample.txt
+
+Adauga permisiuni de citire, scriere si executie pentru proprietarul fisierului
+chmod u+rwx sample.txt
+
+Adauga permisiunea de citire pentru grupul fisierului
+chmod g+r sample.txt
+
+Elimina permisiunea de scriere pentru ceilalti (lume)
+chmod o-w sample.txt
+
+Afiseaza permisiunile actualizate ale fisierului de exemplu
+ls -l sample.txt
+
+Adauga permisiuni de citire si scriere pentru proprietar, grup si ceilalti
+chmod a+rw sample.txt
+
+Afiseaza permisiunile actualizate ale fisierului de exemplu
+ls -l sample.txt
+
+Elimina permisiunile de citire si scriere pentru ceilalti
+chmod o-rw sample.txt
+
+Afiseaza permisiunile finale ale fisierului de exemplu
+ls -l sample.txt

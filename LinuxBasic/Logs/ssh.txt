@@ -1,0 +1,23 @@
+Te conectezi prin SSH la VM-ul remote folosind numele tau de utilizator si adresa IP a VM-ului
+ssh username@vm_ip_address
+
+Navighezi catre un director specific pe VM-ul remote
+cd /path/to/remote/directory
+
+Listezi fisierele și directoarele de pe VM-ul remote
+ls
+
+Copiezi un fisier de pe masina locala pe VM-ul remote
+scp local_file.txt username@vm_ip_address:/path/to/remote/directory
+
+Copiezi un fisier de pe VM-ul remote pe masina locala
+scp username@vm_ip_address:/path/to/remote/file.txt ~/local_destination_directory
+
+Copiezi in mod securizat un director intreg de pe masina locala pe VM-ul remote
+scp -r local_directory/ username@vm_ip_address:/path/to/remote/directory
+
+Copiezi in mod securizat un director intreg de pe VM-ul remote pe masina locala
+scp -r username@vm_ip_address:/path/to/remote/directory ~/local_destination_directory
+
+Inchizi sesiunea SSH cu VM-ul remote
+exit

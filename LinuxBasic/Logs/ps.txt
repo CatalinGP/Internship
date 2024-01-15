@@ -1,0 +1,35 @@
+Afiseaza o lista a tuturor proceselor in executie cu informatii detaliate:
+ps aux
+
+Afiseaza o lista a tuturor proceselor in executie intr-o structura arbore:
+pstree
+
+Afiseaza o lista a proceselor detinute de tine (inlocuieste 'utilizator' cu numele tau de utilizator real):
+ps -u utilizator
+
+Afiseaza o lista a proceselor după identificatorul lor de proces (inlocuieste 'PID' cu identificatorul real al procesului):
+ps -p PID
+
+Afiseaza o lista a proceselor impreuna cu identificatorul lor de proces parinte (PPID):
+ps -eo pid,ppid,cmd
+
+Afiseaza o lista sortata a proceselor dupa utilizarea unitatii centrale de procesare (CPU):
+ps aux --sort=-%cpu
+
+Afiseaza o lista sortata a proceselor dupa utilizarea memoriei:
+ps aux --sort=-%mem
+
+Afiseaza o lista a proceselor intr-un format complet:
+ps -ef
+
+Afiseaza o lista a proceselor cu un nume specific (inlocuieste 'nume_proces' cu numele real al procesului):
+ps -C nume_proces
+
+Afiseaza o lista a proceselor cu un nume specific folosind un model regex:
+ps aux | grep -E 'model'
+
+Afiseaza o lista a proceselor si a fisierelor deschise:
+lsof -c nume_proces
+
+Afiseaza o lista a proceselor zombie:
+ps aux | grep 'Z'

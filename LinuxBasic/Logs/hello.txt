@@ -1,0 +1,20 @@
+Creeaza un fisier text gol numit hello.txt
+touch hello.txt
+
+Foloseste comanda echo pentru a scrie "Hello, world!" in fisier
+echo "Hello, World!" > hello.txt
+
+Afiseaza continutul fisierului hello.txt pentru a verifica daca textul a fost scris
+cat hello.txt
+
+Foloseste comanda grep pentru a cauta cuvantul "Hello" in fisier (fara sensibilitate la majuscule/minuscule)
+grep -i "Hello" hello.txt
+
+Foloseste comanda sed pentru a inlocui "Hello" cu "Hi" in fisier si sa salvezi modificarile
+sed -i 's/Hello/Hi/' hello.txt
+
+Afiseaza continutul modificat al fisierului hello.txt
+cat hello.txt
+
+Foloseste comanda awk pentru a extrage primul cuvant din fisier si sa-l afisezi
+awk '{print $1}' hello.txt
