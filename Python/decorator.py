@@ -1,6 +1,5 @@
 import re
 
-
 def validate_cnp_length(func):
     def wrapper(cnp):
         if len(cnp) != 13:
