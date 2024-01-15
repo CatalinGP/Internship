@@ -13,7 +13,6 @@ def extract_last_words_in_timestamp_range(file_name, start_timestamp, end_timest
 
     return last_words
 
-# Example usage
 filename = "logcat_applications.txt"
 start = "17:56:07.996"
 end = "17:56:08.357"
