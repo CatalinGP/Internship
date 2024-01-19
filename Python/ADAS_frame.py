@@ -1,5 +1,4 @@
-def hex_payload_to_bin(payload_hex):
-    return ''.join(f"{int(byte, 16):08b}" for byte in payload_hex.split())
+from IVI_frame import hex_payload_to_bin
 
 
 def bin_payload_to_hex(payload_bin):
