@@ -51,15 +51,15 @@ class Decoder:
         return original_values, modified_frame_hex
 
 
-# Frame 1 & 4 for LDW_AlertStatus CPO
+# LDW_AlertStatus
 hex_frame1 = "80 00 00 00 00 00 00 00"
 hex_frame4 = "40 00 00 10 00 00 00 00"
 
-# Frame 2 & 5 for DW_FollowUpTimeDisplay CPO
+# DW_FollowUpTimeDisplay
 hex_frame2 = "FF 60 00 00 02 00 00 00"
 hex_frame5 = "21 20 00 00 02 00 00 00"
 
-# Frame 3 & 6 for LCA_OverrideDisplay CPO
+# LCA_OverrideDisplay
 hex_frame3 = "80 00 00 00 00 00 00 00"
 hex_frame6 = "80 00 00 00 00 00 00 00"
 
