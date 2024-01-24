@@ -76,9 +76,14 @@ frames = [
     "80 00 00 00 00 00 00 00"
 ]
 
-# Seteaza lsb_first False daca bit 7 este LSB
-# Diferenta intre Little/Big Endian system
+"""
+    Info :
+    Un sistem big-endian stochează octetul cel mai semnificativ al unui cuvânt la cea mai mică adresă de memorie și 
+    octetul cel mai puțin semnificativ la cea mai mare. Un sistem little-endian, în schimb, 
+    stochează octetul cel mai puțin semnificativ la cea mai mică adresă.
+"""
 
+# Seteaza lsb_first False daca bit 7 este LSB
 decoder = Decoder(signals_info, lsb_first=True)
 
 for frame_hex in frames:

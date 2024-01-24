@@ -52,9 +52,14 @@ payloads = [
     "40 12 6C AF 05 78 4A 04"
 ]
 
-# Seteaza lsb_first False daca bit 7 este LSB
-# Diferenta intre Little/Big Endian system
+"""
+    Info :
+    Un sistem big-endian stochează octetul cel mai semnificativ al unui cuvânt la cea mai mică adresă de memorie și 
+    octetul cel mai puțin semnificativ la cea mai mare. Un sistem little-endian, în schimb, 
+    stochează octetul cel mai puțin semnificativ la cea mai mică adresă.
+"""
 
+# Seteaza lsb_first False daca bit 7 este LSB
 decoder = Decoder(signals_info, lsb_first=True)
 decoded_values = decoder.decode_payloads(payloads)
 for d in decoded_values:
