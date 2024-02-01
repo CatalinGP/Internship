@@ -26,7 +26,7 @@ class Frame:
     def bin_to_hex(self):
         hex_payload = ""
         for i in range(0, len(self.frame_bin), 8):
-            byte = self.frame_bin[i:i+8]
+            byte = self.frame_bin[i:i + 8]
             if not self.lsb_first:
                 byte = byte[::-1]
             hex_payload += f"{int(byte, 2):02X} "
@@ -67,27 +67,16 @@ signals_info = [
     {'name': 'DW_FollowUpTimeDisplay', 'byte': 4, 'bit': 7, 'size': 6, 'new_value': 45}
 ]
 
-frames = [
-    "80 00 00 00 00 00 00 00",
-    "40 00 00 10 00 00 00 00",
-    "FF 60 00 00 02 00 00 00",
-    "21 20 00 00 02 00 00 00",
-    "80 00 00 00 00 00 00 00",
-    "80 00 00 00 00 00 00 00"
-]
+payloads_ADAS_A09SC_FD_1 = "00 06 02 08 80 00 00 00 00 00 00 00 00 05 D0 08 FF 60 00 00 02 00 00 00 00 06 01 08 80 00 00 00 00 00 00 00 00 00 10 C7 77 8A 70 AB AF 88 2A 8C"
+payloads_ADAS_A09SC_FD_2 = "00 06 02 08 40 00 00 10 00 00 00 00 00 05 D0 08 21 20 00 00 02 00 00 00 00 06 01 08 80 00 00 00 00 00 00 00 00 00 00 11 29 FB 84 33 1D E5 5E 9D"
 
-"""
-    Info :
-    Un sistem big-endian stochează octetul cel mai semnificativ al unui cuvânt la cea mai mică adresă de memorie și 
-    octetul cel mai puțin semnificativ la cea mai mare. Un sistem little-endian, în schimb, 
-    stochează octetul cel mai puțin semnificativ la cea mai mică adresă.
-"""
-
-# Seteaza lsb_first False daca bit 7 este LSB
 decoder = Decoder(signals_info, lsb_first=True)
 
-for frame_hex in frames:
-    original_value, modified_frame = decoder.decode_and_modify_frame(frame_hex)
+original_values_1, modified_frame_1 = decoder.decode_and_modify_frame(payloads_ADAS_A09SC_FD_1)
+original_values_2, modified_frame_2 = decoder.decode_and_modify_frame(payloads_ADAS_A09SC_FD_2)
 
-    print(f"Original Values: {original_value}")
-    print(f"Modified Frame: {modified_frame}\n")
+print("Original Values for Payload 1:", original_values_1)
+print("Modified Frame for Payload 1:", modified_frame_1)
+
+print("Original Values for Payload 2:", original_values_2)
+print("Modified Frame for Payload 2:", modified_frame_2)
