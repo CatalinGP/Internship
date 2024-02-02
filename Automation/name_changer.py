@@ -1,24 +1,25 @@
 import os
 
+
 def create_structure(base_path):
     structure = {
         'main': {
             'HEAD': {
                 'dev': {
-                    'system.d': None,
+                    'system.d': None,   # fisier
                     'Opt': {}
                 },
-                'readme.md': None
+                'readme.md': None   # fisier
             },
             'commit': {
                 'commit_fiX': {
-                    'commit_fix_FIX': None,
+                    'commit_fix_FIX': None,     # fisier
                     'src': {
-                        'unit_test.py': None,
-                        'app_main': None
+                        'unit_test.py': None,   # fisier
+                        'app_main': None    # fisier
                     }
                 },
-                'variables.txt': None
+                'variables.txt': None   # fisier
             }
         }
     }
