@@ -1,29 +1,23 @@
 *** Settings ***
-Library           OperatingSystem
-Library           String
+Library    Collections
+Library    yaml_reader.py
 
 *** Variables ***
-${LOGCAT_FILE}    ${CURDIR}/logcat_applications.txt
-${START_MARKER}   ActivityTaskManager: START u0
-${END_MARKER}     Layer: Destroyed ActivityRecord
+${YAML_FILE}    output.yml
 
 *** Test Cases ***
-Analyze Application Lifespan in Logcat
-    ${content}=    OperatingSystem.Get File    ${LOGCAT_FILE}
-    ${start_time}=    Get Marker Time    ${content}    ${START_MARKER}
-    ${end_time}=    Get Marker Time    ${content}    ${END_MARKER}
-    Log    Start Time: ${start_time}
-    Log    End Time: ${end_time}
-
-*** Keywords ***
-Get Marker Time
-    [Arguments]    ${content}    ${marker}
-    @{lines}=    Split String    ${content}    \n
-    ${time}=    Set Variable    ${EMPTY}
-    FOR    ${line}    IN    @{lines}
-        ${line_matched}=    Run Keyword And Return Status    Should Contain    ${line}    ${marker}
-        Run Keyword If    ${line_matched}    Set Variable    ${line}
-        ...    AND    Exit For Loop
+Application Lifespan Test From YAML
+    ${applications}=    Read Yaml File    ${CURDIR}/${YAML_FILE}
+    ${total_apps}=    Get Length    ${applications['applications']}
+    ${count}=    Set Variable    0
+    @{warning_apps}=    Create List
+    FOR    ${app}    IN    @{applications['applications']}
+        ${lifespan}=    Convert To Number    ${app['application']['lifespan'][:-1]}
+        Run Keyword If    ${lifespan} < 30
+        ...    Set Variable    ${count + 1}
+        ...    ELSE    Append To List    ${warning_apps}    ${app['application']['app_path']}
     END
-    RETURN    ${time}
-
+    ${passed_threshold}=    Evaluate    ${total_apps} * 0.75
+    Run Keyword If    ${count} >= ${passed_threshold}
+    ...    Log    Test PASSED. More than 75% of apps have a lifespan less than 30s.
+    ...    ELSE    Fail    Test FAILED. Applications with lifespan over 30s: @{warning_apps}
