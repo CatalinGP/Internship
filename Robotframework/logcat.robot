@@ -85,4 +85,3 @@ Log Warning For Long Lifespan Applications
     [Arguments]    ${lifespan_results}
     ${long_lifespan_apps}=    Evaluate    [app for app, lifespan in ${lifespan_results}.items() if lifespan > ${LIFESPAN_LIMIT}]
     Log    Warning: The following applications have a lifespan longer than ${LIFESPAN_LIMIT} seconds: ${long_lifespan_apps}
-
