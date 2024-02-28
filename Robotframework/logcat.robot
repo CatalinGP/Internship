@@ -31,27 +31,35 @@ Parse Logcat File
         ${end_marker}=    Run Keyword And Return Status    Should Contain    ${line}    Layer: Destroyed ActivityRecord
 
         IF    ${start_marker}
-            ${package_name}=    Get Package Name    ${line}
-            ${start_time}=    Fetch Time    ${line}
-            ${app_info}=    Create Dictionary    start_time=${start_time}    end_time=${EMPTY}
-            Set To Dictionary    ${app_states}    ${package_name}    ${app_info}
-           ELSE IF    ${end_marker}
-                ${package_name}=    Get Package Name    ${line}
-                ${app_exists}=    Run Keyword And Return Status    Dictionary Should Contain Key    ${app_states}    ${package_name}
-                IF    ${app_exists}
-                    ${end_time}=    Fetch Time    ${line}
-                    ${app_info}=    Get From Dictionary    ${app_states}    ${package_name}
-                    Set To Dictionary    ${app_info}    end_time    ${end_time}
-                    ${app_data}=    Create Dictionary    package=${package_name}    start_time=${app_info}[start_time]    end_time=${end_time}
-                    Append To List    ${parsed_data}    ${app_data}
-                    Remove From Dictionary    ${app_states}    ${package_name}
-                ELSE
-                    Log    Warning: End marker found for ${package_name} without a corresponding start marker.
-                END
-            END
+            Run Keyword    Extract Start Marker Data    ${app_states}    ${line}    ${parsed_data}
+        ELSE IF    ${end_marker}
+            Run Keyword    Extract End Marker Data    ${app_states}    ${line}    ${parsed_data}
+        END
 
     END
     RETURN    ${parsed_data}
+
+Extract Start Marker Data
+    [Arguments]    ${app_states}    ${line}    ${parsed_data}
+    ${package_name}=    Get Package Name    ${line}
+    ${start_time}=    Fetch Time    ${line}
+    ${app_info}=    Create Dictionary    start_time=${start_time}    end_time=${EMPTY}
+    Set To Dictionary    ${app_states}    ${package_name}    ${app_info}
+
+Extract End Marker Data
+    [Arguments]    ${app_states}    ${line}    ${parsed_data}
+    ${package_name}=    Get Package Name    ${line}
+    ${end_time}=    Fetch Time    ${line}
+    ${app_exists}=    Run Keyword And Return Status    Dictionary Should Contain Key    ${app_states}    ${package_name}
+    IF    ${app_exists}
+        ${app_info}=    Get From Dictionary    ${app_states}    ${package_name}
+        Set To Dictionary    ${app_info}    end_time    ${end_time}
+        ${app_data}=    Create Dictionary    package=${package_name}    start_time=${app_info}[start_time]    end_time=${end_time}
+        Append To List    ${parsed_data}    ${app_data}
+        Remove From Dictionary    ${app_states}    ${package_name}
+    ELSE
+        Log    Warning: End marker found for ${package_name} without a corresponding start marker.
+    END
 
 Get Package Name
     [Arguments]    ${line}
