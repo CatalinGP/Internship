@@ -43,28 +43,26 @@ Extract Resource File Paths
 
 Check Keywords In Resource Files
     [Arguments]    ${resource_paths}    @{keywords_to_check}
+    ${missing_keywords}=    Create List    @{keywords_to_check}    # Assume all keywords are missing initially
     FOR    ${path}    IN    @{resource_paths}
         ${content}=    Get File    ${path}
         ${lines}=    Split To Lines    ${content}
-        ${found_keywords}=    Create List
-        ${previous_line}=    Set Variable    ${EMPTY}
-
-        FOR    ${line}    IN    @{lines}
-            ${line_trimmed}=    Strip String    ${line}
-            ${is_arguments}=    Run Keyword And Return Status    Should Contain    ${line_trimmed}    [Arguments]
-            ${is_documentation}=    Run Keyword And Return Status    Should Contain    ${line_trimmed}    [Documentation]
-            ${check_line}=    Set Variable If    ${is_arguments} or ${is_documentation}    ${previous_line}    ${EMPTY}
-
-            IF    '${check_line}' != '${EMPTY}'
-                FOR    ${keyword}    IN    @{keywords_to_check}
-                    ${contains_keyword}=    Run Keyword And Return Status    Should Contain    ${check_line}    ${keyword}
-                    IF    ${contains_keyword}
-                        Append To List    ${found_keywords}    ${keyword}
-                    END
-                END
+        FOR    ${keyword}    IN    @{keywords_to_check}
+            ${keyword_found}=    Set Variable    ${FALSE}
+            FOR    ${line}    IN    @{lines}
+                ${contains_keyword}=    Run Keyword And Return Status    Should Contain    ${line}    ${keyword}
+                Run Keyword If    ${contains_keyword}    Set Variable    ${TRUE}    AND    Exit For Loop
             END
-            ${previous_line}=    Set Variable    ${line_trimmed}
-            Run Keyword If    '${found_keywords}' != '[]'    Log    Keywords found in ${path} before [Arguments] or [Documentation]: ${found_keywords}
-            Run Keyword If    '${found_keywords}' == '[]'    Log    No keywords from the list found in ${path} before [Arguments] or [Documentation]
+            Run Keyword If    ${keyword_found}    Remove From List    ${missing_keywords}    ${keyword}
         END
+    END
+    ${missing_count}=    Get Length    ${missing_keywords}
+    Run Keyword If    ${missing_count} > 0    Add Missing Keywords To Imposters    ${missing_keywords}
+
+Add Missing Keywords To Imposters
+    [Arguments]    @{missing_keywords}
+    ${imposters_file}=    Set Variable    ${CURDIR}/Imposters.robot
+    FOR    ${keyword}    IN    @{missing_keywords}
+        ${to_append}=    Catenate    SEPARATOR=\n    ${keyword}\n    \    [Arguments]    \${foo}\n    \    Keyword not defined, waiting for implementation.
+        Append To File    ${imposters_file}    ${to_append}
     END
