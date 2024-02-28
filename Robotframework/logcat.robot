@@ -1,87 +1,134 @@
 *** Settings ***
-Library           OperatingSystem
-Library           Collections
-Library           DateTime
-Library            BuiltIn
-Library            String
+Library    OperatingSystem
+Library    Collections
+Library    String
+Library    BuiltIn
+Library    DateTime
 
 *** Variables ***
-${LOG_FILE}       ${CURDIR}/logcat_applications.txt
-${PASS_THRESHOLD} =    75
-${LIFESPAN_LIMIT} =    30
+${LOGCAT_FILE}    logcat_applications.txt
+${OUTPUT_FILE}    output.yml
 
 *** Test Cases ***
-Check Application Lifespan Verdict
-    ${applications_lifespan}=    Parse Log File And Calculate Lifespan    ${LOG_FILE}
-    ${passed}=    Verify Lifespan Criteria    ${applications_lifespan}    ${PASS_THRESHOLD}    ${LIFESPAN_LIMIT}
-    Log    Test case result: ${passed}
-    Run Keyword If    '${passed}' == 'FAILED'    Log Warning For Long Lifespan Applications    ${applications_lifespan}
+Analyze Lifespan of Android Applications
+    ${data}=    Parse Logcat File    ${LOGCAT_FILE}
+    ${lifespans}=    Calculate Lifespan    ${data}
+    Output App Data To File    ${lifespans}    ${OUTPUT_FILE}
+    Generate Test Verdict      ${lifespans}
 
 *** Keywords ***
-Parse Log File And Calculate Lifespan
-    [Arguments]    ${log_file}
-    ${log_content}=    Get File    ${log_file}
-    ${lines}=    Split String    ${log_content}    \n
-    ${app_starts}=    Create Dictionary
-    ${applications_lifespan}=    Create Dictionary
+Parse Logcat File
+    [Arguments]    ${file_path}
+    ${parsed_data}=    Create List
+    ${file_contents}=    Get File    ${file_path}
+    ${relevant_lines}=    Get Lines Matching Regexp    ${file_contents}    .*ActivityTaskManager: START u0.*|.*Layer: Destroyed ActivityRecord.*
+    ${lines}=    Split To Lines    ${relevant_lines}
+
+    ${app_states}=    Create Dictionary
+
     FOR    ${line}    IN    @{lines}
-        ${is_start}=    Run Keyword And Return Status    Should Contain    ${line}    "ActivityTaskManager: START u0"
-        ${is_end}=    Run Keyword And Return Status    Should Contain    ${line}    "Layer: Destroyed ActivityRecord"
-        Run Keyword If    ${is_start}    Process Start Line    ${line}    ${app_starts}
-        Run Keyword If    ${is_end}    Process End Line    ${line}    ${app_starts}    ${applications_lifespan}
+        ${start_marker}=    Run Keyword And Return Status    Should Contain    ${line}    ActivityTaskManager: START u0
+        ${end_marker}=    Run Keyword And Return Status    Should Contain    ${line}    Layer: Destroyed ActivityRecord
+
+        IF    ${start_marker}
+            ${package_name}=    Get Package Name    ${line}
+            ${start_time}=    Fetch Time    ${line}
+            ${app_info}=    Create Dictionary    start_time=${start_time}    end_time=${EMPTY}
+            Set To Dictionary    ${app_states}    ${package_name}    ${app_info}
+           ELSE IF    ${end_marker}
+                ${package_name}=    Get Package Name    ${line}
+                ${app_exists}=    Run Keyword And Return Status    Dictionary Should Contain Key    ${app_states}    ${package_name}
+                IF    ${app_exists}
+                    ${end_time}=    Fetch Time    ${line}
+                    ${app_info}=    Get From Dictionary    ${app_states}    ${package_name}
+                    Set To Dictionary    ${app_info}    end_time    ${end_time}
+                    ${app_data}=    Create Dictionary    package=${package_name}    start_time=${app_info}[start_time]    end_time=${end_time}
+                    Append To List    ${parsed_data}    ${app_data}
+                    Remove From Dictionary    ${app_states}    ${package_name}
+                ELSE
+                    Log    Warning: End marker found for ${package_name} without a corresponding start marker.
+                END
+            END
+
     END
-    RETURN    ${applications_lifespan}
+    RETURN    ${parsed_data}
 
-Process Start Line
-    [Arguments]    ${line}    ${app_starts}
-    ${timestamp}=    Get Substring    ${line}    0    18
-    ${app_name}=    Fetch App Name    ${line}
-    Set To Dictionary    ${app_starts}    ${app_name}    ${timestamp}
-
-Process End Line
-    [Arguments]    ${line}    ${app_starts}    ${applications_lifespan}
-    ${timestamp}=    Get Substring    ${line}    0    18
-    ${app_name}=    Fetch App Name From End Line    ${line}
-    ${start_timestamp}=    Get From Dictionary    ${app_starts}    ${app_name}    None
-    Run Keyword If    '${start_timestamp}' != 'None'    Calculate And Set Lifespan    ${app_name}    ${start_timestamp}    ${timestamp}    ${applications_lifespan}
-
-Fetch App Name
+Get Package Name
     [Arguments]    ${line}
-    ${start_index}=    Find String    ${line}    "cmp="
-    ${end_index}=    Find String    ${line}    "/"    ${start_index}
-    ${app_name}=    Get Substring    ${line}    ${start_index+4}    ${end_index}
-    RETURN    ${app_name}
+    ${com_start}=    Set Variable    ${line.find('com.')+4}
+    ${package_and_activity}=    Get Substring    ${line}    ${com_start}    ${None}
+    ${slash_index}=    Set Variable    ${package_and_activity.find('/')}
+    ${package_name}=    Get Substring    ${package_and_activity}    0    ${slash_index}
+    RETURN    ${package_name}
 
-Fetch App Name From End Line
+Fetch Time
     [Arguments]    ${line}
-    ${start_index}=    Find String    ${line}    "com."
-    ${end_index}=    Find String    ${line}    "}"    ${start_index}
-    ${app_name}=    Get Substring    ${line}    ${start_index}    ${end_index}
-    RETURN    ${app_name}
+    ${time}=    Get Substring    ${line}    6    18
+    RETURN    ${time}
 
-Calculate And Set Lifespan
-    [Arguments]    ${app_name}    ${start_time}    ${end_time}    ${applications_lifespan}
-    ${lifespan}=    Calculate Time Difference    ${start_time}    ${end_time}
-    Set To Dictionary    ${applications_lifespan}    ${app_name}    ${lifespan}
+Calculate Lifespan
+    [Arguments]    ${data}
+    ${lifespans}=    Create List
+    FOR    ${app}    IN    @{data}
+        Continue For Loop If    '${app['package']}' == '' or '${app['start_time']}' == '' or '${app['end_time']}' == ''
+        ${start_sec}=    Convert Time To Seconds    ${app['start_time']}
+        ${end_sec}=    Convert Time To Seconds    ${app['end_time']}
+        ${lifespan}=    Evaluate    ${end_sec} - ${start_sec}
+        ${app_lifespan}=    Create Dictionary    package=${app['package']}    lifespan=${lifespan}
+        Append To List    ${lifespans}    ${app_lifespan}
+    END
+    RETURN    ${lifespans}
 
-Calculate Time Difference
-    [Arguments]    ${start_time}    ${end_time}
-    ${start_datetime}=    Convert To DateTime    ${start_time}    exact=True
-    ${end_datetime}=    Convert To DateTime    ${end_time}    exact=True
-    ${lifespan_seconds}=    Get Time Difference    ${end_datetime}    ${start_datetime}    result_format=seconds
-    ${lifespan_minutes}=    Convert To Number    ${lifespan_seconds} / 60
-    RETURN    ${lifespan_minutes}
+Output App Data To File
+    [Arguments]    ${data}    ${filename}
+    ${output}=    Set Variable    applications:\n
+    ${index}=    Set Variable    1
+    FOR    ${app}    IN    @{data}
+        ${package}=    Set Variable    ${app.get('package', 'N/A')}
+        ${start_time}=    Set Variable    ${app.get('start_time')}
+        ${end_time}=    Set Variable    ${app.get('end_time')}
+        ${lifespan}=    Set Variable    ${app.get('lifespan', 'N/A')}s
 
-Verify Lifespan Criteria
-    [Arguments]    ${lifespan_results}    ${pass_threshold}    ${lifespan_limit}
-    ${total_apps}=    Get Length    ${lifespan_results}
-    ${apps_under_limit}=    Evaluate    sum(1 for app, lifespan in ${lifespan_results}.items() if lifespan < ${lifespan_limit})
-    ${percentage}=    Evaluate    100.0 * ${apps_under_limit} / ${total_apps} if ${total_apps} != 0 else 0
-    Run Keyword If    ${percentage} >= ${pass_threshold}    Return    PASSED
-    RETURN    FAILED
+        ${app_output}=    Set Variable
+        ...    - application_${index}\n
+        ...    - app_path:  ${package}\n
+        ...    - ts_app_started: ${start_time}\n
+        ...    - ts_app_closed:  ${end_time}\n
+        ...    - lifespan:  ${lifespan}\n
+        ${output}=    Set Variable    ${output}${app_output}\n
+        ${index}=    Evaluate    ${index} + 1
+    END
+    Create File    ${filename}    ${output}
 
+Convert Time To Seconds
+    [Arguments]    ${time_str}
+    ${minutes}=    Get Substring    ${time_str}    3    5
+    ${seconds}=    Get Substring    ${time_str}    6    8
+    ${milliseconds}=    Get Substring    ${time_str}    9    12
 
-Log Warning For Long Lifespan Applications
-    [Arguments]    ${lifespan_results}
-    ${long_lifespan_apps}=    Evaluate    [app for app, lifespan in ${lifespan_results}.items() if lifespan > ${LIFESPAN_LIMIT}]
-    Log    Warning: The following applications have a lifespan longer than ${LIFESPAN_LIMIT} seconds: ${long_lifespan_apps}
+    ${minutes}=    Set Variable If    '${minutes}' == ''    0    ${minutes.lstrip("0")}
+    ${seconds}=    Set Variable If    '${seconds}' == ''    0    ${seconds.lstrip("0")}
+    ${milliseconds}=    Set Variable If    '${milliseconds}' == ''    0    ${milliseconds.lstrip("0")}
+
+    ${total_seconds}=    Evaluate    int(${minutes}) * 60 + int(${seconds}) + int(${milliseconds}) / 1000.0
+    RETURN    ${total_seconds}
+
+Generate Test Verdict
+    [Arguments]    ${data}
+    ${total_apps}=    Get Length    ${data}
+    IF    ${total_apps} == 0
+        Log    No applications analyzed. Test INCONCLUSIVE.
+    ELSE
+        ${apps_below_threshold}=    Evaluate    len([app for app in ${data} if app['lifespan'] < 30])
+        ${percentage_below_threshold}=    Evaluate    100.0 * ${apps_below_threshold} / ${total_apps}
+        ${apps_above_threshold}=    Evaluate    [app for app in ${data} if app['lifespan'] > 30]
+
+        FOR    ${app}    IN    @{apps_above_threshold}
+            Log    Warning: ${app['package']} was opened for more than 30 seconds. Lifespan: ${app['lifespan']} seconds.
+        END
+
+        Run Keyword If    ${percentage_below_threshold} < 75
+        ...    Fail    Test FAILED: Percentage of apps below threshold is less than 75%
+        ...    ELSE    Log    Test PASSED
+
+    END

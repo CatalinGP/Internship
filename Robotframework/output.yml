@@ -1,0 +1,7 @@
+applications:
+['- application_1\n', '- app_path:', 'sec.android.app.camera\n', '- ts_app_started: None\n', '- ts_app_closed:', 'None\n', '- lifespan:', '23.378000000000156s\n']
+['- application_2\n', '- app_path:', 'android.vending\n', '- ts_app_started: None\n', '- ts_app_closed:', 'None\n', '- lifespan:', '15.461999999999989s\n']
+['- application_3\n', '- app_path:', 'spotify.music\n', '- ts_app_started: None\n', '- ts_app_closed:', 'None\n', '- lifespan:', '18.009000000000015s\n']
+['- application_4\n', '- app_path:', 'netflix.mediaclient\n', '- ts_app_started: None\n', '- ts_app_closed:', 'None\n', '- lifespan:', '30.471999999999753s\n']
+['- application_5\n', '- app_path:', 'sec.android.app.popupcalculator\n', '- ts_app_started: None\n', '- ts_app_closed:', 'None\n', '- lifespan:', '25.67599999999993s\n']
+['- application_6\n', '- app_path:', 'sec.android.app.clockpackage\n', '- ts_app_started: None\n', '- ts_app_closed:', 'None\n', '- lifespan:', '43.297999999999774s\n']
