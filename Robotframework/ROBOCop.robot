@@ -5,12 +5,21 @@ Library    String
 
 *** Variables ***
 ${INPUT_FILE}     ${CURDIR}/ccs2/RELIABILITY/TC_SWQUAL_CCS2_RELIABILITY_B2B_PA.robot
-${REPORT_FILE}    ${CURDIR}/ccs2/Imposters.robot
-@{KEYWORDS_TO_CHECK}    START TEST CASE    SAVE CANDUMP LOGS    START LOGCAT MONITOR    START DLT MONITOR    CHECK VIN AND PART ASSOCIATION    CHECK VIN CONFIG ON    SET VNEXT TIME AND DATE ON IVC    SET PROP APLOG    ENABLE IVI DEBUG LOGS   REMOVE IVI APLOG    REMOVE IVI DROPBOX CRASHES
+@{KEYWORDS_TO_CHECK}    START TEST CASE    
+...     SAVE CANDUMP LOGS    
+...     START LOGCAT MONITOR    
+...     START DLT MONITOR    
+...     CHECK VIN AND PART ASSOCIATION    
+...     CHECK VIN CONFIG ON    
+...     SET VNEXT TIME AND DATE ON IVC    
+...     SET PROP APLOG    
+...     ENABLE IVI DEBUG LOGS   
+...     REMOVE IVI APLOG    
+...     REMOVE IVI DROPBOX CRASHES
 
 
 *** Test Cases ***
-Verify Resource Keywords In Main Test Case File
+Trace not existing HLK's
     ${resource_paths}=    Extract Resource File Paths    ${INPUT_FILE}
     Check Keywords In Resource Files    ${resource_paths}    ${KEYWORDS_TO_CHECK}
 
@@ -33,17 +42,14 @@ Extract Resource File Paths
     FOR    ${line}    IN    @{resource_lines}
         ${resource_path}=    Get Substring    ${line}    9
         ${resource_path}=    Strip String    ${resource_path}
-        # Remove ".." from the path
         ${adjusted_path}=    Replace String    ${resource_path}    ../   ccs2/
         Append To List    ${resource_paths}    ${adjusted_path}
     END
-
     RETURN    ${resource_paths}
-
 
 Check Keywords In Resource Files
     [Arguments]    ${resource_paths}    @{keywords_to_check}
-    ${missing_keywords}=    Create List    @{keywords_to_check}    # Assume all keywords are missing initially
+    ${missing_keywords}=    Create List    @{keywords_to_check}
     FOR    ${path}    IN    @{resource_paths}
         ${content}=    Get File    ${path}
         ${lines}=    Split To Lines    ${content}
