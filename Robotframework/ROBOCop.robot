@@ -5,23 +5,22 @@ Library    String
 
 *** Variables ***
 ${INPUT_FILE}     ${CURDIR}/ccs2/RELIABILITY/TC_SWQUAL_CCS2_RELIABILITY_B2B_PA.robot
-@{KEYWORDS_TO_CHECK}    START TEST CASE    
-...     SAVE CANDUMP LOGS    
-...     START LOGCAT MONITOR    
-...     START DLT MONITOR    
-...     CHECK VIN AND PART ASSOCIATION    
-...     CHECK VIN CONFIG ON    
-...     SET VNEXT TIME AND DATE ON IVC    
-...     SET PROP APLOG    
-...     ENABLE IVI DEBUG LOGS   
-...     REMOVE IVI APLOG    
+@{KEYWORDS_TO_CHECK}    START TEST CASE
+...     SAVE CANDUMP LOGS
+...     START LOGCAT MONITOR
+...     START DLT MONITOR
+...     CHECK VIN AND PART ASSOCIATION
+...     CHECK VIN CONFIG ON
+...     SET VNEXT TIME AND DATE ON IVC
+...     SET PROP APLOG
+...     ENABLE IVI DEBUG LOGS
+...     REMOVE IVI APLOG
 ...     REMOVE IVI DROPBOX CRASHES
 
 
 *** Test Cases ***
-Trace not existing HLK's
-    ${resource_paths}=    Extract Resource File Paths    ${INPUT_FILE}
-    Check Keywords In Resource Files    ${resource_paths}    ${KEYWORDS_TO_CHECK}
+Trace undefined HLK's
+    Execute Check
 
 *** Keywords ***
 Extract Resource File Paths
@@ -72,3 +71,7 @@ Add Missing Keywords To Imposters
         ${to_append}=    Catenate    SEPARATOR=\n    ${keyword}\n    \    [Arguments]    \${foo}\n    \    Keyword not defined, waiting for implementation.
         Append To File    ${imposters_file}    ${to_append}
     END
+
+Execute Check
+    ${resource_paths}=    Extract Resource File Paths    ${INPUT_FILE}
+    Check Keywords In Resource Files    ${resource_paths}    ${KEYWORDS_TO_CHECK}
