@@ -52,17 +52,19 @@ Check Keywords In Resource Files
     FOR    ${path}    IN    @{resource_paths}
         ${content}=    Get File    ${path}
         ${lines}=    Split To Lines    ${content}
-        FOR    ${keyword}    IN    @{keywords_to_check}
+        ${index}=    Set Variable    0
+        FOR    ${keyword}    IN    @{missing_keywords}
             ${keyword_found}=    Set Variable    ${FALSE}
             FOR    ${line}    IN    @{lines}
                 ${contains_keyword}=    Run Keyword And Return Status    Should Contain    ${line}    ${keyword}
                 Run Keyword If    ${contains_keyword}    Set Variable    ${TRUE}    AND    Exit For Loop
             END
-            Run Keyword If    ${keyword_found}    Remove From List    ${missing_keywords}    ${keyword}
+            Run Keyword If    ${keyword_found}    Remove From List    ${missing_keywords}    ${index}
+            Run Keyword Unless    ${keyword_found}    Set Variable    ${index}+1    ${index}
         END
     END
-    ${missing_count}=    Get Length    ${missing_keywords}
-    Run Keyword If    ${missing_count} > 0    Add Missing Keywords To Imposters    ${missing_keywords}
+    Log    ${missing_keywords}
+    RETURN    ${missing_keywords}
 
 Add Missing Keywords To Imposters
     [Arguments]    @{missing_keywords}

@@ -82,7 +82,6 @@ Calculate Lifespan
         ${lifespan}=    Evaluate    ${end} - ${start}
         Set To Dictionary    ${data}[${index}]    lifespan    ${lifespan}
     END
-    Log    ${data}
     RETURN    ${data}
 
 Output App Data To File
