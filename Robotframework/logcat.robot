@@ -80,7 +80,7 @@ Calculate Lifespan
         ${start}=    Convert Time    ${data}[${index}][start_time]    result_format=number    exclude_millis=yes
         ${end}=    Convert Time    ${data}[${index}][end_time]    result_format=number    exclude_millis=yes
         ${lifespan}=    Evaluate    ${end} - ${start}
-        Set To Dictionary    ${data}[${index}]    duration    ${lifespan}
+        Set To Dictionary    ${data}[${index}]    lifespan    ${lifespan}
     END
     Log    ${data}
     RETURN    ${data}
@@ -118,11 +118,11 @@ Generate Test Verdict
     ${apps_above_threshold}=    Create List
 
     FOR    ${app}    IN    @{data}
-        Run Keyword If    ${app['duration']} < 30
+        Run Keyword If    ${app['lifespan']} < 30
         ...    Append To List    ${apps_below_threshold}    ${app}
         ...    ELSE    Append To List    ${apps_above_threshold}    ${app}
-        ...    AND IF    ${app['duration']} > 30
-        ...    Log    Warning: ${app['package']} was opened for more than 30 seconds. Lifespan: ${app['duration']} seconds.
+        ...    AND IF    ${app['lifespan']} > 30
+        ...    Log    Warning: ${app['package']} was opened for more than 30 seconds. Lifespan: ${app['lifespan']} seconds.
     END
 
     ${apps_below_threshold_count}=    Get Length    ${apps_below_threshold}
