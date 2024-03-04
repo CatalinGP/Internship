@@ -1,0 +1,2970 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<robot generator="Robot 7.0 (Python 3.10.0 on win32)" generated="2024-03-04T11:33:50.591456" rpa="false" schemaversion="5">
+<suite id="s1" name="Logcat" source="C:\Users\cpopescu\GitHub\CatalinGP\Internship\Robotframework\logcat.robot">
+<test id="s1-t1" name="Analyze Lifespan of Android Applications" line="13">
+<kw name="Parse Logcat File">
+<kw name="Create List" owner="BuiltIn">
+<msg time="2024-03-04T11:33:50.648266" level="INFO">${parsed_data} = []</msg>
+<var>${parsed_data}</var>
+<doc>Returns a list containing given items.</doc>
+<status status="PASS" start="2024-03-04T11:33:50.648266" elapsed="0.000000"/>
+</kw>
+<kw name="Get File" owner="OperatingSystem">
+<msg time="2024-03-04T11:33:50.648266" level="INFO" html="true">Getting file '&lt;a href="file://C:\Users\cpopescu\GitHub\CatalinGP\Internship\Robotframework\logcat_applications.txt"&gt;C:\Users\cpopescu\GitHub\CatalinGP\Internship\Robotframework\logcat_applications.txt&lt;/a&gt;'.</msg>
+<msg time="2024-03-04T11:33:50.654779" level="INFO">${file_contents} = --------- beginning of main
+03-14 17:55:47.856  5535  5619 I System.out: Broadcasting: Intent { act=com.samsung.intent.action.BIG_DATA_INFO (has extras) }
+03-14 17:55:47.857  4830 17522 E power   : IS...</msg>
+<var>${file_contents}</var>
+<arg>${file_path}</arg>
+<doc>Returns the contents of a specified file.</doc>
+<status status="PASS" start="2024-03-04T11:33:50.648266" elapsed="0.006513"/>
+</kw>
+<kw name="Get Lines Matching Regexp" owner="String">
+<msg time="2024-03-04T11:33:50.663634" level="INFO">12 out of 9656 lines matched.</msg>
+<msg time="2024-03-04T11:33:50.664767" level="INFO">${relevant_lines} = 03-14 17:56:07.504  5230  7316 I ActivityTaskManager: START u0 {act=android.intent.action.MAIN cat=[android.intent.category.LAUNCHER] flg=0x10200000 cmp=com.sec.android.app.camera/.Camera bnds=[529,13...</msg>
+<var>${relevant_lines}</var>
+<arg>${file_contents}</arg>
+<arg>.*ActivityTaskManager: START u0.*|.*Layer: Destroyed ActivityRecord.*</arg>
+<doc>Returns lines of the given ``string`` that match the regexp ``pattern``.</doc>
+<status status="PASS" start="2024-03-04T11:33:50.654779" elapsed="0.009988"/>
+</kw>
+<kw name="Split To Lines" owner="String">
+<msg time="2024-03-04T11:33:50.664767" level="INFO">12 lines returned</msg>
+<msg time="2024-03-04T11:33:50.664767" level="INFO">${lines} = ['03-14 17:56:07.504  5230  7316 I ActivityTaskManager: START u0 {act=android.intent.action.MAIN cat=[android.intent.category.LAUNCHER] flg=0x10200000 cmp=com.sec.android.app.camera/.Camera bnds=[529,...</msg>
+<var>${lines}</var>
+<arg>${relevant_lines}</arg>
+<doc>Splits the given string to lines.</doc>
+<status status="PASS" start="2024-03-04T11:33:50.664767" elapsed="0.000000"/>
+</kw>
+<kw name="Create Dictionary" owner="BuiltIn">
+<msg time="2024-03-04T11:33:50.665798" level="INFO">${app_states} = {}</msg>
+<var>${app_states}</var>
+<doc>Creates and returns a dictionary based on the given ``items``.</doc>
+<status status="PASS" start="2024-03-04T11:33:50.664767" elapsed="0.001031"/>
+</kw>
+<for flavor="IN">
+<iter>
+<kw name="Run Keyword And Return Status" owner="BuiltIn">
+<kw name="Should Contain" owner="BuiltIn">
+<arg>${line}</arg>
+<arg>ActivityTaskManager: START u0</arg>
+<doc>Fails if ``container`` does not contain ``item`` one or more times.</doc>
+<status status="PASS" start="2024-03-04T11:33:50.665798" elapsed="0.000000"/>
+</kw>
+<msg time="2024-03-04T11:33:50.666832" level="INFO">${start_marker} = True</msg>
+<var>${start_marker}</var>
+<arg>Should Contain</arg>
+<arg>${line}</arg>
+<arg>ActivityTaskManager: START u0</arg>
+<doc>Runs the given keyword with given arguments and returns the status as a Boolean value.</doc>
+<status status="PASS" start="2024-03-04T11:33:50.665798" elapsed="0.001034"/>
+</kw>
+<kw name="Run Keyword And Return Status" owner="BuiltIn">
+<kw name="Should Contain" owner="BuiltIn">
+<msg time="2024-03-04T11:33:50.666832" level="FAIL">'03-14 17:56:07.504  5230  7316 I ActivityTaskManager: START u0 {act=android.intent.action.MAIN cat=[android.intent.category.LAUNCHER] flg=0x10200000 cmp=com.sec.android.app.camera/.Camera bnds=[529,1342][693,1516]} from uid 10088' does not contain 'Layer: Destroyed ActivityRecord'</msg>
+<arg>${line}</arg>
+<arg>Layer: Destroyed ActivityRecord</arg>
+<doc>Fails if ``container`` does not contain ``item`` one or more times.</doc>
+<status status="FAIL" start="2024-03-04T11:33:50.666832" elapsed="0.000000">'03-14 17:56:07.504  5230  7316 I ActivityTaskManager: START u0 {act=android.intent.action.MAIN cat=[android.intent.category.LAUNCHER] flg=0x10200000 cmp=com.sec.android.app.camera/.Camera bnds=[529,1342][693,1516]} from uid 10088' does not contain 'Layer: Destroyed ActivityRecord'</status>
+</kw>
+<msg time="2024-03-04T11:33:50.666832" level="INFO">${end_marker} = False</msg>
+<var>${end_marker}</var>
+<arg>Should Contain</arg>
+<arg>${line}</arg>
+<arg>Layer: Destroyed ActivityRecord</arg>
+<doc>Runs the given keyword with given arguments and returns the status as a Boolean value.</doc>
+<status status="PASS" start="2024-03-04T11:33:50.666832" elapsed="0.000000"/>
+</kw>
+<if>
+<branch type="IF" condition="${start_marker}">
+<kw name="Run Keyword" owner="BuiltIn">
+<kw name="Extract Start Marker Data">
+<kw name="Get Package Name">
+<kw name="Set Variable" owner="BuiltIn">
+<msg time="2024-03-04T11:33:50.669079" level="INFO">${com_start} = 157</msg>
+<var>${com_start}</var>
+<arg>${line.find('com.')+4}</arg>
+<doc>Returns the given values which can then be assigned to a variables.</doc>
+<status status="PASS" start="2024-03-04T11:33:50.667956" elapsed="0.001123"/>
+</kw>
+<kw name="Get Substring" owner="String">
+<msg time="2024-03-04T11:33:50.669079" level="INFO">${package_and_activity} = sec.android.app.camera/.Camera bnds=[529,1342][693,1516]} from uid 10088</msg>
+<var>${package_and_activity}</var>
+<arg>${line}</arg>
+<arg>${com_start}</arg>
+<arg>${None}</arg>
+<doc>Returns a substring from ``start`` index to ``end`` index.</doc>
+<status status="PASS" start="2024-03-04T11:33:50.669079" elapsed="0.000000"/>
+</kw>
+<kw name="Set Variable" owner="BuiltIn">
+<msg time="2024-03-04T11:33:50.670199" level="INFO">${slash_index} = 22</msg>
+<var>${slash_index}</var>
+<arg>${package_and_activity.find('/')}</arg>
+<doc>Returns the given values which can then be assigned to a variables.</doc>
+<status status="PASS" start="2024-03-04T11:33:50.669079" elapsed="0.001120"/>
+</kw>
+<kw name="Get Substring" owner="String">
+<msg time="2024-03-04T11:33:50.670199" level="INFO">${package_name} = sec.android.app.camera</msg>
+<var>${package_name}</var>
+<arg>${package_and_activity}</arg>
+<arg>0</arg>
+<arg>${slash_index}</arg>
+<doc>Returns a substring from ``start`` index to ``end`` index.</doc>
+<status status="PASS" start="2024-03-04T11:33:50.670199" elapsed="0.000000"/>
+</kw>
+<return>
+<value>${package_name}</value>
+<status status="PASS" start="2024-03-04T11:33:50.670199" elapsed="0.000000"/>
+</return>
+<msg time="2024-03-04T11:33:50.670199" level="INFO">${package_name} = sec.android.app.camera</msg>
+<var>${package_name}</var>
+<arg>${line}</arg>
+<status status="PASS" start="2024-03-04T11:33:50.667956" elapsed="0.002243"/>
+</kw>
+<kw name="Fetch Time">
+<kw name="Get Substring" owner="String">
+<msg time="2024-03-04T11:33:50.671315" level="INFO">${time} = 17:56:07.504</msg>
+<var>${time}</var>
+<arg>${line}</arg>
+<arg>6</arg>
+<arg>18</arg>
+<doc>Returns a substring from ``start`` index to ``end`` index.</doc>
+<status status="PASS" start="2024-03-04T11:33:50.671315" elapsed="0.000000"/>
+</kw>
+<return>
+<value>${time}</value>
+<status status="PASS" start="2024-03-04T11:33:50.671315" elapsed="0.000000"/>
+</return>
+<msg time="2024-03-04T11:33:50.671315" level="INFO">${start_time} = 17:56:07.504</msg>
+<var>${start_time}</var>
+<arg>${line}</arg>
+<status status="PASS" start="2024-03-04T11:33:50.670199" elapsed="0.001116"/>
+</kw>
+<kw name="Create Dictionary" owner="BuiltIn">
+<msg time="2024-03-04T11:33:50.672439" level="INFO">${app_info} = {'start_time': '17:56:07.504', 'end_time': ''}</msg>
+<var>${app_info}</var>
+<arg>start_time=${start_time}</arg>
+<arg>end_time=${EMPTY}</arg>
+<doc>Creates and returns a dictionary based on the given ``items``.</doc>
+<status status="PASS" start="2024-03-04T11:33:50.671315" elapsed="0.001124"/>
+</kw>
+<kw name="Set To Dictionary" owner="Collections">
+<arg>${app_states}</arg>
+<arg>${package_name}</arg>
+<arg>${app_info}</arg>
+<doc>Adds the given ``key_value_pairs`` and/or ``items`` to the ``dictionary``.</doc>
+<status status="PASS" start="2024-03-04T11:33:50.672439" elapsed="0.000000"/>
+</kw>
+<arg>${app_states}</arg>
+<arg>${line}</arg>
+<arg>${parsed_data}</arg>
+<status status="PASS" start="2024-03-04T11:33:50.667937" elapsed="0.004502"/>
+</kw>
+<arg>Extract Start Marker Data</arg>
+<arg>${app_states}</arg>
+<arg>${line}</arg>
+<arg>${parsed_data}</arg>
+<doc>Executes the given keyword with the given arguments.</doc>
+<status status="PASS" start="2024-03-04T11:33:50.666832" elapsed="0.005607"/>
+</kw>
+<status status="PASS" start="2024-03-04T11:33:50.666832" elapsed="0.005607"/>
+</branch>
+<branch type="ELSE IF" condition="${end_marker}">
+<kw name="Run Keyword" owner="BuiltIn">
+<arg>Extract End Marker Data</arg>
+<arg>${app_states}</arg>
+<arg>${line}</arg>
+<arg>${parsed_data}</arg>
+<doc>Executes the given keyword with the given arguments.</doc>
+<status status="NOT RUN" start="2024-03-04T11:33:50.672439" elapsed="0.000000"/>
+</kw>
+<status status="NOT RUN" start="2024-03-04T11:33:50.672439" elapsed="0.000000"/>
+</branch>
+<status status="PASS" start="2024-03-04T11:33:50.666832" elapsed="0.005607"/>
+</if>
+<var name="${line}">03-14 17:56:07.504  5230  7316 I ActivityTaskManager: START u0 {act=android.intent.action.MAIN cat=[android.intent.category.LAUNCHER] flg=0x10200000 cmp=com.sec.android.app.camera/.Camera bnds=[529,13...</var>
+<status status="PASS" start="2024-03-04T11:33:50.665798" elapsed="0.006641"/>
+</iter>
+<iter>
+<kw name="Run Keyword And Return Status" owner="BuiltIn">
+<kw name="Should Contain" owner="BuiltIn">
+<arg>${line}</arg>
+<arg>ActivityTaskManager: START u0</arg>
+<doc>Fails if ``container`` does not contain ``item`` one or more times.</doc>
+<status status="PASS" start="2024-03-04T11:33:50.673557" elapsed="0.000000"/>
+</kw>
+<msg time="2024-03-04T11:33:50.673557" level="INFO">${start_marker} = True</msg>
+<var>${start_marker}</var>
+<arg>Should Contain</arg>
+<arg>${line}</arg>
+<arg>ActivityTaskManager: START u0</arg>
+<doc>Runs the given keyword with given arguments and returns the status as a Boolean value.</doc>
+<status status="PASS" start="2024-03-04T11:33:50.673557" elapsed="0.000000"/>
+</kw>
+<kw name="Run Keyword And Return Status" owner="BuiltIn">
+<kw name="Should Contain" owner="BuiltIn">
+<msg time="2024-03-04T11:33:50.673557" level="FAIL">'03-14 17:56:29.534  5230  7331 I ActivityTaskManager: START u0 {act=android.intent.action.MAIN cat=[android.intent.category.LAUNCHER] flg=0x10200000 cmp=com.netflix.mediaclient/.ui.launch.UIWebViewActivity bnds=[194,823][358,1056]} from uid 10088' does not contain 'Layer: Destroyed ActivityRecord'</msg>
+<arg>${line}</arg>
+<arg>Layer: Destroyed ActivityRecord</arg>
+<doc>Fails if ``container`` does not contain ``item`` one or more times.</doc>
+<status status="FAIL" start="2024-03-04T11:33:50.673557" elapsed="0.000000">'03-14 17:56:29.534  5230  7331 I ActivityTaskManager: START u0 {act=android.intent.action.MAIN cat=[android.intent.category.LAUNCHER] flg=0x10200000 cmp=com.netflix.mediaclient/.ui.launch.UIWebViewActivity bnds=[194,823][358,1056]} from uid 10088' does not contain 'Layer: Destroyed ActivityRecord'</status>
+</kw>
+<msg time="2024-03-04T11:33:50.673557" level="INFO">${end_marker} = False</msg>
+<var>${end_marker}</var>
+<arg>Should Contain</arg>
+<arg>${line}</arg>
+<arg>Layer: Destroyed ActivityRecord</arg>
+<doc>Runs the given keyword with given arguments and returns the status as a Boolean value.</doc>
+<status status="PASS" start="2024-03-04T11:33:50.673557" elapsed="0.000000"/>
+</kw>
+<if>
+<branch type="IF" condition="${start_marker}">
+<kw name="Run Keyword" owner="BuiltIn">
+<kw name="Extract Start Marker Data">
+<kw name="Get Package Name">
+<kw name="Set Variable" owner="BuiltIn">
+<msg time="2024-03-04T11:33:50.675825" level="INFO">${com_start} = 157</msg>
+<var>${com_start}</var>
+<arg>${line.find('com.')+4}</arg>
+<doc>Returns the given values which can then be assigned to a variables.</doc>
+<status status="PASS" start="2024-03-04T11:33:50.674675" elapsed="0.001150"/>
+</kw>
+<kw name="Get Substring" owner="String">
+<msg time="2024-03-04T11:33:50.675825" level="INFO">${package_and_activity} = netflix.mediaclient/.ui.launch.UIWebViewActivity bnds=[194,823][358,1056]} from uid 10088</msg>
+<var>${package_and_activity}</var>
+<arg>${line}</arg>
+<arg>${com_start}</arg>
+<arg>${None}</arg>
+<doc>Returns a substring from ``start`` index to ``end`` index.</doc>
+<status status="PASS" start="2024-03-04T11:33:50.675825" elapsed="0.000000"/>
+</kw>
+<kw name="Set Variable" owner="BuiltIn">
+<msg time="2024-03-04T11:33:50.676972" level="INFO">${slash_index} = 19</msg>
+<var>${slash_index}</var>
+<arg>${package_and_activity.find('/')}</arg>
+<doc>Returns the given values which can then be assigned to a variables.</doc>
+<status status="PASS" start="2024-03-04T11:33:50.675825" elapsed="0.001147"/>
+</kw>
+<kw name="Get Substring" owner="String">
+<msg time="2024-03-04T11:33:50.676972" level="INFO">${package_name} = netflix.mediaclient</msg>
+<var>${package_name}</var>
+<arg>${package_and_activity}</arg>
+<arg>0</arg>
+<arg>${slash_index}</arg>
+<doc>Returns a substring from ``start`` index to ``end`` index.</doc>
+<status status="PASS" start="2024-03-04T11:33:50.676972" elapsed="0.000000"/>
+</kw>
+<return>
+<value>${package_name}</value>
+<status status="PASS" start="2024-03-04T11:33:50.676972" elapsed="0.000000"/>
+</return>
+<msg time="2024-03-04T11:33:50.676972" level="INFO">${package_name} = netflix.mediaclient</msg>
+<var>${package_name}</var>
+<arg>${line}</arg>
+<status status="PASS" start="2024-03-04T11:33:50.674675" elapsed="0.002297"/>
+</kw>
+<kw name="Fetch Time">
+<kw name="Get Substring" owner="String">
+<msg time="2024-03-04T11:33:50.678041" level="INFO">${time} = 17:56:29.534</msg>
+<var>${time}</var>
+<arg>${line}</arg>
+<arg>6</arg>
+<arg>18</arg>
+<doc>Returns a substring from ``start`` index to ``end`` index.</doc>
+<status status="PASS" start="2024-03-04T11:33:50.678041" elapsed="0.000000"/>
+</kw>
+<return>
+<value>${time}</value>
+<status status="PASS" start="2024-03-04T11:33:50.678041" elapsed="0.000000"/>
+</return>
+<msg time="2024-03-04T11:33:50.678041" level="INFO">${start_time} = 17:56:29.534</msg>
+<var>${start_time}</var>
+<arg>${line}</arg>
+<status status="PASS" start="2024-03-04T11:33:50.676972" elapsed="0.001069"/>
+</kw>
+<kw name="Create Dictionary" owner="BuiltIn">
+<msg time="2024-03-04T11:33:50.679158" level="INFO">${app_info} = {'start_time': '17:56:29.534', 'end_time': ''}</msg>
+<var>${app_info}</var>
+<arg>start_time=${start_time}</arg>
+<arg>end_time=${EMPTY}</arg>
+<doc>Creates and returns a dictionary based on the given ``items``.</doc>
+<status status="PASS" start="2024-03-04T11:33:50.678041" elapsed="0.001117"/>
+</kw>
+<kw name="Set To Dictionary" owner="Collections">
+<arg>${app_states}</arg>
+<arg>${package_name}</arg>
+<arg>${app_info}</arg>
+<doc>Adds the given ``key_value_pairs`` and/or ``items`` to the ``dictionary``.</doc>
+<status status="PASS" start="2024-03-04T11:33:50.679158" elapsed="0.000000"/>
+</kw>
+<arg>${app_states}</arg>
+<arg>${line}</arg>
+<arg>${parsed_data}</arg>
+<status status="PASS" start="2024-03-04T11:33:50.674675" elapsed="0.004483"/>
+</kw>
+<arg>Extract Start Marker Data</arg>
+<arg>${app_states}</arg>
+<arg>${line}</arg>
+<arg>${parsed_data}</arg>
+<doc>Executes the given keyword with the given arguments.</doc>
+<status status="PASS" start="2024-03-04T11:33:50.674675" elapsed="0.004483"/>
+</kw>
+<status status="PASS" start="2024-03-04T11:33:50.674675" elapsed="0.004483"/>
+</branch>
+<branch type="ELSE IF" condition="${end_marker}">
+<kw name="Run Keyword" owner="BuiltIn">
+<arg>Extract End Marker Data</arg>
+<arg>${app_states}</arg>
+<arg>${line}</arg>
+<arg>${parsed_data}</arg>
+<doc>Executes the given keyword with the given arguments.</doc>
+<status status="NOT RUN" start="2024-03-04T11:33:50.679158" elapsed="0.000000"/>
+</kw>
+<status status="NOT RUN" start="2024-03-04T11:33:50.679158" elapsed="0.001075"/>
+</branch>
+<status status="PASS" start="2024-03-04T11:33:50.674675" elapsed="0.005558"/>
+</if>
+<var name="${line}">03-14 17:56:29.534  5230  7331 I ActivityTaskManager: START u0 {act=android.intent.action.MAIN cat=[android.intent.category.LAUNCHER] flg=0x10200000 cmp=com.netflix.mediaclient/.ui.launch.UIWebViewAct...</var>
+<status status="PASS" start="2024-03-04T11:33:50.673557" elapsed="0.006676"/>
+</iter>
+<iter>
+<kw name="Run Keyword And Return Status" owner="BuiltIn">
+<kw name="Should Contain" owner="BuiltIn">
+<msg time="2024-03-04T11:33:50.680434" level="FAIL">'03-14 17:56:30.882  5230  5252 I Layer: Destroyed ActivityRecord{d2590bc u0 com.sec.android.app.camera}' does not contain 'ActivityTaskManager: START u0'</msg>
+<arg>${line}</arg>
+<arg>ActivityTaskManager: START u0</arg>
+<doc>Fails if ``container`` does not contain ``item`` one or more times.</doc>
+<status status="FAIL" start="2024-03-04T11:33:50.680434" elapsed="0.000000">'03-14 17:56:30.882  5230  5252 I Layer: Destroyed ActivityRecord{d2590bc u0 com.sec.android.app.camera}' does not contain 'ActivityTaskManager: START u0'</status>
+</kw>
+<msg time="2024-03-04T11:33:50.680434" level="INFO">${start_marker} = False</msg>
+<var>${start_marker}</var>
+<arg>Should Contain</arg>
+<arg>${line}</arg>
+<arg>ActivityTaskManager: START u0</arg>
+<doc>Runs the given keyword with given arguments and returns the status as a Boolean value.</doc>
+<status status="PASS" start="2024-03-04T11:33:50.680434" elapsed="0.000000"/>
+</kw>
+<kw name="Run Keyword And Return Status" owner="BuiltIn">
+<kw name="Should Contain" owner="BuiltIn">
+<arg>${line}</arg>
+<arg>Layer: Destroyed ActivityRecord</arg>
+<doc>Fails if ``container`` does not contain ``item`` one or more times.</doc>
+<status status="PASS" start="2024-03-04T11:33:50.681553" elapsed="0.000000"/>
+</kw>
+<msg time="2024-03-04T11:33:50.681553" level="INFO">${end_marker} = True</msg>
+<var>${end_marker}</var>
+<arg>Should Contain</arg>
+<arg>${line}</arg>
+<arg>Layer: Destroyed ActivityRecord</arg>
+<doc>Runs the given keyword with given arguments and returns the status as a Boolean value.</doc>
+<status status="PASS" start="2024-03-04T11:33:50.680434" elapsed="0.001119"/>
+</kw>
+<if>
+<branch type="IF" condition="${start_marker}">
+<kw name="Run Keyword" owner="BuiltIn">
+<arg>Extract Start Marker Data</arg>
+<arg>${app_states}</arg>
+<arg>${line}</arg>
+<arg>${parsed_data}</arg>
+<doc>Executes the given keyword with the given arguments.</doc>
+<status status="NOT RUN" start="2024-03-04T11:33:50.681553" elapsed="0.000000"/>
+</kw>
+<status status="NOT RUN" start="2024-03-04T11:33:50.681553" elapsed="0.000000"/>
+</branch>
+<branch type="ELSE IF" condition="${end_marker}">
+<kw name="Run Keyword" owner="BuiltIn">
+<kw name="Extract End Marker Data">
+<kw name="Get Package Name">
+<kw name="Set Variable" owner="BuiltIn">
+<msg time="2024-03-04T11:33:50.683181" level="INFO">${com_start} = 80</msg>
+<var>${com_start}</var>
+<arg>${line.find('com.')+4}</arg>
+<doc>Returns the given values which can then be assigned to a variables.</doc>
+<status status="PASS" start="2024-03-04T11:33:50.682554" elapsed="0.000627"/>
+</kw>
+<kw name="Get Substring" owner="String">
+<msg time="2024-03-04T11:33:50.683181" level="INFO">${package_and_activity} = sec.android.app.camera}</msg>
+<var>${package_and_activity}</var>
+<arg>${line}</arg>
+<arg>${com_start}</arg>
+<arg>${None}</arg>
+<doc>Returns a substring from ``start`` index to ``end`` index.</doc>
+<status status="PASS" start="2024-03-04T11:33:50.683181" elapsed="0.000000"/>
+</kw>
+<kw name="Set Variable" owner="BuiltIn">
+<msg time="2024-03-04T11:33:50.684270" level="INFO">${slash_index} = -1</msg>
+<var>${slash_index}</var>
+<arg>${package_and_activity.find('/')}</arg>
+<doc>Returns the given values which can then be assigned to a variables.</doc>
+<status status="PASS" start="2024-03-04T11:33:50.683181" elapsed="0.001089"/>
+</kw>
+<kw name="Get Substring" owner="String">
+<msg time="2024-03-04T11:33:50.684270" level="INFO">${package_name} = sec.android.app.camera</msg>
+<var>${package_name}</var>
+<arg>${package_and_activity}</arg>
+<arg>0</arg>
+<arg>${slash_index}</arg>
+<doc>Returns a substring from ``start`` index to ``end`` index.</doc>
+<status status="PASS" start="2024-03-04T11:33:50.684270" elapsed="0.000000"/>
+</kw>
+<return>
+<value>${package_name}</value>
+<status status="PASS" start="2024-03-04T11:33:50.684270" elapsed="0.000000"/>
+</return>
+<msg time="2024-03-04T11:33:50.684270" level="INFO">${package_name} = sec.android.app.camera</msg>
+<var>${package_name}</var>
+<arg>${line}</arg>
+<status status="PASS" start="2024-03-04T11:33:50.682554" elapsed="0.001716"/>
+</kw>
+<kw name="Fetch Time">
+<kw name="Get Substring" owner="String">
+<msg time="2024-03-04T11:33:50.685390" level="INFO">${time} = 17:56:30.882</msg>
+<var>${time}</var>
+<arg>${line}</arg>
+<arg>6</arg>
+<arg>18</arg>
+<doc>Returns a substring from ``start`` index to ``end`` index.</doc>
+<status status="PASS" start="2024-03-04T11:33:50.685390" elapsed="0.000000"/>
+</kw>
+<return>
+<value>${time}</value>
+<status status="PASS" start="2024-03-04T11:33:50.685390" elapsed="0.000000"/>
+</return>
+<msg time="2024-03-04T11:33:50.685390" level="INFO">${end_time} = 17:56:30.882</msg>
+<var>${end_time}</var>
+<arg>${line}</arg>
+<status status="PASS" start="2024-03-04T11:33:50.684270" elapsed="0.001120"/>
+</kw>
+<kw name="Run Keyword And Return Status" owner="BuiltIn">
+<kw name="Dictionary Should Contain Key" owner="Collections">
+<msg time="2024-03-04T11:33:50.685390" level="INFO">False</msg>
+<arg>${app_states}</arg>
+<arg>${package_name}</arg>
+<doc>Fails if ``key`` is not found from ``dictionary``.</doc>
+<status status="PASS" start="2024-03-04T11:33:50.685390" elapsed="0.000000"/>
+</kw>
+<msg time="2024-03-04T11:33:50.685390" level="INFO">${app_exists} = True</msg>
+<var>${app_exists}</var>
+<arg>Dictionary Should Contain Key</arg>
+<arg>${app_states}</arg>
+<arg>${package_name}</arg>
+<doc>Runs the given keyword with given arguments and returns the status as a Boolean value.</doc>
+<status status="PASS" start="2024-03-04T11:33:50.685390" elapsed="0.000000"/>
+</kw>
+<if>
+<branch type="IF" condition="${app_exists}">
+<kw name="Get From Dictionary" owner="Collections">
+<msg time="2024-03-04T11:33:50.686511" level="INFO">${app_info} = {'start_time': '17:56:07.504', 'end_time': ''}</msg>
+<var>${app_info}</var>
+<arg>${app_states}</arg>
+<arg>${package_name}</arg>
+<doc>Returns a value from the given ``dictionary`` based on the given ``key``.</doc>
+<status status="PASS" start="2024-03-04T11:33:50.686511" elapsed="0.000000"/>
+</kw>
+<kw name="Set To Dictionary" owner="Collections">
+<arg>${app_info}</arg>
+<arg>end_time</arg>
+<arg>${end_time}</arg>
+<doc>Adds the given ``key_value_pairs`` and/or ``items`` to the ``dictionary``.</doc>
+<status status="PASS" start="2024-03-04T11:33:50.686511" elapsed="0.000000"/>
+</kw>
+<kw name="Create Dictionary" owner="BuiltIn">
+<msg time="2024-03-04T11:33:50.686511" level="INFO">${app_data} = {'package': 'sec.android.app.camera', 'start_time': '17:56:07.504', 'end_time': '17:56:30.882'}</msg>
+<var>${app_data}</var>
+<arg>package=${package_name}</arg>
+<arg>start_time=${app_info}[start_time]</arg>
+<arg>end_time=${end_time}</arg>
+<doc>Creates and returns a dictionary based on the given ``items``.</doc>
+<status status="PASS" start="2024-03-04T11:33:50.686511" elapsed="0.000000"/>
+</kw>
+<kw name="Append To List" owner="Collections">
+<arg>${parsed_data}</arg>
+<arg>${app_data}</arg>
+<doc>Adds ``values`` to the end of ``list``.</doc>
+<status status="PASS" start="2024-03-04T11:33:50.687633" elapsed="0.000000"/>
+</kw>
+<kw name="Remove From Dictionary" owner="Collections">
+<msg time="2024-03-04T11:33:50.687633" level="INFO">Removed item with key 'sec.android.app.camera' and value '{'start_time': '17:56:07.504', 'end_time': '17:56:30.882'}'.</msg>
+<arg>${app_states}</arg>
+<arg>${package_name}</arg>
+<doc>Removes the given ``keys`` from the ``dictionary``.</doc>
+<status status="PASS" start="2024-03-04T11:33:50.687633" elapsed="0.000000"/>
+</kw>
+<status status="PASS" start="2024-03-04T11:33:50.686511" elapsed="0.001122"/>
+</branch>
+<branch type="ELSE">
+<kw name="Log" owner="BuiltIn">
+<arg>Warning: End marker found for ${package_name} without a corresponding start marker.</arg>
+<doc>Logs the given message with the given level.</doc>
+<status status="NOT RUN" start="2024-03-04T11:33:50.687633" elapsed="0.000000"/>
+</kw>
+<status status="NOT RUN" start="2024-03-04T11:33:50.687633" elapsed="0.000000"/>
+</branch>
+<status status="PASS" start="2024-03-04T11:33:50.686511" elapsed="0.001122"/>
+</if>
+<arg>${app_states}</arg>
+<arg>${line}</arg>
+<arg>${parsed_data}</arg>
+<status status="PASS" start="2024-03-04T11:33:50.681553" elapsed="0.006080"/>
+</kw>
+<arg>Extract End Marker Data</arg>
+<arg>${app_states}</arg>
+<arg>${line}</arg>
+<arg>${parsed_data}</arg>
+<doc>Executes the given keyword with the given arguments.</doc>
+<status status="PASS" start="2024-03-04T11:33:50.681553" elapsed="0.006080"/>
+</kw>
+<status status="PASS" start="2024-03-04T11:33:50.681553" elapsed="0.006080"/>
+</branch>
+<status status="PASS" start="2024-03-04T11:33:50.681553" elapsed="0.006080"/>
+</if>
+<var name="${line}">03-14 17:56:30.882  5230  5252 I Layer: Destroyed ActivityRecord{d2590bc u0 com.sec.android.app.camera}</var>
+<status status="PASS" start="2024-03-04T11:33:50.680434" elapsed="0.007199"/>
+</iter>
+<iter>
+<kw name="Run Keyword And Return Status" owner="BuiltIn">
+<kw name="Should Contain" owner="BuiltIn">
+<arg>${line}</arg>
+<arg>ActivityTaskManager: START u0</arg>
+<doc>Fails if ``container`` does not contain ``item`` one or more times.</doc>
+<status status="PASS" start="2024-03-04T11:33:50.688757" elapsed="0.000000"/>
+</kw>
+<msg time="2024-03-04T11:33:50.688757" level="INFO">${start_marker} = True</msg>
+<var>${start_marker}</var>
+<arg>Should Contain</arg>
+<arg>${line}</arg>
+<arg>ActivityTaskManager: START u0</arg>
+<doc>Runs the given keyword with given arguments and returns the status as a Boolean value.</doc>
+<status status="PASS" start="2024-03-04T11:33:50.688757" elapsed="0.000000"/>
+</kw>
+<kw name="Run Keyword And Return Status" owner="BuiltIn">
+<kw name="Should Contain" owner="BuiltIn">
+<msg time="2024-03-04T11:33:50.688757" level="FAIL">'03-14 17:56:33.783  5230  7966 I ActivityTaskManager: START u0 {act=android.intent.action.VIEW dat=http://market.android.com/... cmp=com.android.vending/com.google.android.finsky.activities.MainActivity (has extras)} from uid 10193' does not contain 'Layer: Destroyed ActivityRecord'</msg>
+<arg>${line}</arg>
+<arg>Layer: Destroyed ActivityRecord</arg>
+<doc>Fails if ``container`` does not contain ``item`` one or more times.</doc>
+<status status="FAIL" start="2024-03-04T11:33:50.688757" elapsed="0.000000">'03-14 17:56:33.783  5230  7966 I ActivityTaskManager: START u0 {act=android.intent.action.VIEW dat=http://market.android.com/... cmp=com.android.vending/com.google.android.finsky.activities.MainActivity (has extras)} from uid 10193' does not contain 'Layer: Destroyed ActivityRecord'</status>
+</kw>
+<msg time="2024-03-04T11:33:50.689834" level="INFO">${end_marker} = False</msg>
+<var>${end_marker}</var>
+<arg>Should Contain</arg>
+<arg>${line}</arg>
+<arg>Layer: Destroyed ActivityRecord</arg>
+<doc>Runs the given keyword with given arguments and returns the status as a Boolean value.</doc>
+<status status="PASS" start="2024-03-04T11:33:50.688757" elapsed="0.001102"/>
+</kw>
+<if>
+<branch type="IF" condition="${start_marker}">
+<kw name="Run Keyword" owner="BuiltIn">
+<kw name="Extract Start Marker Data">
+<kw name="Get Package Name">
+<kw name="Set Variable" owner="BuiltIn">
+<msg time="2024-03-04T11:33:50.690994" level="INFO">${com_start} = 137</msg>
+<var>${com_start}</var>
+<arg>${line.find('com.')+4}</arg>
+<doc>Returns the given values which can then be assigned to a variables.</doc>
+<status status="PASS" start="2024-03-04T11:33:50.690994" elapsed="0.000000"/>
+</kw>
+<kw name="Get Substring" owner="String">
+<msg time="2024-03-04T11:33:50.690994" level="INFO">${package_and_activity} = android.vending/com.google.android.finsky.activities.MainActivity (has extras)} from uid 10193</msg>
+<var>${package_and_activity}</var>
+<arg>${line}</arg>
+<arg>${com_start}</arg>
+<arg>${None}</arg>
+<doc>Returns a substring from ``start`` index to ``end`` index.</doc>
+<status status="PASS" start="2024-03-04T11:33:50.690994" elapsed="0.000000"/>
+</kw>
+<kw name="Set Variable" owner="BuiltIn">
+<msg time="2024-03-04T11:33:50.692112" level="INFO">${slash_index} = 15</msg>
+<var>${slash_index}</var>
+<arg>${package_and_activity.find('/')}</arg>
+<doc>Returns the given values which can then be assigned to a variables.</doc>
+<status status="PASS" start="2024-03-04T11:33:50.690994" elapsed="0.001118"/>
+</kw>
+<kw name="Get Substring" owner="String">
+<msg time="2024-03-04T11:33:50.692112" level="INFO">${package_name} = android.vending</msg>
+<var>${package_name}</var>
+<arg>${package_and_activity}</arg>
+<arg>0</arg>
+<arg>${slash_index}</arg>
+<doc>Returns a substring from ``start`` index to ``end`` index.</doc>
+<status status="PASS" start="2024-03-04T11:33:50.692112" elapsed="0.000000"/>
+</kw>
+<return>
+<value>${package_name}</value>
+<status status="PASS" start="2024-03-04T11:33:50.692112" elapsed="0.000000"/>
+</return>
+<msg time="2024-03-04T11:33:50.692112" level="INFO">${package_name} = android.vending</msg>
+<var>${package_name}</var>
+<arg>${line}</arg>
+<status status="PASS" start="2024-03-04T11:33:50.689878" elapsed="0.002234"/>
+</kw>
+<kw name="Fetch Time">
+<kw name="Get Substring" owner="String">
+<msg time="2024-03-04T11:33:50.693226" level="INFO">${time} = 17:56:33.783</msg>
+<var>${time}</var>
+<arg>${line}</arg>
+<arg>6</arg>
+<arg>18</arg>
+<doc>Returns a substring from ``start`` index to ``end`` index.</doc>
+<status status="PASS" start="2024-03-04T11:33:50.693226" elapsed="0.000000"/>
+</kw>
+<return>
+<value>${time}</value>
+<status status="PASS" start="2024-03-04T11:33:50.693226" elapsed="0.000000"/>
+</return>
+<msg time="2024-03-04T11:33:50.693226" level="INFO">${start_time} = 17:56:33.783</msg>
+<var>${start_time}</var>
+<arg>${line}</arg>
+<status status="PASS" start="2024-03-04T11:33:50.692112" elapsed="0.001114"/>
+</kw>
+<kw name="Create Dictionary" owner="BuiltIn">
+<msg time="2024-03-04T11:33:50.694340" level="INFO">${app_info} = {'start_time': '17:56:33.783', 'end_time': ''}</msg>
+<var>${app_info}</var>
+<arg>start_time=${start_time}</arg>
+<arg>end_time=${EMPTY}</arg>
+<doc>Creates and returns a dictionary based on the given ``items``.</doc>
+<status status="PASS" start="2024-03-04T11:33:50.693226" elapsed="0.001114"/>
+</kw>
+<kw name="Set To Dictionary" owner="Collections">
+<arg>${app_states}</arg>
+<arg>${package_name}</arg>
+<arg>${app_info}</arg>
+<doc>Adds the given ``key_value_pairs`` and/or ``items`` to the ``dictionary``.</doc>
+<status status="PASS" start="2024-03-04T11:33:50.694340" elapsed="0.000000"/>
+</kw>
+<arg>${app_states}</arg>
+<arg>${line}</arg>
+<arg>${parsed_data}</arg>
+<status status="PASS" start="2024-03-04T11:33:50.689878" elapsed="0.004462"/>
+</kw>
+<arg>Extract Start Marker Data</arg>
+<arg>${app_states}</arg>
+<arg>${line}</arg>
+<arg>${parsed_data}</arg>
+<doc>Executes the given keyword with the given arguments.</doc>
+<status status="PASS" start="2024-03-04T11:33:50.689878" elapsed="0.004462"/>
+</kw>
+<status status="PASS" start="2024-03-04T11:33:50.689878" elapsed="0.004462"/>
+</branch>
+<branch type="ELSE IF" condition="${end_marker}">
+<kw name="Run Keyword" owner="BuiltIn">
+<arg>Extract End Marker Data</arg>
+<arg>${app_states}</arg>
+<arg>${line}</arg>
+<arg>${parsed_data}</arg>
+<doc>Executes the given keyword with the given arguments.</doc>
+<status status="NOT RUN" start="2024-03-04T11:33:50.694340" elapsed="0.000000"/>
+</kw>
+<status status="NOT RUN" start="2024-03-04T11:33:50.694340" elapsed="0.000000"/>
+</branch>
+<status status="PASS" start="2024-03-04T11:33:50.689878" elapsed="0.004462"/>
+</if>
+<var name="${line}">03-14 17:56:33.783  5230  7966 I ActivityTaskManager: START u0 {act=android.intent.action.VIEW dat=http://market.android.com/... cmp=com.android.vending/com.google.android.finsky.activities.MainActivi...</var>
+<status status="PASS" start="2024-03-04T11:33:50.688757" elapsed="0.005583"/>
+</iter>
+<iter>
+<kw name="Run Keyword And Return Status" owner="BuiltIn">
+<kw name="Should Contain" owner="BuiltIn">
+<arg>${line}</arg>
+<arg>ActivityTaskManager: START u0</arg>
+<doc>Fails if ``container`` does not contain ``item`` one or more times.</doc>
+<status status="PASS" start="2024-03-04T11:33:50.695466" elapsed="0.000000"/>
+</kw>
+<msg time="2024-03-04T11:33:50.695466" level="INFO">${start_marker} = True</msg>
+<var>${start_marker}</var>
+<arg>Should Contain</arg>
+<arg>${line}</arg>
+<arg>ActivityTaskManager: START u0</arg>
+<doc>Runs the given keyword with given arguments and returns the status as a Boolean value.</doc>
+<status status="PASS" start="2024-03-04T11:33:50.695466" elapsed="0.000000"/>
+</kw>
+<kw name="Run Keyword And Return Status" owner="BuiltIn">
+<kw name="Should Contain" owner="BuiltIn">
+<msg time="2024-03-04T11:33:50.695466" level="FAIL">'03-14 17:56:40.793  5230  5681 I ActivityTaskManager: START u0 {act=android.intent.action.MAIN cat=[android.intent.category.LAUNCHER] flg=0x10200000 cmp=com.spotify.music/.MainActivity bnds=[26,823][190,1056]} from uid 10088' does not contain 'Layer: Destroyed ActivityRecord'</msg>
+<arg>${line}</arg>
+<arg>Layer: Destroyed ActivityRecord</arg>
+<doc>Fails if ``container`` does not contain ``item`` one or more times.</doc>
+<status status="FAIL" start="2024-03-04T11:33:50.695466" elapsed="0.000000">'03-14 17:56:40.793  5230  5681 I ActivityTaskManager: START u0 {act=android.intent.action.MAIN cat=[android.intent.category.LAUNCHER] flg=0x10200000 cmp=com.spotify.music/.MainActivity bnds=[26,823][190,1056]} from uid 10088' does not contain 'Layer: Destroyed ActivityRecord'</status>
+</kw>
+<msg time="2024-03-04T11:33:50.695466" level="INFO">${end_marker} = False</msg>
+<var>${end_marker}</var>
+<arg>Should Contain</arg>
+<arg>${line}</arg>
+<arg>Layer: Destroyed ActivityRecord</arg>
+<doc>Runs the given keyword with given arguments and returns the status as a Boolean value.</doc>
+<status status="PASS" start="2024-03-04T11:33:50.695466" elapsed="0.000000"/>
+</kw>
+<if>
+<branch type="IF" condition="${start_marker}">
+<kw name="Run Keyword" owner="BuiltIn">
+<kw name="Extract Start Marker Data">
+<kw name="Get Package Name">
+<kw name="Set Variable" owner="BuiltIn">
+<msg time="2024-03-04T11:33:50.697711" level="INFO">${com_start} = 157</msg>
+<var>${com_start}</var>
+<arg>${line.find('com.')+4}</arg>
+<doc>Returns the given values which can then be assigned to a variables.</doc>
+<status status="PASS" start="2024-03-04T11:33:50.696586" elapsed="0.001125"/>
+</kw>
+<kw name="Get Substring" owner="String">
+<msg time="2024-03-04T11:33:50.697711" level="INFO">${package_and_activity} = spotify.music/.MainActivity bnds=[26,823][190,1056]} from uid 10088</msg>
+<var>${package_and_activity}</var>
+<arg>${line}</arg>
+<arg>${com_start}</arg>
+<arg>${None}</arg>
+<doc>Returns a substring from ``start`` index to ``end`` index.</doc>
+<status status="PASS" start="2024-03-04T11:33:50.697711" elapsed="0.000000"/>
+</kw>
+<kw name="Set Variable" owner="BuiltIn">
+<msg time="2024-03-04T11:33:50.697711" level="INFO">${slash_index} = 13</msg>
+<var>${slash_index}</var>
+<arg>${package_and_activity.find('/')}</arg>
+<doc>Returns the given values which can then be assigned to a variables.</doc>
+<status status="PASS" start="2024-03-04T11:33:50.697711" elapsed="0.001082"/>
+</kw>
+<kw name="Get Substring" owner="String">
+<msg time="2024-03-04T11:33:50.698840" level="INFO">${package_name} = spotify.music</msg>
+<var>${package_name}</var>
+<arg>${package_and_activity}</arg>
+<arg>0</arg>
+<arg>${slash_index}</arg>
+<doc>Returns a substring from ``start`` index to ``end`` index.</doc>
+<status status="PASS" start="2024-03-04T11:33:50.698840" elapsed="0.000000"/>
+</kw>
+<return>
+<value>${package_name}</value>
+<status status="PASS" start="2024-03-04T11:33:50.698840" elapsed="0.000000"/>
+</return>
+<msg time="2024-03-04T11:33:50.698840" level="INFO">${package_name} = spotify.music</msg>
+<var>${package_name}</var>
+<arg>${line}</arg>
+<status status="PASS" start="2024-03-04T11:33:50.696586" elapsed="0.002254"/>
+</kw>
+<kw name="Fetch Time">
+<kw name="Get Substring" owner="String">
+<msg time="2024-03-04T11:33:50.699942" level="INFO">${time} = 17:56:40.793</msg>
+<var>${time}</var>
+<arg>${line}</arg>
+<arg>6</arg>
+<arg>18</arg>
+<doc>Returns a substring from ``start`` index to ``end`` index.</doc>
+<status status="PASS" start="2024-03-04T11:33:50.699942" elapsed="0.000000"/>
+</kw>
+<return>
+<value>${time}</value>
+<status status="PASS" start="2024-03-04T11:33:50.700353" elapsed="0.000000"/>
+</return>
+<msg time="2024-03-04T11:33:50.700353" level="INFO">${start_time} = 17:56:40.793</msg>
+<var>${start_time}</var>
+<arg>${line}</arg>
+<status status="PASS" start="2024-03-04T11:33:50.698840" elapsed="0.001513"/>
+</kw>
+<kw name="Create Dictionary" owner="BuiltIn">
+<msg time="2024-03-04T11:33:50.700922" level="INFO">${app_info} = {'start_time': '17:56:40.793', 'end_time': ''}</msg>
+<var>${app_info}</var>
+<arg>start_time=${start_time}</arg>
+<arg>end_time=${EMPTY}</arg>
+<doc>Creates and returns a dictionary based on the given ``items``.</doc>
+<status status="PASS" start="2024-03-04T11:33:50.700353" elapsed="0.000569"/>
+</kw>
+<kw name="Set To Dictionary" owner="Collections">
+<arg>${app_states}</arg>
+<arg>${package_name}</arg>
+<arg>${app_info}</arg>
+<doc>Adds the given ``key_value_pairs`` and/or ``items`` to the ``dictionary``.</doc>
+<status status="PASS" start="2024-03-04T11:33:50.700922" elapsed="0.000617"/>
+</kw>
+<arg>${app_states}</arg>
+<arg>${line}</arg>
+<arg>${parsed_data}</arg>
+<status status="PASS" start="2024-03-04T11:33:50.696586" elapsed="0.004953"/>
+</kw>
+<arg>Extract Start Marker Data</arg>
+<arg>${app_states}</arg>
+<arg>${line}</arg>
+<arg>${parsed_data}</arg>
+<doc>Executes the given keyword with the given arguments.</doc>
+<status status="PASS" start="2024-03-04T11:33:50.696586" elapsed="0.004953"/>
+</kw>
+<status status="PASS" start="2024-03-04T11:33:50.695466" elapsed="0.006073"/>
+</branch>
+<branch type="ELSE IF" condition="${end_marker}">
+<kw name="Run Keyword" owner="BuiltIn">
+<arg>Extract End Marker Data</arg>
+<arg>${app_states}</arg>
+<arg>${line}</arg>
+<arg>${parsed_data}</arg>
+<doc>Executes the given keyword with the given arguments.</doc>
+<status status="NOT RUN" start="2024-03-04T11:33:50.701539" elapsed="0.000000"/>
+</kw>
+<status status="NOT RUN" start="2024-03-04T11:33:50.701539" elapsed="0.000000"/>
+</branch>
+<status status="PASS" start="2024-03-04T11:33:50.695466" elapsed="0.006073"/>
+</if>
+<var name="${line}">03-14 17:56:40.793  5230  5681 I ActivityTaskManager: START u0 {act=android.intent.action.MAIN cat=[android.intent.category.LAUNCHER] flg=0x10200000 cmp=com.spotify.music/.MainActivity bnds=[26,823][1...</var>
+<status status="PASS" start="2024-03-04T11:33:50.694340" elapsed="0.007199"/>
+</iter>
+<iter>
+<kw name="Run Keyword And Return Status" owner="BuiltIn">
+<kw name="Should Contain" owner="BuiltIn">
+<msg time="2024-03-04T11:33:50.702814" level="FAIL">'03-14 17:56:49.245  5230  5252 I Layer: Destroyed ActivityRecord{d2590bc u0 com.android.vending}' does not contain 'ActivityTaskManager: START u0'</msg>
+<arg>${line}</arg>
+<arg>ActivityTaskManager: START u0</arg>
+<doc>Fails if ``container`` does not contain ``item`` one or more times.</doc>
+<status status="FAIL" start="2024-03-04T11:33:50.702315" elapsed="0.000499">'03-14 17:56:49.245  5230  5252 I Layer: Destroyed ActivityRecord{d2590bc u0 com.android.vending}' does not contain 'ActivityTaskManager: START u0'</status>
+</kw>
+<msg time="2024-03-04T11:33:50.702814" level="INFO">${start_marker} = False</msg>
+<var>${start_marker}</var>
+<arg>Should Contain</arg>
+<arg>${line}</arg>
+<arg>ActivityTaskManager: START u0</arg>
+<doc>Runs the given keyword with given arguments and returns the status as a Boolean value.</doc>
+<status status="PASS" start="2024-03-04T11:33:50.701539" elapsed="0.001655"/>
+</kw>
+<kw name="Run Keyword And Return Status" owner="BuiltIn">
+<kw name="Should Contain" owner="BuiltIn">
+<arg>${line}</arg>
+<arg>Layer: Destroyed ActivityRecord</arg>
+<doc>Fails if ``container`` does not contain ``item`` one or more times.</doc>
+<status status="PASS" start="2024-03-04T11:33:50.703194" elapsed="0.000400"/>
+</kw>
+<msg time="2024-03-04T11:33:50.703594" level="INFO">${end_marker} = True</msg>
+<var>${end_marker}</var>
+<arg>Should Contain</arg>
+<arg>${line}</arg>
+<arg>Layer: Destroyed ActivityRecord</arg>
+<doc>Runs the given keyword with given arguments and returns the status as a Boolean value.</doc>
+<status status="PASS" start="2024-03-04T11:33:50.703194" elapsed="0.000400"/>
+</kw>
+<if>
+<branch type="IF" condition="${start_marker}">
+<kw name="Run Keyword" owner="BuiltIn">
+<arg>Extract Start Marker Data</arg>
+<arg>${app_states}</arg>
+<arg>${line}</arg>
+<arg>${parsed_data}</arg>
+<doc>Executes the given keyword with the given arguments.</doc>
+<status status="NOT RUN" start="2024-03-04T11:33:50.703594" elapsed="0.000376"/>
+</kw>
+<status status="NOT RUN" start="2024-03-04T11:33:50.703594" elapsed="0.000376"/>
+</branch>
+<branch type="ELSE IF" condition="${end_marker}">
+<kw name="Run Keyword" owner="BuiltIn">
+<kw name="Extract End Marker Data">
+<kw name="Get Package Name">
+<kw name="Set Variable" owner="BuiltIn">
+<msg time="2024-03-04T11:33:50.705622" level="INFO">${com_start} = 80</msg>
+<var>${com_start}</var>
+<arg>${line.find('com.')+4}</arg>
+<doc>Returns the given values which can then be assigned to a variables.</doc>
+<status status="PASS" start="2024-03-04T11:33:50.705112" elapsed="0.000550"/>
+</kw>
+<kw name="Get Substring" owner="String">
+<msg time="2024-03-04T11:33:50.705815" level="INFO">${package_and_activity} = android.vending}</msg>
+<var>${package_and_activity}</var>
+<arg>${line}</arg>
+<arg>${com_start}</arg>
+<arg>${None}</arg>
+<doc>Returns a substring from ``start`` index to ``end`` index.</doc>
+<status status="PASS" start="2024-03-04T11:33:50.705662" elapsed="0.000153"/>
+</kw>
+<kw name="Set Variable" owner="BuiltIn">
+<msg time="2024-03-04T11:33:50.706548" level="INFO">${slash_index} = -1</msg>
+<var>${slash_index}</var>
+<arg>${package_and_activity.find('/')}</arg>
+<doc>Returns the given values which can then be assigned to a variables.</doc>
+<status status="PASS" start="2024-03-04T11:33:50.705815" elapsed="0.000733"/>
+</kw>
+<kw name="Get Substring" owner="String">
+<msg time="2024-03-04T11:33:50.706548" level="INFO">${package_name} = android.vending</msg>
+<var>${package_name}</var>
+<arg>${package_and_activity}</arg>
+<arg>0</arg>
+<arg>${slash_index}</arg>
+<doc>Returns a substring from ``start`` index to ``end`` index.</doc>
+<status status="PASS" start="2024-03-04T11:33:50.706548" elapsed="0.000000"/>
+</kw>
+<return>
+<value>${package_name}</value>
+<status status="PASS" start="2024-03-04T11:33:50.706548" elapsed="0.000000"/>
+</return>
+<msg time="2024-03-04T11:33:50.707100" level="INFO">${package_name} = android.vending</msg>
+<var>${package_name}</var>
+<arg>${line}</arg>
+<status status="PASS" start="2024-03-04T11:33:50.704599" elapsed="0.002576"/>
+</kw>
+<kw name="Fetch Time">
+<kw name="Get Substring" owner="String">
+<msg time="2024-03-04T11:33:50.707675" level="INFO">${time} = 17:56:49.245</msg>
+<var>${time}</var>
+<arg>${line}</arg>
+<arg>6</arg>
+<arg>18</arg>
+<doc>Returns a substring from ``start`` index to ``end`` index.</doc>
+<status status="PASS" start="2024-03-04T11:33:50.707175" elapsed="0.000500"/>
+</kw>
+<return>
+<value>${time}</value>
+<status status="PASS" start="2024-03-04T11:33:50.707675" elapsed="0.000000"/>
+</return>
+<msg time="2024-03-04T11:33:50.707675" level="INFO">${end_time} = 17:56:49.245</msg>
+<var>${end_time}</var>
+<arg>${line}</arg>
+<status status="PASS" start="2024-03-04T11:33:50.707175" elapsed="0.000500"/>
+</kw>
+<kw name="Run Keyword And Return Status" owner="BuiltIn">
+<kw name="Dictionary Should Contain Key" owner="Collections">
+<msg time="2024-03-04T11:33:50.707675" level="INFO">False</msg>
+<arg>${app_states}</arg>
+<arg>${package_name}</arg>
+<doc>Fails if ``key`` is not found from ``dictionary``.</doc>
+<status status="PASS" start="2024-03-04T11:33:50.707675" elapsed="0.000000"/>
+</kw>
+<msg time="2024-03-04T11:33:50.707675" level="INFO">${app_exists} = True</msg>
+<var>${app_exists}</var>
+<arg>Dictionary Should Contain Key</arg>
+<arg>${app_states}</arg>
+<arg>${package_name}</arg>
+<doc>Runs the given keyword with given arguments and returns the status as a Boolean value.</doc>
+<status status="PASS" start="2024-03-04T11:33:50.707675" elapsed="0.000000"/>
+</kw>
+<if>
+<branch type="IF" condition="${app_exists}">
+<kw name="Get From Dictionary" owner="Collections">
+<msg time="2024-03-04T11:33:50.708725" level="INFO">${app_info} = {'start_time': '17:56:33.783', 'end_time': ''}</msg>
+<var>${app_info}</var>
+<arg>${app_states}</arg>
+<arg>${package_name}</arg>
+<doc>Returns a value from the given ``dictionary`` based on the given ``key``.</doc>
+<status status="PASS" start="2024-03-04T11:33:50.708725" elapsed="0.000000"/>
+</kw>
+<kw name="Set To Dictionary" owner="Collections">
+<arg>${app_info}</arg>
+<arg>end_time</arg>
+<arg>${end_time}</arg>
+<doc>Adds the given ``key_value_pairs`` and/or ``items`` to the ``dictionary``.</doc>
+<status status="PASS" start="2024-03-04T11:33:50.708725" elapsed="0.000000"/>
+</kw>
+<kw name="Create Dictionary" owner="BuiltIn">
+<msg time="2024-03-04T11:33:50.708725" level="INFO">${app_data} = {'package': 'android.vending', 'start_time': '17:56:33.783', 'end_time': '17:56:49.245'}</msg>
+<var>${app_data}</var>
+<arg>package=${package_name}</arg>
+<arg>start_time=${app_info}[start_time]</arg>
+<arg>end_time=${end_time}</arg>
+<doc>Creates and returns a dictionary based on the given ``items``.</doc>
+<status status="PASS" start="2024-03-04T11:33:50.708725" elapsed="0.000000"/>
+</kw>
+<kw name="Append To List" owner="Collections">
+<arg>${parsed_data}</arg>
+<arg>${app_data}</arg>
+<doc>Adds ``values`` to the end of ``list``.</doc>
+<status status="PASS" start="2024-03-04T11:33:50.709733" elapsed="0.000039"/>
+</kw>
+<kw name="Remove From Dictionary" owner="Collections">
+<msg time="2024-03-04T11:33:50.709772" level="INFO">Removed item with key 'android.vending' and value '{'start_time': '17:56:33.783', 'end_time': '17:56:49.245'}'.</msg>
+<arg>${app_states}</arg>
+<arg>${package_name}</arg>
+<doc>Removes the given ``keys`` from the ``dictionary``.</doc>
+<status status="PASS" start="2024-03-04T11:33:50.709772" elapsed="0.000000"/>
+</kw>
+<status status="PASS" start="2024-03-04T11:33:50.707675" elapsed="0.002097"/>
+</branch>
+<branch type="ELSE">
+<kw name="Log" owner="BuiltIn">
+<arg>Warning: End marker found for ${package_name} without a corresponding start marker.</arg>
+<doc>Logs the given message with the given level.</doc>
+<status status="NOT RUN" start="2024-03-04T11:33:50.709772" elapsed="0.000000"/>
+</kw>
+<status status="NOT RUN" start="2024-03-04T11:33:50.709772" elapsed="0.000000"/>
+</branch>
+<status status="PASS" start="2024-03-04T11:33:50.707675" elapsed="0.002097"/>
+</if>
+<arg>${app_states}</arg>
+<arg>${line}</arg>
+<arg>${parsed_data}</arg>
+<status status="PASS" start="2024-03-04T11:33:50.704470" elapsed="0.005302"/>
+</kw>
+<arg>Extract End Marker Data</arg>
+<arg>${app_states}</arg>
+<arg>${line}</arg>
+<arg>${parsed_data}</arg>
+<doc>Executes the given keyword with the given arguments.</doc>
+<status status="PASS" start="2024-03-04T11:33:50.703970" elapsed="0.005802"/>
+</kw>
+<status status="PASS" start="2024-03-04T11:33:50.703970" elapsed="0.005802"/>
+</branch>
+<status status="PASS" start="2024-03-04T11:33:50.703594" elapsed="0.006178"/>
+</if>
+<var name="${line}">03-14 17:56:49.245  5230  5252 I Layer: Destroyed ActivityRecord{d2590bc u0 com.android.vending}</var>
+<status status="PASS" start="2024-03-04T11:33:50.701539" elapsed="0.008233"/>
+</iter>
+<iter>
+<kw name="Run Keyword And Return Status" owner="BuiltIn">
+<kw name="Should Contain" owner="BuiltIn">
+<msg time="2024-03-04T11:33:50.710817" level="FAIL">'03-14 17:56:58.802  5230  5252 I Layer: Destroyed ActivityRecord{d2590bc u0 com.spotify.music}' does not contain 'ActivityTaskManager: START u0'</msg>
+<arg>${line}</arg>
+<arg>ActivityTaskManager: START u0</arg>
+<doc>Fails if ``container`` does not contain ``item`` one or more times.</doc>
+<status status="FAIL" start="2024-03-04T11:33:50.710817" elapsed="0.000000">'03-14 17:56:58.802  5230  5252 I Layer: Destroyed ActivityRecord{d2590bc u0 com.spotify.music}' does not contain 'ActivityTaskManager: START u0'</status>
+</kw>
+<msg time="2024-03-04T11:33:50.710817" level="INFO">${start_marker} = False</msg>
+<var>${start_marker}</var>
+<arg>Should Contain</arg>
+<arg>${line}</arg>
+<arg>ActivityTaskManager: START u0</arg>
+<doc>Runs the given keyword with given arguments and returns the status as a Boolean value.</doc>
+<status status="PASS" start="2024-03-04T11:33:50.710817" elapsed="0.000000"/>
+</kw>
+<kw name="Run Keyword And Return Status" owner="BuiltIn">
+<kw name="Should Contain" owner="BuiltIn">
+<arg>${line}</arg>
+<arg>Layer: Destroyed ActivityRecord</arg>
+<doc>Fails if ``container`` does not contain ``item`` one or more times.</doc>
+<status status="PASS" start="2024-03-04T11:33:50.710817" elapsed="0.001121"/>
+</kw>
+<msg time="2024-03-04T11:33:50.711938" level="INFO">${end_marker} = True</msg>
+<var>${end_marker}</var>
+<arg>Should Contain</arg>
+<arg>${line}</arg>
+<arg>Layer: Destroyed ActivityRecord</arg>
+<doc>Runs the given keyword with given arguments and returns the status as a Boolean value.</doc>
+<status status="PASS" start="2024-03-04T11:33:50.710817" elapsed="0.001121"/>
+</kw>
+<if>
+<branch type="IF" condition="${start_marker}">
+<kw name="Run Keyword" owner="BuiltIn">
+<arg>Extract Start Marker Data</arg>
+<arg>${app_states}</arg>
+<arg>${line}</arg>
+<arg>${parsed_data}</arg>
+<doc>Executes the given keyword with the given arguments.</doc>
+<status status="NOT RUN" start="2024-03-04T11:33:50.711938" elapsed="0.000000"/>
+</kw>
+<status status="NOT RUN" start="2024-03-04T11:33:50.711938" elapsed="0.000000"/>
+</branch>
+<branch type="ELSE IF" condition="${end_marker}">
+<kw name="Run Keyword" owner="BuiltIn">
+<kw name="Extract End Marker Data">
+<kw name="Get Package Name">
+<kw name="Set Variable" owner="BuiltIn">
+<msg time="2024-03-04T11:33:50.713057" level="INFO">${com_start} = 80</msg>
+<var>${com_start}</var>
+<arg>${line.find('com.')+4}</arg>
+<doc>Returns the given values which can then be assigned to a variables.</doc>
+<status status="PASS" start="2024-03-04T11:33:50.713057" elapsed="0.000000"/>
+</kw>
+<kw name="Get Substring" owner="String">
+<msg time="2024-03-04T11:33:50.714158" level="INFO">${package_and_activity} = spotify.music}</msg>
+<var>${package_and_activity}</var>
+<arg>${line}</arg>
+<arg>${com_start}</arg>
+<arg>${None}</arg>
+<doc>Returns a substring from ``start`` index to ``end`` index.</doc>
+<status status="PASS" start="2024-03-04T11:33:50.713057" elapsed="0.001119"/>
+</kw>
+<kw name="Set Variable" owner="BuiltIn">
+<msg time="2024-03-04T11:33:50.714176" level="INFO">${slash_index} = -1</msg>
+<var>${slash_index}</var>
+<arg>${package_and_activity.find('/')}</arg>
+<doc>Returns the given values which can then be assigned to a variables.</doc>
+<status status="PASS" start="2024-03-04T11:33:50.714176" elapsed="0.000000"/>
+</kw>
+<kw name="Get Substring" owner="String">
+<msg time="2024-03-04T11:33:50.714176" level="INFO">${package_name} = spotify.music</msg>
+<var>${package_name}</var>
+<arg>${package_and_activity}</arg>
+<arg>0</arg>
+<arg>${slash_index}</arg>
+<doc>Returns a substring from ``start`` index to ``end`` index.</doc>
+<status status="PASS" start="2024-03-04T11:33:50.714176" elapsed="0.000000"/>
+</kw>
+<return>
+<value>${package_name}</value>
+<status status="PASS" start="2024-03-04T11:33:50.714176" elapsed="0.000000"/>
+</return>
+<msg time="2024-03-04T11:33:50.714176" level="INFO">${package_name} = spotify.music</msg>
+<var>${package_name}</var>
+<arg>${line}</arg>
+<status status="PASS" start="2024-03-04T11:33:50.713057" elapsed="0.002194"/>
+</kw>
+<kw name="Fetch Time">
+<kw name="Get Substring" owner="String">
+<msg time="2024-03-04T11:33:50.715306" level="INFO">${time} = 17:56:58.802</msg>
+<var>${time}</var>
+<arg>${line}</arg>
+<arg>6</arg>
+<arg>18</arg>
+<doc>Returns a substring from ``start`` index to ``end`` index.</doc>
+<status status="PASS" start="2024-03-04T11:33:50.715306" elapsed="0.000000"/>
+</kw>
+<return>
+<value>${time}</value>
+<status status="PASS" start="2024-03-04T11:33:50.715306" elapsed="0.000000"/>
+</return>
+<msg time="2024-03-04T11:33:50.716306" level="INFO">${end_time} = 17:56:58.802</msg>
+<var>${end_time}</var>
+<arg>${line}</arg>
+<status status="PASS" start="2024-03-04T11:33:50.715306" elapsed="0.001062"/>
+</kw>
+<kw name="Run Keyword And Return Status" owner="BuiltIn">
+<kw name="Dictionary Should Contain Key" owner="Collections">
+<msg time="2024-03-04T11:33:50.716368" level="INFO">False</msg>
+<arg>${app_states}</arg>
+<arg>${package_name}</arg>
+<doc>Fails if ``key`` is not found from ``dictionary``.</doc>
+<status status="PASS" start="2024-03-04T11:33:50.716368" elapsed="0.000000"/>
+</kw>
+<msg time="2024-03-04T11:33:50.716368" level="INFO">${app_exists} = True</msg>
+<var>${app_exists}</var>
+<arg>Dictionary Should Contain Key</arg>
+<arg>${app_states}</arg>
+<arg>${package_name}</arg>
+<doc>Runs the given keyword with given arguments and returns the status as a Boolean value.</doc>
+<status status="PASS" start="2024-03-04T11:33:50.716368" elapsed="0.000000"/>
+</kw>
+<if>
+<branch type="IF" condition="${app_exists}">
+<kw name="Get From Dictionary" owner="Collections">
+<msg time="2024-03-04T11:33:50.716368" level="INFO">${app_info} = {'start_time': '17:56:40.793', 'end_time': ''}</msg>
+<var>${app_info}</var>
+<arg>${app_states}</arg>
+<arg>${package_name}</arg>
+<doc>Returns a value from the given ``dictionary`` based on the given ``key``.</doc>
+<status status="PASS" start="2024-03-04T11:33:50.716368" elapsed="0.000000"/>
+</kw>
+<kw name="Set To Dictionary" owner="Collections">
+<arg>${app_info}</arg>
+<arg>end_time</arg>
+<arg>${end_time}</arg>
+<doc>Adds the given ``key_value_pairs`` and/or ``items`` to the ``dictionary``.</doc>
+<status status="PASS" start="2024-03-04T11:33:50.717489" elapsed="0.000000"/>
+</kw>
+<kw name="Create Dictionary" owner="BuiltIn">
+<msg time="2024-03-04T11:33:50.717489" level="INFO">${app_data} = {'package': 'spotify.music', 'start_time': '17:56:40.793', 'end_time': '17:56:58.802'}</msg>
+<var>${app_data}</var>
+<arg>package=${package_name}</arg>
+<arg>start_time=${app_info}[start_time]</arg>
+<arg>end_time=${end_time}</arg>
+<doc>Creates and returns a dictionary based on the given ``items``.</doc>
+<status status="PASS" start="2024-03-04T11:33:50.717489" elapsed="0.000000"/>
+</kw>
+<kw name="Append To List" owner="Collections">
+<arg>${parsed_data}</arg>
+<arg>${app_data}</arg>
+<doc>Adds ``values`` to the end of ``list``.</doc>
+<status status="PASS" start="2024-03-04T11:33:50.717489" elapsed="0.000000"/>
+</kw>
+<kw name="Remove From Dictionary" owner="Collections">
+<msg time="2024-03-04T11:33:50.717489" level="INFO">Removed item with key 'spotify.music' and value '{'start_time': '17:56:40.793', 'end_time': '17:56:58.802'}'.</msg>
+<arg>${app_states}</arg>
+<arg>${package_name}</arg>
+<doc>Removes the given ``keys`` from the ``dictionary``.</doc>
+<status status="PASS" start="2024-03-04T11:33:50.717489" elapsed="0.001112"/>
+</kw>
+<status status="PASS" start="2024-03-04T11:33:50.716368" elapsed="0.002252"/>
+</branch>
+<branch type="ELSE">
+<kw name="Log" owner="BuiltIn">
+<arg>Warning: End marker found for ${package_name} without a corresponding start marker.</arg>
+<doc>Logs the given message with the given level.</doc>
+<status status="NOT RUN" start="2024-03-04T11:33:50.718620" elapsed="0.000000"/>
+</kw>
+<status status="NOT RUN" start="2024-03-04T11:33:50.718620" elapsed="0.000000"/>
+</branch>
+<status status="PASS" start="2024-03-04T11:33:50.716368" elapsed="0.002252"/>
+</if>
+<arg>${app_states}</arg>
+<arg>${line}</arg>
+<arg>${parsed_data}</arg>
+<status status="PASS" start="2024-03-04T11:33:50.711938" elapsed="0.006682"/>
+</kw>
+<arg>Extract End Marker Data</arg>
+<arg>${app_states}</arg>
+<arg>${line}</arg>
+<arg>${parsed_data}</arg>
+<doc>Executes the given keyword with the given arguments.</doc>
+<status status="PASS" start="2024-03-04T11:33:50.711938" elapsed="0.006682"/>
+</kw>
+<status status="PASS" start="2024-03-04T11:33:50.711938" elapsed="0.006682"/>
+</branch>
+<status status="PASS" start="2024-03-04T11:33:50.711938" elapsed="0.006682"/>
+</if>
+<var name="${line}">03-14 17:56:58.802  5230  5252 I Layer: Destroyed ActivityRecord{d2590bc u0 com.spotify.music}</var>
+<status status="PASS" start="2024-03-04T11:33:50.710779" elapsed="0.007841"/>
+</iter>
+<iter>
+<kw name="Run Keyword And Return Status" owner="BuiltIn">
+<kw name="Should Contain" owner="BuiltIn">
+<arg>${line}</arg>
+<arg>ActivityTaskManager: START u0</arg>
+<doc>Fails if ``container`` does not contain ``item`` one or more times.</doc>
+<status status="PASS" start="2024-03-04T11:33:50.718620" elapsed="0.000000"/>
+</kw>
+<msg time="2024-03-04T11:33:50.718620" level="INFO">${start_marker} = True</msg>
+<var>${start_marker}</var>
+<arg>Should Contain</arg>
+<arg>${line}</arg>
+<arg>ActivityTaskManager: START u0</arg>
+<doc>Runs the given keyword with given arguments and returns the status as a Boolean value.</doc>
+<status status="PASS" start="2024-03-04T11:33:50.718620" elapsed="0.000000"/>
+</kw>
+<kw name="Run Keyword And Return Status" owner="BuiltIn">
+<kw name="Should Contain" owner="BuiltIn">
+<msg time="2024-03-04T11:33:50.719749" level="FAIL">'03-14 17:56:59.524  5230 10365 I ActivityTaskManager: START u0 {act=android.intent.action.MAIN cat=[android.intent.category.LAUNCHER] flg=0x10200000 cmp=com.sec.android.app.popupcalculator/.Calculator bnds=[194,1200][358,1447]} from uid 10088' does not contain 'Layer: Destroyed ActivityRecord'</msg>
+<arg>${line}</arg>
+<arg>Layer: Destroyed ActivityRecord</arg>
+<doc>Fails if ``container`` does not contain ``item`` one or more times.</doc>
+<status status="FAIL" start="2024-03-04T11:33:50.719749" elapsed="0.000000">'03-14 17:56:59.524  5230 10365 I ActivityTaskManager: START u0 {act=android.intent.action.MAIN cat=[android.intent.category.LAUNCHER] flg=0x10200000 cmp=com.sec.android.app.popupcalculator/.Calculator bnds=[194,1200][358,1447]} from uid 10088' does not contain 'Layer: Destroyed ActivityRecord'</status>
+</kw>
+<msg time="2024-03-04T11:33:50.719749" level="INFO">${end_marker} = False</msg>
+<var>${end_marker}</var>
+<arg>Should Contain</arg>
+<arg>${line}</arg>
+<arg>Layer: Destroyed ActivityRecord</arg>
+<doc>Runs the given keyword with given arguments and returns the status as a Boolean value.</doc>
+<status status="PASS" start="2024-03-04T11:33:50.719749" elapsed="0.000000"/>
+</kw>
+<if>
+<branch type="IF" condition="${start_marker}">
+<kw name="Run Keyword" owner="BuiltIn">
+<kw name="Extract Start Marker Data">
+<kw name="Get Package Name">
+<kw name="Set Variable" owner="BuiltIn">
+<msg time="2024-03-04T11:33:50.721990" level="INFO">${com_start} = 157</msg>
+<var>${com_start}</var>
+<arg>${line.find('com.')+4}</arg>
+<doc>Returns the given values which can then be assigned to a variables.</doc>
+<status status="PASS" start="2024-03-04T11:33:50.721938" elapsed="0.000052"/>
+</kw>
+<kw name="Get Substring" owner="String">
+<msg time="2024-03-04T11:33:50.721990" level="INFO">${package_and_activity} = sec.android.app.popupcalculator/.Calculator bnds=[194,1200][358,1447]} from uid 10088</msg>
+<var>${package_and_activity}</var>
+<arg>${line}</arg>
+<arg>${com_start}</arg>
+<arg>${None}</arg>
+<doc>Returns a substring from ``start`` index to ``end`` index.</doc>
+<status status="PASS" start="2024-03-04T11:33:50.721990" elapsed="0.000000"/>
+</kw>
+<kw name="Set Variable" owner="BuiltIn">
+<msg time="2024-03-04T11:33:50.723113" level="INFO">${slash_index} = 31</msg>
+<var>${slash_index}</var>
+<arg>${package_and_activity.find('/')}</arg>
+<doc>Returns the given values which can then be assigned to a variables.</doc>
+<status status="PASS" start="2024-03-04T11:33:50.721990" elapsed="0.001123"/>
+</kw>
+<kw name="Get Substring" owner="String">
+<msg time="2024-03-04T11:33:50.723113" level="INFO">${package_name} = sec.android.app.popupcalculator</msg>
+<var>${package_name}</var>
+<arg>${package_and_activity}</arg>
+<arg>0</arg>
+<arg>${slash_index}</arg>
+<doc>Returns a substring from ``start`` index to ``end`` index.</doc>
+<status status="PASS" start="2024-03-04T11:33:50.723113" elapsed="0.000000"/>
+</kw>
+<return>
+<value>${package_name}</value>
+<status status="PASS" start="2024-03-04T11:33:50.723113" elapsed="0.000000"/>
+</return>
+<msg time="2024-03-04T11:33:50.723113" level="INFO">${package_name} = sec.android.app.popupcalculator</msg>
+<var>${package_name}</var>
+<arg>${line}</arg>
+<status status="PASS" start="2024-03-04T11:33:50.720867" elapsed="0.002246"/>
+</kw>
+<kw name="Fetch Time">
+<kw name="Get Substring" owner="String">
+<msg time="2024-03-04T11:33:50.724231" level="INFO">${time} = 17:56:59.524</msg>
+<var>${time}</var>
+<arg>${line}</arg>
+<arg>6</arg>
+<arg>18</arg>
+<doc>Returns a substring from ``start`` index to ``end`` index.</doc>
+<status status="PASS" start="2024-03-04T11:33:50.724231" elapsed="0.000000"/>
+</kw>
+<return>
+<value>${time}</value>
+<status status="PASS" start="2024-03-04T11:33:50.724231" elapsed="0.000000"/>
+</return>
+<msg time="2024-03-04T11:33:50.724231" level="INFO">${start_time} = 17:56:59.524</msg>
+<var>${start_time}</var>
+<arg>${line}</arg>
+<status status="PASS" start="2024-03-04T11:33:50.723113" elapsed="0.001118"/>
+</kw>
+<kw name="Create Dictionary" owner="BuiltIn">
+<msg time="2024-03-04T11:33:50.725337" level="INFO">${app_info} = {'start_time': '17:56:59.524', 'end_time': ''}</msg>
+<var>${app_info}</var>
+<arg>start_time=${start_time}</arg>
+<arg>end_time=${EMPTY}</arg>
+<doc>Creates and returns a dictionary based on the given ``items``.</doc>
+<status status="PASS" start="2024-03-04T11:33:50.724231" elapsed="0.001124"/>
+</kw>
+<kw name="Set To Dictionary" owner="Collections">
+<arg>${app_states}</arg>
+<arg>${package_name}</arg>
+<arg>${app_info}</arg>
+<doc>Adds the given ``key_value_pairs`` and/or ``items`` to the ``dictionary``.</doc>
+<status status="PASS" start="2024-03-04T11:33:50.725355" elapsed="0.000000"/>
+</kw>
+<arg>${app_states}</arg>
+<arg>${line}</arg>
+<arg>${parsed_data}</arg>
+<status status="PASS" start="2024-03-04T11:33:50.719749" elapsed="0.005606"/>
+</kw>
+<arg>Extract Start Marker Data</arg>
+<arg>${app_states}</arg>
+<arg>${line}</arg>
+<arg>${parsed_data}</arg>
+<doc>Executes the given keyword with the given arguments.</doc>
+<status status="PASS" start="2024-03-04T11:33:50.719749" elapsed="0.005606"/>
+</kw>
+<status status="PASS" start="2024-03-04T11:33:50.719749" elapsed="0.005606"/>
+</branch>
+<branch type="ELSE IF" condition="${end_marker}">
+<kw name="Run Keyword" owner="BuiltIn">
+<arg>Extract End Marker Data</arg>
+<arg>${app_states}</arg>
+<arg>${line}</arg>
+<arg>${parsed_data}</arg>
+<doc>Executes the given keyword with the given arguments.</doc>
+<status status="NOT RUN" start="2024-03-04T11:33:50.725355" elapsed="0.000000"/>
+</kw>
+<status status="NOT RUN" start="2024-03-04T11:33:50.725355" elapsed="0.000000"/>
+</branch>
+<status status="PASS" start="2024-03-04T11:33:50.719749" elapsed="0.005606"/>
+</if>
+<var name="${line}">03-14 17:56:59.524  5230 10365 I ActivityTaskManager: START u0 {act=android.intent.action.MAIN cat=[android.intent.category.LAUNCHER] flg=0x10200000 cmp=com.sec.android.app.popupcalculator/.Calculator...</var>
+<status status="PASS" start="2024-03-04T11:33:50.718620" elapsed="0.006735"/>
+</iter>
+<iter>
+<kw name="Run Keyword And Return Status" owner="BuiltIn">
+<kw name="Should Contain" owner="BuiltIn">
+<msg time="2024-03-04T11:33:50.726477" level="FAIL">'03-14 17:57:00.006  5230  5252 I Layer: Destroyed ActivityRecord{d2590bc u0 com.netflix.mediaclient}' does not contain 'ActivityTaskManager: START u0'</msg>
+<arg>${line}</arg>
+<arg>ActivityTaskManager: START u0</arg>
+<doc>Fails if ``container`` does not contain ``item`` one or more times.</doc>
+<status status="FAIL" start="2024-03-04T11:33:50.726477" elapsed="0.000000">'03-14 17:57:00.006  5230  5252 I Layer: Destroyed ActivityRecord{d2590bc u0 com.netflix.mediaclient}' does not contain 'ActivityTaskManager: START u0'</status>
+</kw>
+<msg time="2024-03-04T11:33:50.726477" level="INFO">${start_marker} = False</msg>
+<var>${start_marker}</var>
+<arg>Should Contain</arg>
+<arg>${line}</arg>
+<arg>ActivityTaskManager: START u0</arg>
+<doc>Runs the given keyword with given arguments and returns the status as a Boolean value.</doc>
+<status status="PASS" start="2024-03-04T11:33:50.725355" elapsed="0.001122"/>
+</kw>
+<kw name="Run Keyword And Return Status" owner="BuiltIn">
+<kw name="Should Contain" owner="BuiltIn">
+<arg>${line}</arg>
+<arg>Layer: Destroyed ActivityRecord</arg>
+<doc>Fails if ``container`` does not contain ``item`` one or more times.</doc>
+<status status="PASS" start="2024-03-04T11:33:50.726477" elapsed="0.000000"/>
+</kw>
+<msg time="2024-03-04T11:33:50.726477" level="INFO">${end_marker} = True</msg>
+<var>${end_marker}</var>
+<arg>Should Contain</arg>
+<arg>${line}</arg>
+<arg>Layer: Destroyed ActivityRecord</arg>
+<doc>Runs the given keyword with given arguments and returns the status as a Boolean value.</doc>
+<status status="PASS" start="2024-03-04T11:33:50.726477" elapsed="0.000000"/>
+</kw>
+<if>
+<branch type="IF" condition="${start_marker}">
+<kw name="Run Keyword" owner="BuiltIn">
+<arg>Extract Start Marker Data</arg>
+<arg>${app_states}</arg>
+<arg>${line}</arg>
+<arg>${parsed_data}</arg>
+<doc>Executes the given keyword with the given arguments.</doc>
+<status status="NOT RUN" start="2024-03-04T11:33:50.726477" elapsed="0.000000"/>
+</kw>
+<status status="NOT RUN" start="2024-03-04T11:33:50.726477" elapsed="0.001076"/>
+</branch>
+<branch type="ELSE IF" condition="${end_marker}">
+<kw name="Run Keyword" owner="BuiltIn">
+<kw name="Extract End Marker Data">
+<kw name="Get Package Name">
+<kw name="Set Variable" owner="BuiltIn">
+<msg time="2024-03-04T11:33:50.728713" level="INFO">${com_start} = 80</msg>
+<var>${com_start}</var>
+<arg>${line.find('com.')+4}</arg>
+<doc>Returns the given values which can then be assigned to a variables.</doc>
+<status status="PASS" start="2024-03-04T11:33:50.727595" elapsed="0.001118"/>
+</kw>
+<kw name="Get Substring" owner="String">
+<msg time="2024-03-04T11:33:50.728713" level="INFO">${package_and_activity} = netflix.mediaclient}</msg>
+<var>${package_and_activity}</var>
+<arg>${line}</arg>
+<arg>${com_start}</arg>
+<arg>${None}</arg>
+<doc>Returns a substring from ``start`` index to ``end`` index.</doc>
+<status status="PASS" start="2024-03-04T11:33:50.728713" elapsed="0.000000"/>
+</kw>
+<kw name="Set Variable" owner="BuiltIn">
+<msg time="2024-03-04T11:33:50.729833" level="INFO">${slash_index} = -1</msg>
+<var>${slash_index}</var>
+<arg>${package_and_activity.find('/')}</arg>
+<doc>Returns the given values which can then be assigned to a variables.</doc>
+<status status="PASS" start="2024-03-04T11:33:50.728713" elapsed="0.001120"/>
+</kw>
+<kw name="Get Substring" owner="String">
+<msg time="2024-03-04T11:33:50.729833" level="INFO">${package_name} = netflix.mediaclient</msg>
+<var>${package_name}</var>
+<arg>${package_and_activity}</arg>
+<arg>0</arg>
+<arg>${slash_index}</arg>
+<doc>Returns a substring from ``start`` index to ``end`` index.</doc>
+<status status="PASS" start="2024-03-04T11:33:50.729833" elapsed="0.000000"/>
+</kw>
+<return>
+<value>${package_name}</value>
+<status status="PASS" start="2024-03-04T11:33:50.729833" elapsed="0.000000"/>
+</return>
+<msg time="2024-03-04T11:33:50.729833" level="INFO">${package_name} = netflix.mediaclient</msg>
+<var>${package_name}</var>
+<arg>${line}</arg>
+<status status="PASS" start="2024-03-04T11:33:50.727595" elapsed="0.002238"/>
+</kw>
+<kw name="Fetch Time">
+<kw name="Get Substring" owner="String">
+<msg time="2024-03-04T11:33:50.730959" level="INFO">${time} = 17:57:00.006</msg>
+<var>${time}</var>
+<arg>${line}</arg>
+<arg>6</arg>
+<arg>18</arg>
+<doc>Returns a substring from ``start`` index to ``end`` index.</doc>
+<status status="PASS" start="2024-03-04T11:33:50.729833" elapsed="0.001126"/>
+</kw>
+<return>
+<value>${time}</value>
+<status status="PASS" start="2024-03-04T11:33:50.730959" elapsed="0.000000"/>
+</return>
+<msg time="2024-03-04T11:33:50.730959" level="INFO">${end_time} = 17:57:00.006</msg>
+<var>${end_time}</var>
+<arg>${line}</arg>
+<status status="PASS" start="2024-03-04T11:33:50.729833" elapsed="0.001126"/>
+</kw>
+<kw name="Run Keyword And Return Status" owner="BuiltIn">
+<kw name="Dictionary Should Contain Key" owner="Collections">
+<msg time="2024-03-04T11:33:50.730959" level="INFO">False</msg>
+<arg>${app_states}</arg>
+<arg>${package_name}</arg>
+<doc>Fails if ``key`` is not found from ``dictionary``.</doc>
+<status status="PASS" start="2024-03-04T11:33:50.730959" elapsed="0.001015"/>
+</kw>
+<msg time="2024-03-04T11:33:50.731993" level="INFO">${app_exists} = True</msg>
+<var>${app_exists}</var>
+<arg>Dictionary Should Contain Key</arg>
+<arg>${app_states}</arg>
+<arg>${package_name}</arg>
+<doc>Runs the given keyword with given arguments and returns the status as a Boolean value.</doc>
+<status status="PASS" start="2024-03-04T11:33:50.730959" elapsed="0.001034"/>
+</kw>
+<if>
+<branch type="IF" condition="${app_exists}">
+<kw name="Get From Dictionary" owner="Collections">
+<msg time="2024-03-04T11:33:50.731993" level="INFO">${app_info} = {'start_time': '17:56:29.534', 'end_time': ''}</msg>
+<var>${app_info}</var>
+<arg>${app_states}</arg>
+<arg>${package_name}</arg>
+<doc>Returns a value from the given ``dictionary`` based on the given ``key``.</doc>
+<status status="PASS" start="2024-03-04T11:33:50.731993" elapsed="0.000000"/>
+</kw>
+<kw name="Set To Dictionary" owner="Collections">
+<arg>${app_info}</arg>
+<arg>end_time</arg>
+<arg>${end_time}</arg>
+<doc>Adds the given ``key_value_pairs`` and/or ``items`` to the ``dictionary``.</doc>
+<status status="PASS" start="2024-03-04T11:33:50.731993" elapsed="0.000000"/>
+</kw>
+<kw name="Create Dictionary" owner="BuiltIn">
+<msg time="2024-03-04T11:33:50.733111" level="INFO">${app_data} = {'package': 'netflix.mediaclient', 'start_time': '17:56:29.534', 'end_time': '17:57:00.006'}</msg>
+<var>${app_data}</var>
+<arg>package=${package_name}</arg>
+<arg>start_time=${app_info}[start_time]</arg>
+<arg>end_time=${end_time}</arg>
+<doc>Creates and returns a dictionary based on the given ``items``.</doc>
+<status status="PASS" start="2024-03-04T11:33:50.731993" elapsed="0.001118"/>
+</kw>
+<kw name="Append To List" owner="Collections">
+<arg>${parsed_data}</arg>
+<arg>${app_data}</arg>
+<doc>Adds ``values`` to the end of ``list``.</doc>
+<status status="PASS" start="2024-03-04T11:33:50.733111" elapsed="0.000000"/>
+</kw>
+<kw name="Remove From Dictionary" owner="Collections">
+<msg time="2024-03-04T11:33:50.733111" level="INFO">Removed item with key 'netflix.mediaclient' and value '{'start_time': '17:56:29.534', 'end_time': '17:57:00.006'}'.</msg>
+<arg>${app_states}</arg>
+<arg>${package_name}</arg>
+<doc>Removes the given ``keys`` from the ``dictionary``.</doc>
+<status status="PASS" start="2024-03-04T11:33:50.733111" elapsed="0.000000"/>
+</kw>
+<status status="PASS" start="2024-03-04T11:33:50.731993" elapsed="0.001118"/>
+</branch>
+<branch type="ELSE">
+<kw name="Log" owner="BuiltIn">
+<arg>Warning: End marker found for ${package_name} without a corresponding start marker.</arg>
+<doc>Logs the given message with the given level.</doc>
+<status status="NOT RUN" start="2024-03-04T11:33:50.733111" elapsed="0.000000"/>
+</kw>
+<status status="NOT RUN" start="2024-03-04T11:33:50.733111" elapsed="0.000000"/>
+</branch>
+<status status="PASS" start="2024-03-04T11:33:50.731993" elapsed="0.001118"/>
+</if>
+<arg>${app_states}</arg>
+<arg>${line}</arg>
+<arg>${parsed_data}</arg>
+<status status="PASS" start="2024-03-04T11:33:50.727595" elapsed="0.005516"/>
+</kw>
+<arg>Extract End Marker Data</arg>
+<arg>${app_states}</arg>
+<arg>${line}</arg>
+<arg>${parsed_data}</arg>
+<doc>Executes the given keyword with the given arguments.</doc>
+<status status="PASS" start="2024-03-04T11:33:50.727595" elapsed="0.005516"/>
+</kw>
+<status status="PASS" start="2024-03-04T11:33:50.727577" elapsed="0.005534"/>
+</branch>
+<status status="PASS" start="2024-03-04T11:33:50.726477" elapsed="0.006634"/>
+</if>
+<var name="${line}">03-14 17:57:00.006  5230  5252 I Layer: Destroyed ActivityRecord{d2590bc u0 com.netflix.mediaclient}</var>
+<status status="PASS" start="2024-03-04T11:33:50.725355" elapsed="0.007756"/>
+</iter>
+<iter>
+<kw name="Run Keyword And Return Status" owner="BuiltIn">
+<kw name="Should Contain" owner="BuiltIn">
+<arg>${line}</arg>
+<arg>ActivityTaskManager: START u0</arg>
+<doc>Fails if ``container`` does not contain ``item`` one or more times.</doc>
+<status status="PASS" start="2024-03-04T11:33:50.734230" elapsed="0.000000"/>
+</kw>
+<msg time="2024-03-04T11:33:50.734230" level="INFO">${start_marker} = True</msg>
+<var>${start_marker}</var>
+<arg>Should Contain</arg>
+<arg>${line}</arg>
+<arg>ActivityTaskManager: START u0</arg>
+<doc>Runs the given keyword with given arguments and returns the status as a Boolean value.</doc>
+<status status="PASS" start="2024-03-04T11:33:50.734230" elapsed="0.000000"/>
+</kw>
+<kw name="Run Keyword And Return Status" owner="BuiltIn">
+<kw name="Should Contain" owner="BuiltIn">
+<msg time="2024-03-04T11:33:50.734230" level="FAIL">'03-14 17:57:16.608  5230  7327 I ActivityTaskManager: START u0 {act=android.intent.action.MAIN cat=[android.intent.category.LAUNCHER] flg=0x10200000 cmp=com.sec.android.app.clockpackage/.ClockPackage bnds=[194,949][358,1196]} from uid 10088' does not contain 'Layer: Destroyed ActivityRecord'</msg>
+<arg>${line}</arg>
+<arg>Layer: Destroyed ActivityRecord</arg>
+<doc>Fails if ``container`` does not contain ``item`` one or more times.</doc>
+<status status="FAIL" start="2024-03-04T11:33:50.734230" elapsed="0.000000">'03-14 17:57:16.608  5230  7327 I ActivityTaskManager: START u0 {act=android.intent.action.MAIN cat=[android.intent.category.LAUNCHER] flg=0x10200000 cmp=com.sec.android.app.clockpackage/.ClockPackage bnds=[194,949][358,1196]} from uid 10088' does not contain 'Layer: Destroyed ActivityRecord'</status>
+</kw>
+<msg time="2024-03-04T11:33:50.735331" level="INFO">${end_marker} = False</msg>
+<var>${end_marker}</var>
+<arg>Should Contain</arg>
+<arg>${line}</arg>
+<arg>Layer: Destroyed ActivityRecord</arg>
+<doc>Runs the given keyword with given arguments and returns the status as a Boolean value.</doc>
+<status status="PASS" start="2024-03-04T11:33:50.734230" elapsed="0.001119"/>
+</kw>
+<if>
+<branch type="IF" condition="${start_marker}">
+<kw name="Run Keyword" owner="BuiltIn">
+<kw name="Extract Start Marker Data">
+<kw name="Get Package Name">
+<kw name="Set Variable" owner="BuiltIn">
+<msg time="2024-03-04T11:33:50.736469" level="INFO">${com_start} = 157</msg>
+<var>${com_start}</var>
+<arg>${line.find('com.')+4}</arg>
+<doc>Returns the given values which can then be assigned to a variables.</doc>
+<status status="PASS" start="2024-03-04T11:33:50.735349" elapsed="0.001120"/>
+</kw>
+<kw name="Get Substring" owner="String">
+<msg time="2024-03-04T11:33:50.736469" level="INFO">${package_and_activity} = sec.android.app.clockpackage/.ClockPackage bnds=[194,949][358,1196]} from uid 10088</msg>
+<var>${package_and_activity}</var>
+<arg>${line}</arg>
+<arg>${com_start}</arg>
+<arg>${None}</arg>
+<doc>Returns a substring from ``start`` index to ``end`` index.</doc>
+<status status="PASS" start="2024-03-04T11:33:50.736469" elapsed="0.000000"/>
+</kw>
+<kw name="Set Variable" owner="BuiltIn">
+<msg time="2024-03-04T11:33:50.737589" level="INFO">${slash_index} = 28</msg>
+<var>${slash_index}</var>
+<arg>${package_and_activity.find('/')}</arg>
+<doc>Returns the given values which can then be assigned to a variables.</doc>
+<status status="PASS" start="2024-03-04T11:33:50.736469" elapsed="0.001120"/>
+</kw>
+<kw name="Get Substring" owner="String">
+<msg time="2024-03-04T11:33:50.737589" level="INFO">${package_name} = sec.android.app.clockpackage</msg>
+<var>${package_name}</var>
+<arg>${package_and_activity}</arg>
+<arg>0</arg>
+<arg>${slash_index}</arg>
+<doc>Returns a substring from ``start`` index to ``end`` index.</doc>
+<status status="PASS" start="2024-03-04T11:33:50.737589" elapsed="0.000000"/>
+</kw>
+<return>
+<value>${package_name}</value>
+<status status="PASS" start="2024-03-04T11:33:50.737589" elapsed="0.000000"/>
+</return>
+<msg time="2024-03-04T11:33:50.737589" level="INFO">${package_name} = sec.android.app.clockpackage</msg>
+<var>${package_name}</var>
+<arg>${line}</arg>
+<status status="PASS" start="2024-03-04T11:33:50.735349" elapsed="0.002240"/>
+</kw>
+<kw name="Fetch Time">
+<kw name="Get Substring" owner="String">
+<msg time="2024-03-04T11:33:50.738711" level="INFO">${time} = 17:57:16.608</msg>
+<var>${time}</var>
+<arg>${line}</arg>
+<arg>6</arg>
+<arg>18</arg>
+<doc>Returns a substring from ``start`` index to ``end`` index.</doc>
+<status status="PASS" start="2024-03-04T11:33:50.737589" elapsed="0.001122"/>
+</kw>
+<return>
+<value>${time}</value>
+<status status="PASS" start="2024-03-04T11:33:50.738711" elapsed="0.000000"/>
+</return>
+<msg time="2024-03-04T11:33:50.738711" level="INFO">${start_time} = 17:57:16.608</msg>
+<var>${start_time}</var>
+<arg>${line}</arg>
+<status status="PASS" start="2024-03-04T11:33:50.737589" elapsed="0.001122"/>
+</kw>
+<kw name="Create Dictionary" owner="BuiltIn">
+<msg time="2024-03-04T11:33:50.738711" level="INFO">${app_info} = {'start_time': '17:57:16.608', 'end_time': ''}</msg>
+<var>${app_info}</var>
+<arg>start_time=${start_time}</arg>
+<arg>end_time=${EMPTY}</arg>
+<doc>Creates and returns a dictionary based on the given ``items``.</doc>
+<status status="PASS" start="2024-03-04T11:33:50.738711" elapsed="0.000000"/>
+</kw>
+<kw name="Set To Dictionary" owner="Collections">
+<arg>${app_states}</arg>
+<arg>${package_name}</arg>
+<arg>${app_info}</arg>
+<doc>Adds the given ``key_value_pairs`` and/or ``items`` to the ``dictionary``.</doc>
+<status status="PASS" start="2024-03-04T11:33:50.739816" elapsed="0.000017"/>
+</kw>
+<arg>${app_states}</arg>
+<arg>${line}</arg>
+<arg>${parsed_data}</arg>
+<status status="PASS" start="2024-03-04T11:33:50.735349" elapsed="0.004484"/>
+</kw>
+<arg>Extract Start Marker Data</arg>
+<arg>${app_states}</arg>
+<arg>${line}</arg>
+<arg>${parsed_data}</arg>
+<doc>Executes the given keyword with the given arguments.</doc>
+<status status="PASS" start="2024-03-04T11:33:50.735349" elapsed="0.004484"/>
+</kw>
+<status status="PASS" start="2024-03-04T11:33:50.735349" elapsed="0.004484"/>
+</branch>
+<branch type="ELSE IF" condition="${end_marker}">
+<kw name="Run Keyword" owner="BuiltIn">
+<arg>Extract End Marker Data</arg>
+<arg>${app_states}</arg>
+<arg>${line}</arg>
+<arg>${parsed_data}</arg>
+<doc>Executes the given keyword with the given arguments.</doc>
+<status status="NOT RUN" start="2024-03-04T11:33:50.739833" elapsed="0.000000"/>
+</kw>
+<status status="NOT RUN" start="2024-03-04T11:33:50.739833" elapsed="0.000000"/>
+</branch>
+<status status="PASS" start="2024-03-04T11:33:50.735349" elapsed="0.004484"/>
+</if>
+<var name="${line}">03-14 17:57:16.608  5230  7327 I ActivityTaskManager: START u0 {act=android.intent.action.MAIN cat=[android.intent.category.LAUNCHER] flg=0x10200000 cmp=com.sec.android.app.clockpackage/.ClockPackage ...</var>
+<status status="PASS" start="2024-03-04T11:33:50.734230" elapsed="0.005603"/>
+</iter>
+<iter>
+<kw name="Run Keyword And Return Status" owner="BuiltIn">
+<kw name="Should Contain" owner="BuiltIn">
+<msg time="2024-03-04T11:33:50.740906" level="FAIL">'03-14 17:57:25.200  5230  5252 I Layer: Destroyed ActivityRecord{d2590bc u0 com.sec.android.app.popupcalculator}' does not contain 'ActivityTaskManager: START u0'</msg>
+<arg>${line}</arg>
+<arg>ActivityTaskManager: START u0</arg>
+<doc>Fails if ``container`` does not contain ``item`` one or more times.</doc>
+<status status="FAIL" start="2024-03-04T11:33:50.739833" elapsed="0.001119">'03-14 17:57:25.200  5230  5252 I Layer: Destroyed ActivityRecord{d2590bc u0 com.sec.android.app.popupcalculator}' does not contain 'ActivityTaskManager: START u0'</status>
+</kw>
+<msg time="2024-03-04T11:33:50.740952" level="INFO">${start_marker} = False</msg>
+<var>${start_marker}</var>
+<arg>Should Contain</arg>
+<arg>${line}</arg>
+<arg>ActivityTaskManager: START u0</arg>
+<doc>Runs the given keyword with given arguments and returns the status as a Boolean value.</doc>
+<status status="PASS" start="2024-03-04T11:33:50.739833" elapsed="0.001119"/>
+</kw>
+<kw name="Run Keyword And Return Status" owner="BuiltIn">
+<kw name="Should Contain" owner="BuiltIn">
+<arg>${line}</arg>
+<arg>Layer: Destroyed ActivityRecord</arg>
+<doc>Fails if ``container`` does not contain ``item`` one or more times.</doc>
+<status status="PASS" start="2024-03-04T11:33:50.740952" elapsed="0.000000"/>
+</kw>
+<msg time="2024-03-04T11:33:50.740952" level="INFO">${end_marker} = True</msg>
+<var>${end_marker}</var>
+<arg>Should Contain</arg>
+<arg>${line}</arg>
+<arg>Layer: Destroyed ActivityRecord</arg>
+<doc>Runs the given keyword with given arguments and returns the status as a Boolean value.</doc>
+<status status="PASS" start="2024-03-04T11:33:50.740952" elapsed="0.000000"/>
+</kw>
+<if>
+<branch type="IF" condition="${start_marker}">
+<kw name="Run Keyword" owner="BuiltIn">
+<arg>Extract Start Marker Data</arg>
+<arg>${app_states}</arg>
+<arg>${line}</arg>
+<arg>${parsed_data}</arg>
+<doc>Executes the given keyword with the given arguments.</doc>
+<status status="NOT RUN" start="2024-03-04T11:33:50.742071" elapsed="0.000000"/>
+</kw>
+<status status="NOT RUN" start="2024-03-04T11:33:50.742026" elapsed="0.000045"/>
+</branch>
+<branch type="ELSE IF" condition="${end_marker}">
+<kw name="Run Keyword" owner="BuiltIn">
+<kw name="Extract End Marker Data">
+<kw name="Get Package Name">
+<kw name="Set Variable" owner="BuiltIn">
+<msg time="2024-03-04T11:33:50.743190" level="INFO">${com_start} = 80</msg>
+<var>${com_start}</var>
+<arg>${line.find('com.')+4}</arg>
+<doc>Returns the given values which can then be assigned to a variables.</doc>
+<status status="PASS" start="2024-03-04T11:33:50.743190" elapsed="0.000000"/>
+</kw>
+<kw name="Get Substring" owner="String">
+<msg time="2024-03-04T11:33:50.743190" level="INFO">${package_and_activity} = sec.android.app.popupcalculator}</msg>
+<var>${package_and_activity}</var>
+<arg>${line}</arg>
+<arg>${com_start}</arg>
+<arg>${None}</arg>
+<doc>Returns a substring from ``start`` index to ``end`` index.</doc>
+<status status="PASS" start="2024-03-04T11:33:50.743190" elapsed="0.000000"/>
+</kw>
+<kw name="Set Variable" owner="BuiltIn">
+<msg time="2024-03-04T11:33:50.744310" level="INFO">${slash_index} = -1</msg>
+<var>${slash_index}</var>
+<arg>${package_and_activity.find('/')}</arg>
+<doc>Returns the given values which can then be assigned to a variables.</doc>
+<status status="PASS" start="2024-03-04T11:33:50.743190" elapsed="0.001120"/>
+</kw>
+<kw name="Get Substring" owner="String">
+<msg time="2024-03-04T11:33:50.744310" level="INFO">${package_name} = sec.android.app.popupcalculator</msg>
+<var>${package_name}</var>
+<arg>${package_and_activity}</arg>
+<arg>0</arg>
+<arg>${slash_index}</arg>
+<doc>Returns a substring from ``start`` index to ``end`` index.</doc>
+<status status="PASS" start="2024-03-04T11:33:50.744310" elapsed="0.000000"/>
+</kw>
+<return>
+<value>${package_name}</value>
+<status status="PASS" start="2024-03-04T11:33:50.744310" elapsed="0.000000"/>
+</return>
+<msg time="2024-03-04T11:33:50.744310" level="INFO">${package_name} = sec.android.app.popupcalculator</msg>
+<var>${package_name}</var>
+<arg>${line}</arg>
+<status status="PASS" start="2024-03-04T11:33:50.742071" elapsed="0.002239"/>
+</kw>
+<kw name="Fetch Time">
+<kw name="Get Substring" owner="String">
+<msg time="2024-03-04T11:33:50.745429" level="INFO">${time} = 17:57:25.200</msg>
+<var>${time}</var>
+<arg>${line}</arg>
+<arg>6</arg>
+<arg>18</arg>
+<doc>Returns a substring from ``start`` index to ``end`` index.</doc>
+<status status="PASS" start="2024-03-04T11:33:50.745429" elapsed="0.000000"/>
+</kw>
+<return>
+<value>${time}</value>
+<status status="PASS" start="2024-03-04T11:33:50.745429" elapsed="0.000000"/>
+</return>
+<msg time="2024-03-04T11:33:50.745429" level="INFO">${end_time} = 17:57:25.200</msg>
+<var>${end_time}</var>
+<arg>${line}</arg>
+<status status="PASS" start="2024-03-04T11:33:50.744310" elapsed="0.001119"/>
+</kw>
+<kw name="Run Keyword And Return Status" owner="BuiltIn">
+<kw name="Dictionary Should Contain Key" owner="Collections">
+<msg time="2024-03-04T11:33:50.745429" level="INFO">False</msg>
+<arg>${app_states}</arg>
+<arg>${package_name}</arg>
+<doc>Fails if ``key`` is not found from ``dictionary``.</doc>
+<status status="PASS" start="2024-03-04T11:33:50.745429" elapsed="0.000000"/>
+</kw>
+<msg time="2024-03-04T11:33:50.745429" level="INFO">${app_exists} = True</msg>
+<var>${app_exists}</var>
+<arg>Dictionary Should Contain Key</arg>
+<arg>${app_states}</arg>
+<arg>${package_name}</arg>
+<doc>Runs the given keyword with given arguments and returns the status as a Boolean value.</doc>
+<status status="PASS" start="2024-03-04T11:33:50.745429" elapsed="0.000000"/>
+</kw>
+<if>
+<branch type="IF" condition="${app_exists}">
+<kw name="Get From Dictionary" owner="Collections">
+<msg time="2024-03-04T11:33:50.746554" level="INFO">${app_info} = {'start_time': '17:56:59.524', 'end_time': ''}</msg>
+<var>${app_info}</var>
+<arg>${app_states}</arg>
+<arg>${package_name}</arg>
+<doc>Returns a value from the given ``dictionary`` based on the given ``key``.</doc>
+<status status="PASS" start="2024-03-04T11:33:50.746554" elapsed="0.000000"/>
+</kw>
+<kw name="Set To Dictionary" owner="Collections">
+<arg>${app_info}</arg>
+<arg>end_time</arg>
+<arg>${end_time}</arg>
+<doc>Adds the given ``key_value_pairs`` and/or ``items`` to the ``dictionary``.</doc>
+<status status="PASS" start="2024-03-04T11:33:50.746554" elapsed="0.000000"/>
+</kw>
+<kw name="Create Dictionary" owner="BuiltIn">
+<msg time="2024-03-04T11:33:50.746554" level="INFO">${app_data} = {'package': 'sec.android.app.popupcalculator', 'start_time': '17:56:59.524', 'end_time': '17:57:25.200'}</msg>
+<var>${app_data}</var>
+<arg>package=${package_name}</arg>
+<arg>start_time=${app_info}[start_time]</arg>
+<arg>end_time=${end_time}</arg>
+<doc>Creates and returns a dictionary based on the given ``items``.</doc>
+<status status="PASS" start="2024-03-04T11:33:50.746554" elapsed="0.000000"/>
+</kw>
+<kw name="Append To List" owner="Collections">
+<arg>${parsed_data}</arg>
+<arg>${app_data}</arg>
+<doc>Adds ``values`` to the end of ``list``.</doc>
+<status status="PASS" start="2024-03-04T11:33:50.747630" elapsed="0.000043"/>
+</kw>
+<kw name="Remove From Dictionary" owner="Collections">
+<msg time="2024-03-04T11:33:50.747673" level="INFO">Removed item with key 'sec.android.app.popupcalculator' and value '{'start_time': '17:56:59.524', 'end_time': '17:57:25.200'}'.</msg>
+<arg>${app_states}</arg>
+<arg>${package_name}</arg>
+<doc>Removes the given ``keys`` from the ``dictionary``.</doc>
+<status status="PASS" start="2024-03-04T11:33:50.747673" elapsed="0.000000"/>
+</kw>
+<status status="PASS" start="2024-03-04T11:33:50.746501" elapsed="0.001172"/>
+</branch>
+<branch type="ELSE">
+<kw name="Log" owner="BuiltIn">
+<arg>Warning: End marker found for ${package_name} without a corresponding start marker.</arg>
+<doc>Logs the given message with the given level.</doc>
+<status status="NOT RUN" start="2024-03-04T11:33:50.747673" elapsed="0.000000"/>
+</kw>
+<status status="NOT RUN" start="2024-03-04T11:33:50.747673" elapsed="0.000000"/>
+</branch>
+<status status="PASS" start="2024-03-04T11:33:50.746501" elapsed="0.001172"/>
+</if>
+<arg>${app_states}</arg>
+<arg>${line}</arg>
+<arg>${parsed_data}</arg>
+<status status="PASS" start="2024-03-04T11:33:50.742071" elapsed="0.005602"/>
+</kw>
+<arg>Extract End Marker Data</arg>
+<arg>${app_states}</arg>
+<arg>${line}</arg>
+<arg>${parsed_data}</arg>
+<doc>Executes the given keyword with the given arguments.</doc>
+<status status="PASS" start="2024-03-04T11:33:50.742071" elapsed="0.005602"/>
+</kw>
+<status status="PASS" start="2024-03-04T11:33:50.742071" elapsed="0.005602"/>
+</branch>
+<status status="PASS" start="2024-03-04T11:33:50.740952" elapsed="0.006721"/>
+</if>
+<var name="${line}">03-14 17:57:25.200  5230  5252 I Layer: Destroyed ActivityRecord{d2590bc u0 com.sec.android.app.popupcalculator}</var>
+<status status="PASS" start="2024-03-04T11:33:50.739833" elapsed="0.007840"/>
+</iter>
+<iter>
+<kw name="Run Keyword And Return Status" owner="BuiltIn">
+<kw name="Should Contain" owner="BuiltIn">
+<msg time="2024-03-04T11:33:50.748795" level="FAIL">'03-14 17:57:59.906  5230  5252 I Layer: Destroyed ActivityRecord{d2590bc u0 com.sec.android.app.clockpackage}' does not contain 'ActivityTaskManager: START u0'</msg>
+<arg>${line}</arg>
+<arg>ActivityTaskManager: START u0</arg>
+<doc>Fails if ``container`` does not contain ``item`` one or more times.</doc>
+<status status="FAIL" start="2024-03-04T11:33:50.748795" elapsed="0.000000">'03-14 17:57:59.906  5230  5252 I Layer: Destroyed ActivityRecord{d2590bc u0 com.sec.android.app.clockpackage}' does not contain 'ActivityTaskManager: START u0'</status>
+</kw>
+<msg time="2024-03-04T11:33:50.748795" level="INFO">${start_marker} = False</msg>
+<var>${start_marker}</var>
+<arg>Should Contain</arg>
+<arg>${line}</arg>
+<arg>ActivityTaskManager: START u0</arg>
+<doc>Runs the given keyword with given arguments and returns the status as a Boolean value.</doc>
+<status status="PASS" start="2024-03-04T11:33:50.748750" elapsed="0.000045"/>
+</kw>
+<kw name="Run Keyword And Return Status" owner="BuiltIn">
+<kw name="Should Contain" owner="BuiltIn">
+<arg>${line}</arg>
+<arg>Layer: Destroyed ActivityRecord</arg>
+<doc>Fails if ``container`` does not contain ``item`` one or more times.</doc>
+<status status="PASS" start="2024-03-04T11:33:50.748795" elapsed="0.000000"/>
+</kw>
+<msg time="2024-03-04T11:33:50.748795" level="INFO">${end_marker} = True</msg>
+<var>${end_marker}</var>
+<arg>Should Contain</arg>
+<arg>${line}</arg>
+<arg>Layer: Destroyed ActivityRecord</arg>
+<doc>Runs the given keyword with given arguments and returns the status as a Boolean value.</doc>
+<status status="PASS" start="2024-03-04T11:33:50.748795" elapsed="0.000000"/>
+</kw>
+<if>
+<branch type="IF" condition="${start_marker}">
+<kw name="Run Keyword" owner="BuiltIn">
+<arg>Extract Start Marker Data</arg>
+<arg>${app_states}</arg>
+<arg>${line}</arg>
+<arg>${parsed_data}</arg>
+<doc>Executes the given keyword with the given arguments.</doc>
+<status status="NOT RUN" start="2024-03-04T11:33:50.749911" elapsed="0.000000"/>
+</kw>
+<status status="NOT RUN" start="2024-03-04T11:33:50.748795" elapsed="0.001116"/>
+</branch>
+<branch type="ELSE IF" condition="${end_marker}">
+<kw name="Run Keyword" owner="BuiltIn">
+<kw name="Extract End Marker Data">
+<kw name="Get Package Name">
+<kw name="Set Variable" owner="BuiltIn">
+<msg time="2024-03-04T11:33:50.751029" level="INFO">${com_start} = 80</msg>
+<var>${com_start}</var>
+<arg>${line.find('com.')+4}</arg>
+<doc>Returns the given values which can then be assigned to a variables.</doc>
+<status status="PASS" start="2024-03-04T11:33:50.751029" elapsed="0.000000"/>
+</kw>
+<kw name="Get Substring" owner="String">
+<msg time="2024-03-04T11:33:50.751029" level="INFO">${package_and_activity} = sec.android.app.clockpackage}</msg>
+<var>${package_and_activity}</var>
+<arg>${line}</arg>
+<arg>${com_start}</arg>
+<arg>${None}</arg>
+<doc>Returns a substring from ``start`` index to ``end`` index.</doc>
+<status status="PASS" start="2024-03-04T11:33:50.751029" elapsed="0.000000"/>
+</kw>
+<kw name="Set Variable" owner="BuiltIn">
+<msg time="2024-03-04T11:33:50.752149" level="INFO">${slash_index} = -1</msg>
+<var>${slash_index}</var>
+<arg>${package_and_activity.find('/')}</arg>
+<doc>Returns the given values which can then be assigned to a variables.</doc>
+<status status="PASS" start="2024-03-04T11:33:50.752103" elapsed="0.000046"/>
+</kw>
+<kw name="Get Substring" owner="String">
+<msg time="2024-03-04T11:33:50.752149" level="INFO">${package_name} = sec.android.app.clockpackage</msg>
+<var>${package_name}</var>
+<arg>${package_and_activity}</arg>
+<arg>0</arg>
+<arg>${slash_index}</arg>
+<doc>Returns a substring from ``start`` index to ``end`` index.</doc>
+<status status="PASS" start="2024-03-04T11:33:50.752149" elapsed="0.000000"/>
+</kw>
+<return>
+<value>${package_name}</value>
+<status status="PASS" start="2024-03-04T11:33:50.752149" elapsed="0.000000"/>
+</return>
+<msg time="2024-03-04T11:33:50.752149" level="INFO">${package_name} = sec.android.app.clockpackage</msg>
+<var>${package_name}</var>
+<arg>${line}</arg>
+<status status="PASS" start="2024-03-04T11:33:50.749911" elapsed="0.002238"/>
+</kw>
+<kw name="Fetch Time">
+<kw name="Get Substring" owner="String">
+<msg time="2024-03-04T11:33:50.753271" level="INFO">${time} = 17:57:59.906</msg>
+<var>${time}</var>
+<arg>${line}</arg>
+<arg>6</arg>
+<arg>18</arg>
+<doc>Returns a substring from ``start`` index to ``end`` index.</doc>
+<status status="PASS" start="2024-03-04T11:33:50.753271" elapsed="0.000000"/>
+</kw>
+<return>
+<value>${time}</value>
+<status status="PASS" start="2024-03-04T11:33:50.753271" elapsed="0.000000"/>
+</return>
+<msg time="2024-03-04T11:33:50.753271" level="INFO">${end_time} = 17:57:59.906</msg>
+<var>${end_time}</var>
+<arg>${line}</arg>
+<status status="PASS" start="2024-03-04T11:33:50.753225" elapsed="0.000046"/>
+</kw>
+<kw name="Run Keyword And Return Status" owner="BuiltIn">
+<kw name="Dictionary Should Contain Key" owner="Collections">
+<msg time="2024-03-04T11:33:50.753271" level="INFO">False</msg>
+<arg>${app_states}</arg>
+<arg>${package_name}</arg>
+<doc>Fails if ``key`` is not found from ``dictionary``.</doc>
+<status status="PASS" start="2024-03-04T11:33:50.753271" elapsed="0.000000"/>
+</kw>
+<msg time="2024-03-04T11:33:50.754371" level="INFO">${app_exists} = True</msg>
+<var>${app_exists}</var>
+<arg>Dictionary Should Contain Key</arg>
+<arg>${app_states}</arg>
+<arg>${package_name}</arg>
+<doc>Runs the given keyword with given arguments and returns the status as a Boolean value.</doc>
+<status status="PASS" start="2024-03-04T11:33:50.753271" elapsed="0.001117"/>
+</kw>
+<if>
+<branch type="IF" condition="${app_exists}">
+<kw name="Get From Dictionary" owner="Collections">
+<msg time="2024-03-04T11:33:50.754388" level="INFO">${app_info} = {'start_time': '17:57:16.608', 'end_time': ''}</msg>
+<var>${app_info}</var>
+<arg>${app_states}</arg>
+<arg>${package_name}</arg>
+<doc>Returns a value from the given ``dictionary`` based on the given ``key``.</doc>
+<status status="PASS" start="2024-03-04T11:33:50.754388" elapsed="0.000000"/>
+</kw>
+<kw name="Set To Dictionary" owner="Collections">
+<arg>${app_info}</arg>
+<arg>end_time</arg>
+<arg>${end_time}</arg>
+<doc>Adds the given ``key_value_pairs`` and/or ``items`` to the ``dictionary``.</doc>
+<status status="PASS" start="2024-03-04T11:33:50.754388" elapsed="0.000000"/>
+</kw>
+<kw name="Create Dictionary" owner="BuiltIn">
+<msg time="2024-03-04T11:33:50.754388" level="INFO">${app_data} = {'package': 'sec.android.app.clockpackage', 'start_time': '17:57:16.608', 'end_time': '17:57:59.906'}</msg>
+<var>${app_data}</var>
+<arg>package=${package_name}</arg>
+<arg>start_time=${app_info}[start_time]</arg>
+<arg>end_time=${end_time}</arg>
+<doc>Creates and returns a dictionary based on the given ``items``.</doc>
+<status status="PASS" start="2024-03-04T11:33:50.754388" elapsed="0.001082"/>
+</kw>
+<kw name="Append To List" owner="Collections">
+<arg>${parsed_data}</arg>
+<arg>${app_data}</arg>
+<doc>Adds ``values`` to the end of ``list``.</doc>
+<status status="PASS" start="2024-03-04T11:33:50.755521" elapsed="0.000000"/>
+</kw>
+<kw name="Remove From Dictionary" owner="Collections">
+<msg time="2024-03-04T11:33:50.755521" level="INFO">Removed item with key 'sec.android.app.clockpackage' and value '{'start_time': '17:57:16.608', 'end_time': '17:57:59.906'}'.</msg>
+<arg>${app_states}</arg>
+<arg>${package_name}</arg>
+<doc>Removes the given ``keys`` from the ``dictionary``.</doc>
+<status status="PASS" start="2024-03-04T11:33:50.755521" elapsed="0.000000"/>
+</kw>
+<status status="PASS" start="2024-03-04T11:33:50.754388" elapsed="0.001133"/>
+</branch>
+<branch type="ELSE">
+<kw name="Log" owner="BuiltIn">
+<arg>Warning: End marker found for ${package_name} without a corresponding start marker.</arg>
+<doc>Logs the given message with the given level.</doc>
+<status status="NOT RUN" start="2024-03-04T11:33:50.755521" elapsed="0.000000"/>
+</kw>
+<status status="NOT RUN" start="2024-03-04T11:33:50.755521" elapsed="0.000000"/>
+</branch>
+<status status="PASS" start="2024-03-04T11:33:50.754388" elapsed="0.001133"/>
+</if>
+<arg>${app_states}</arg>
+<arg>${line}</arg>
+<arg>${parsed_data}</arg>
+<status status="PASS" start="2024-03-04T11:33:50.749911" elapsed="0.005610"/>
+</kw>
+<arg>Extract End Marker Data</arg>
+<arg>${app_states}</arg>
+<arg>${line}</arg>
+<arg>${parsed_data}</arg>
+<doc>Executes the given keyword with the given arguments.</doc>
+<status status="PASS" start="2024-03-04T11:33:50.749911" elapsed="0.005610"/>
+</kw>
+<status status="PASS" start="2024-03-04T11:33:50.749911" elapsed="0.005610"/>
+</branch>
+<status status="PASS" start="2024-03-04T11:33:50.748795" elapsed="0.006726"/>
+</if>
+<var name="${line}">03-14 17:57:59.906  5230  5252 I Layer: Destroyed ActivityRecord{d2590bc u0 com.sec.android.app.clockpackage}</var>
+<status status="PASS" start="2024-03-04T11:33:50.747673" elapsed="0.007848"/>
+</iter>
+<var>${line}</var>
+<value>@{lines}</value>
+<status status="PASS" start="2024-03-04T11:33:50.665798" elapsed="0.089723"/>
+</for>
+<return>
+<value>${parsed_data}</value>
+<status status="PASS" start="2024-03-04T11:33:50.755521" elapsed="0.000000"/>
+</return>
+<msg time="2024-03-04T11:33:50.756640" level="INFO">${data} = [{'package': 'sec.android.app.camera', 'start_time': '17:56:07.504', 'end_time': '17:56:30.882'}, {'package': 'android.vending', 'start_time': '17:56:33.783', 'end_time': '17:56:49.245'}, {'package': ...</msg>
+<var>${data}</var>
+<arg>${LOGCAT_FILE}</arg>
+<status status="PASS" start="2024-03-04T11:33:50.647140" elapsed="0.109500"/>
+</kw>
+<kw name="Calculate Lifespan">
+<for flavor="IN RANGE">
+<iter>
+<kw name="Convert Time" owner="DateTime">
+<msg time="2024-03-04T11:33:50.757762" level="INFO">${start} = 64568.0</msg>
+<var>${start}</var>
+<arg>${data}[${index}][start_time]</arg>
+<arg>result_format=number</arg>
+<arg>exclude_millis=yes</arg>
+<doc>Converts between supported `time formats`.</doc>
+<status status="PASS" start="2024-03-04T11:33:50.757762" elapsed="0.000000"/>
+</kw>
+<kw name="Convert Time" owner="DateTime">
+<msg time="2024-03-04T11:33:50.757762" level="INFO">${end} = 64591.0</msg>
+<var>${end}</var>
+<arg>${data}[${index}][end_time]</arg>
+<arg>result_format=number</arg>
+<arg>exclude_millis=yes</arg>
+<doc>Converts between supported `time formats`.</doc>
+<status status="PASS" start="2024-03-04T11:33:50.757762" elapsed="0.000000"/>
+</kw>
+<kw name="Evaluate" owner="BuiltIn">
+<msg time="2024-03-04T11:33:50.758878" level="INFO">${lifespan} = 23.0</msg>
+<var>${lifespan}</var>
+<arg>${end} - ${start}</arg>
+<doc>Evaluates the given expression in Python and returns the result.</doc>
+<status status="PASS" start="2024-03-04T11:33:50.757762" elapsed="0.001116"/>
+</kw>
+<kw name="Set To Dictionary" owner="Collections">
+<arg>${data}[${index}]</arg>
+<arg>duration</arg>
+<arg>${lifespan}</arg>
+<doc>Adds the given ``key_value_pairs`` and/or ``items`` to the ``dictionary``.</doc>
+<status status="PASS" start="2024-03-04T11:33:50.758878" elapsed="0.000000"/>
+</kw>
+<var name="${index}">0</var>
+<status status="PASS" start="2024-03-04T11:33:50.757762" elapsed="0.001116"/>
+</iter>
+<iter>
+<kw name="Convert Time" owner="DateTime">
+<msg time="2024-03-04T11:33:50.758878" level="INFO">${start} = 64594.0</msg>
+<var>${start}</var>
+<arg>${data}[${index}][start_time]</arg>
+<arg>result_format=number</arg>
+<arg>exclude_millis=yes</arg>
+<doc>Converts between supported `time formats`.</doc>
+<status status="PASS" start="2024-03-04T11:33:50.758878" elapsed="0.000000"/>
+</kw>
+<kw name="Convert Time" owner="DateTime">
+<msg time="2024-03-04T11:33:50.759994" level="INFO">${end} = 64609.0</msg>
+<var>${end}</var>
+<arg>${data}[${index}][end_time]</arg>
+<arg>result_format=number</arg>
+<arg>exclude_millis=yes</arg>
+<doc>Converts between supported `time formats`.</doc>
+<status status="PASS" start="2024-03-04T11:33:50.758878" elapsed="0.001116"/>
+</kw>
+<kw name="Evaluate" owner="BuiltIn">
+<msg time="2024-03-04T11:33:50.759994" level="INFO">${lifespan} = 15.0</msg>
+<var>${lifespan}</var>
+<arg>${end} - ${start}</arg>
+<doc>Evaluates the given expression in Python and returns the result.</doc>
+<status status="PASS" start="2024-03-04T11:33:50.759994" elapsed="0.000000"/>
+</kw>
+<kw name="Set To Dictionary" owner="Collections">
+<arg>${data}[${index}]</arg>
+<arg>duration</arg>
+<arg>${lifespan}</arg>
+<doc>Adds the given ``key_value_pairs`` and/or ``items`` to the ``dictionary``.</doc>
+<status status="PASS" start="2024-03-04T11:33:50.759994" elapsed="0.000000"/>
+</kw>
+<var name="${index}">1</var>
+<status status="PASS" start="2024-03-04T11:33:50.758878" elapsed="0.001116"/>
+</iter>
+<iter>
+<kw name="Convert Time" owner="DateTime">
+<msg time="2024-03-04T11:33:50.761111" level="INFO">${start} = 64601.0</msg>
+<var>${start}</var>
+<arg>${data}[${index}][start_time]</arg>
+<arg>result_format=number</arg>
+<arg>exclude_millis=yes</arg>
+<doc>Converts between supported `time formats`.</doc>
+<status status="PASS" start="2024-03-04T11:33:50.759994" elapsed="0.001117"/>
+</kw>
+<kw name="Convert Time" owner="DateTime">
+<msg time="2024-03-04T11:33:50.761111" level="INFO">${end} = 64619.0</msg>
+<var>${end}</var>
+<arg>${data}[${index}][end_time]</arg>
+<arg>result_format=number</arg>
+<arg>exclude_millis=yes</arg>
+<doc>Converts between supported `time formats`.</doc>
+<status status="PASS" start="2024-03-04T11:33:50.761111" elapsed="0.000000"/>
+</kw>
+<kw name="Evaluate" owner="BuiltIn">
+<msg time="2024-03-04T11:33:50.761111" level="INFO">${lifespan} = 18.0</msg>
+<var>${lifespan}</var>
+<arg>${end} - ${start}</arg>
+<doc>Evaluates the given expression in Python and returns the result.</doc>
+<status status="PASS" start="2024-03-04T11:33:50.761111" elapsed="0.000000"/>
+</kw>
+<kw name="Set To Dictionary" owner="Collections">
+<arg>${data}[${index}]</arg>
+<arg>duration</arg>
+<arg>${lifespan}</arg>
+<doc>Adds the given ``key_value_pairs`` and/or ``items`` to the ``dictionary``.</doc>
+<status status="PASS" start="2024-03-04T11:33:50.761111" elapsed="0.000000"/>
+</kw>
+<var name="${index}">2</var>
+<status status="PASS" start="2024-03-04T11:33:50.759994" elapsed="0.001117"/>
+</iter>
+<iter>
+<kw name="Convert Time" owner="DateTime">
+<msg time="2024-03-04T11:33:50.762833" level="INFO">${start} = 64590.0</msg>
+<var>${start}</var>
+<arg>${data}[${index}][start_time]</arg>
+<arg>result_format=number</arg>
+<arg>exclude_millis=yes</arg>
+<doc>Converts between supported `time formats`.</doc>
+<status status="PASS" start="2024-03-04T11:33:50.762238" elapsed="0.000595"/>
+</kw>
+<kw name="Convert Time" owner="DateTime">
+<msg time="2024-03-04T11:33:50.763404" level="INFO">${end} = 64620.0</msg>
+<var>${end}</var>
+<arg>${data}[${index}][end_time]</arg>
+<arg>result_format=number</arg>
+<arg>exclude_millis=yes</arg>
+<doc>Converts between supported `time formats`.</doc>
+<status status="PASS" start="2024-03-04T11:33:50.762833" elapsed="0.000606"/>
+</kw>
+<kw name="Evaluate" owner="BuiltIn">
+<msg time="2024-03-04T11:33:50.763469" level="INFO">${lifespan} = 30.0</msg>
+<var>${lifespan}</var>
+<arg>${end} - ${start}</arg>
+<doc>Evaluates the given expression in Python and returns the result.</doc>
+<status status="PASS" start="2024-03-04T11:33:50.763469" elapsed="0.000000"/>
+</kw>
+<kw name="Set To Dictionary" owner="Collections">
+<arg>${data}[${index}]</arg>
+<arg>duration</arg>
+<arg>${lifespan}</arg>
+<doc>Adds the given ``key_value_pairs`` and/or ``items`` to the ``dictionary``.</doc>
+<status status="PASS" start="2024-03-04T11:33:50.763469" elapsed="0.000000"/>
+</kw>
+<var name="${index}">3</var>
+<status status="PASS" start="2024-03-04T11:33:50.762183" elapsed="0.001286"/>
+</iter>
+<iter>
+<kw name="Convert Time" owner="DateTime">
+<msg time="2024-03-04T11:33:50.764586" level="INFO">${start} = 64620.0</msg>
+<var>${start}</var>
+<arg>${data}[${index}][start_time]</arg>
+<arg>result_format=number</arg>
+<arg>exclude_millis=yes</arg>
+<doc>Converts between supported `time formats`.</doc>
+<status status="PASS" start="2024-03-04T11:33:50.763469" elapsed="0.001117"/>
+</kw>
+<kw name="Convert Time" owner="DateTime">
+<msg time="2024-03-04T11:33:50.764586" level="INFO">${end} = 64645.0</msg>
+<var>${end}</var>
+<arg>${data}[${index}][end_time]</arg>
+<arg>result_format=number</arg>
+<arg>exclude_millis=yes</arg>
+<doc>Converts between supported `time formats`.</doc>
+<status status="PASS" start="2024-03-04T11:33:50.764586" elapsed="0.000000"/>
+</kw>
+<kw name="Evaluate" owner="BuiltIn">
+<msg time="2024-03-04T11:33:50.764586" level="INFO">${lifespan} = 25.0</msg>
+<var>${lifespan}</var>
+<arg>${end} - ${start}</arg>
+<doc>Evaluates the given expression in Python and returns the result.</doc>
+<status status="PASS" start="2024-03-04T11:33:50.764586" elapsed="0.000000"/>
+</kw>
+<kw name="Set To Dictionary" owner="Collections">
+<arg>${data}[${index}]</arg>
+<arg>duration</arg>
+<arg>${lifespan}</arg>
+<doc>Adds the given ``key_value_pairs`` and/or ``items`` to the ``dictionary``.</doc>
+<status status="PASS" start="2024-03-04T11:33:50.764586" elapsed="0.001082"/>
+</kw>
+<var name="${index}">4</var>
+<status status="PASS" start="2024-03-04T11:33:50.763469" elapsed="0.002199"/>
+</iter>
+<iter>
+<kw name="Convert Time" owner="DateTime">
+<msg time="2024-03-04T11:33:50.765668" level="INFO">${start} = 64637.0</msg>
+<var>${start}</var>
+<arg>${data}[${index}][start_time]</arg>
+<arg>result_format=number</arg>
+<arg>exclude_millis=yes</arg>
+<doc>Converts between supported `time formats`.</doc>
+<status status="PASS" start="2024-03-04T11:33:50.765668" elapsed="0.000000"/>
+</kw>
+<kw name="Convert Time" owner="DateTime">
+<msg time="2024-03-04T11:33:50.765668" level="INFO">${end} = 64680.0</msg>
+<var>${end}</var>
+<arg>${data}[${index}][end_time]</arg>
+<arg>result_format=number</arg>
+<arg>exclude_millis=yes</arg>
+<doc>Converts between supported `time formats`.</doc>
+<status status="PASS" start="2024-03-04T11:33:50.765668" elapsed="0.000000"/>
+</kw>
+<kw name="Evaluate" owner="BuiltIn">
+<msg time="2024-03-04T11:33:50.766791" level="INFO">${lifespan} = 43.0</msg>
+<var>${lifespan}</var>
+<arg>${end} - ${start}</arg>
+<doc>Evaluates the given expression in Python and returns the result.</doc>
+<status status="PASS" start="2024-03-04T11:33:50.765668" elapsed="0.001123"/>
+</kw>
+<kw name="Set To Dictionary" owner="Collections">
+<arg>${data}[${index}]</arg>
+<arg>duration</arg>
+<arg>${lifespan}</arg>
+<doc>Adds the given ``key_value_pairs`` and/or ``items`` to the ``dictionary``.</doc>
+<status status="PASS" start="2024-03-04T11:33:50.766791" elapsed="0.000000"/>
+</kw>
+<var name="${index}">5</var>
+<status status="PASS" start="2024-03-04T11:33:50.765668" elapsed="0.001123"/>
+</iter>
+<var>${index}</var>
+<value>len(${data})</value>
+<status status="PASS" start="2024-03-04T11:33:50.756640" elapsed="0.010151"/>
+</for>
+<kw name="Log" owner="BuiltIn">
+<msg time="2024-03-04T11:33:50.766791" level="INFO">[{'package': 'sec.android.app.camera', 'start_time': '17:56:07.504', 'end_time': '17:56:30.882', 'duration': 23.0}, {'package': 'android.vending', 'start_time': '17:56:33.783', 'end_time': '17:56:49.245', 'duration': 15.0}, {'package': 'spotify.music', 'start_time': '17:56:40.793', 'end_time': '17:56:58.802', 'duration': 18.0}, {'package': 'netflix.mediaclient', 'start_time': '17:56:29.534', 'end_time': '17:57:00.006', 'duration': 30.0}, {'package': 'sec.android.app.popupcalculator', 'start_time': '17:56:59.524', 'end_time': '17:57:25.200', 'duration': 25.0}, {'package': 'sec.android.app.clockpackage', 'start_time': '17:57:16.608', 'end_time': '17:57:59.906', 'duration': 43.0}]</msg>
+<arg>${data}</arg>
+<doc>Logs the given message with the given level.</doc>
+<status status="PASS" start="2024-03-04T11:33:50.766791" elapsed="0.000000"/>
+</kw>
+<return>
+<value>${data}</value>
+<status status="PASS" start="2024-03-04T11:33:50.766791" elapsed="0.000000"/>
+</return>
+<msg time="2024-03-04T11:33:50.766791" level="INFO">${updated_data} = [{'package': 'sec.android.app.camera', 'start_time': '17:56:07.504', 'end_time': '17:56:30.882', 'duration': 23.0}, {'package': 'android.vending', 'start_time': '17:56:33.783', 'end_time': '17:56:49.2...</msg>
+<var>${updated_data}</var>
+<arg>${data}</arg>
+<status status="PASS" start="2024-03-04T11:33:50.756640" elapsed="0.010151"/>
+</kw>
+<kw name="Output App Data To File">
+<kw name="Set Variable" owner="BuiltIn">
+<msg time="2024-03-04T11:33:50.767914" level="INFO">${output} = applications:
+</msg>
+<var>${output}</var>
+<arg>applications:\n</arg>
+<doc>Returns the given values which can then be assigned to a variables.</doc>
+<status status="PASS" start="2024-03-04T11:33:50.767914" elapsed="0.000000"/>
+</kw>
+<kw name="Set Variable" owner="BuiltIn">
+<msg time="2024-03-04T11:33:50.767914" level="INFO">${index} = 1</msg>
+<var>${index}</var>
+<arg>1</arg>
+<doc>Returns the given values which can then be assigned to a variables.</doc>
+<status status="PASS" start="2024-03-04T11:33:50.767914" elapsed="0.000000"/>
+</kw>
+<for flavor="IN">
+<iter>
+<kw name="Set Variable" owner="BuiltIn">
+<msg time="2024-03-04T11:33:50.769039" level="INFO">${package} = sec.android.app.camera</msg>
+<var>${package}</var>
+<arg>${app.get('package', 'N/A')}</arg>
+<doc>Returns the given values which can then be assigned to a variables.</doc>
+<status status="PASS" start="2024-03-04T11:33:50.769039" elapsed="0.000000"/>
+</kw>
+<kw name="Set Variable" owner="BuiltIn">
+<msg time="2024-03-04T11:33:50.770156" level="INFO">${start_time} = 17:56:07.504</msg>
+<var>${start_time}</var>
+<arg>${app.get('start_time')}</arg>
+<doc>Returns the given values which can then be assigned to a variables.</doc>
+<status status="PASS" start="2024-03-04T11:33:50.769039" elapsed="0.001117"/>
+</kw>
+<kw name="Set Variable" owner="BuiltIn">
+<msg time="2024-03-04T11:33:50.770156" level="INFO">${end_time} = 17:56:30.882</msg>
+<var>${end_time}</var>
+<arg>${app.get('end_time')}</arg>
+<doc>Returns the given values which can then be assigned to a variables.</doc>
+<status status="PASS" start="2024-03-04T11:33:50.770156" elapsed="0.000000"/>
+</kw>
+<kw name="Set Variable" owner="BuiltIn">
+<msg time="2024-03-04T11:33:50.771229" level="INFO">${lifespan} = N/As</msg>
+<var>${lifespan}</var>
+<arg>${app.get('lifespan', 'N/A')}s</arg>
+<doc>Returns the given values which can then be assigned to a variables.</doc>
+<status status="PASS" start="2024-03-04T11:33:50.770156" elapsed="0.001117"/>
+</kw>
+<kw name="Set Variable" owner="BuiltIn">
+<msg time="2024-03-04T11:33:50.771273" level="INFO">${app_output} = ['- application_1\n', '- app_path:', 'sec.android.app.camera\n', '- ts_app_started: 17:56:07.504\n', '- ts_app_closed:', '17:56:30.882\n', '- lifespan:', 'N/As\n']</msg>
+<var>${app_output}</var>
+<arg>- application_${index}\n</arg>
+<arg>- app_path:</arg>
+<arg>${package}\n</arg>
+<arg>- ts_app_started: ${start_time}\n</arg>
+<arg>- ts_app_closed:</arg>
+<arg>${end_time}\n</arg>
+<arg>- lifespan:</arg>
+<arg>${lifespan}\n</arg>
+<doc>Returns the given values which can then be assigned to a variables.</doc>
+<status status="PASS" start="2024-03-04T11:33:50.771273" elapsed="0.000000"/>
+</kw>
+<kw name="Set Variable" owner="BuiltIn">
+<msg time="2024-03-04T11:33:50.771273" level="INFO">${output} = applications:
+['- application_1\n', '- app_path:', 'sec.android.app.camera\n', '- ts_app_started: 17:56:07.504\n', '- ts_app_closed:', '17:56:30.882\n', '- lifespan:', 'N/As\n']
+</msg>
+<var>${output}</var>
+<arg>${output}${app_output}\n</arg>
+<doc>Returns the given values which can then be assigned to a variables.</doc>
+<status status="PASS" start="2024-03-04T11:33:50.771273" elapsed="0.000000"/>
+</kw>
+<kw name="Evaluate" owner="BuiltIn">
+<msg time="2024-03-04T11:33:50.772346" level="INFO">${index} = 2</msg>
+<var>${index}</var>
+<arg>${index} + 1</arg>
+<doc>Evaluates the given expression in Python and returns the result.</doc>
+<status status="PASS" start="2024-03-04T11:33:50.771273" elapsed="0.001098"/>
+</kw>
+<var name="${app}">{'package': 'sec.android.app.camera', 'start_time': '17:56:07.504', 'end_time': '17:56:30.882', 'duration': 23.0}</var>
+<status status="PASS" start="2024-03-04T11:33:50.769039" elapsed="0.003350"/>
+</iter>
+<iter>
+<kw name="Set Variable" owner="BuiltIn">
+<msg time="2024-03-04T11:33:50.772389" level="INFO">${package} = android.vending</msg>
+<var>${package}</var>
+<arg>${app.get('package', 'N/A')}</arg>
+<doc>Returns the given values which can then be assigned to a variables.</doc>
+<status status="PASS" start="2024-03-04T11:33:50.772389" elapsed="0.000000"/>
+</kw>
+<kw name="Set Variable" owner="BuiltIn">
+<msg time="2024-03-04T11:33:50.773510" level="INFO">${start_time} = 17:56:33.783</msg>
+<var>${start_time}</var>
+<arg>${app.get('start_time')}</arg>
+<doc>Returns the given values which can then be assigned to a variables.</doc>
+<status status="PASS" start="2024-03-04T11:33:50.772389" elapsed="0.001121"/>
+</kw>
+<kw name="Set Variable" owner="BuiltIn">
+<msg time="2024-03-04T11:33:50.773510" level="INFO">${end_time} = 17:56:49.245</msg>
+<var>${end_time}</var>
+<arg>${app.get('end_time')}</arg>
+<doc>Returns the given values which can then be assigned to a variables.</doc>
+<status status="PASS" start="2024-03-04T11:33:50.773510" elapsed="0.000000"/>
+</kw>
+<kw name="Set Variable" owner="BuiltIn">
+<msg time="2024-03-04T11:33:50.774627" level="INFO">${lifespan} = N/As</msg>
+<var>${lifespan}</var>
+<arg>${app.get('lifespan', 'N/A')}s</arg>
+<doc>Returns the given values which can then be assigned to a variables.</doc>
+<status status="PASS" start="2024-03-04T11:33:50.773510" elapsed="0.001117"/>
+</kw>
+<kw name="Set Variable" owner="BuiltIn">
+<msg time="2024-03-04T11:33:50.774627" level="INFO">${app_output} = ['- application_2\n', '- app_path:', 'android.vending\n', '- ts_app_started: 17:56:33.783\n', '- ts_app_closed:', '17:56:49.245\n', '- lifespan:', 'N/As\n']</msg>
+<var>${app_output}</var>
+<arg>- application_${index}\n</arg>
+<arg>- app_path:</arg>
+<arg>${package}\n</arg>
+<arg>- ts_app_started: ${start_time}\n</arg>
+<arg>- ts_app_closed:</arg>
+<arg>${end_time}\n</arg>
+<arg>- lifespan:</arg>
+<arg>${lifespan}\n</arg>
+<doc>Returns the given values which can then be assigned to a variables.</doc>
+<status status="PASS" start="2024-03-04T11:33:50.774627" elapsed="0.000000"/>
+</kw>
+<kw name="Set Variable" owner="BuiltIn">
+<msg time="2024-03-04T11:33:50.774627" level="INFO">${output} = applications:
+['- application_1\n', '- app_path:', 'sec.android.app.camera\n', '- ts_app_started: 17:56:07.504\n', '- ts_app_closed:', '17:56:30.882\n', '- lifespan:', 'N/As\n']
+['- application_2\n', ...</msg>
+<var>${output}</var>
+<arg>${output}${app_output}\n</arg>
+<doc>Returns the given values which can then be assigned to a variables.</doc>
+<status status="PASS" start="2024-03-04T11:33:50.774627" elapsed="0.000000"/>
+</kw>
+<kw name="Evaluate" owner="BuiltIn">
+<msg time="2024-03-04T11:33:50.775750" level="INFO">${index} = 3</msg>
+<var>${index}</var>
+<arg>${index} + 1</arg>
+<doc>Evaluates the given expression in Python and returns the result.</doc>
+<status status="PASS" start="2024-03-04T11:33:50.774627" elapsed="0.001123"/>
+</kw>
+<var name="${app}">{'package': 'android.vending', 'start_time': '17:56:33.783', 'end_time': '17:56:49.245', 'duration': 15.0}</var>
+<status status="PASS" start="2024-03-04T11:33:50.772389" elapsed="0.003361"/>
+</iter>
+<iter>
+<kw name="Set Variable" owner="BuiltIn">
+<msg time="2024-03-04T11:33:50.775750" level="INFO">${package} = spotify.music</msg>
+<var>${package}</var>
+<arg>${app.get('package', 'N/A')}</arg>
+<doc>Returns the given values which can then be assigned to a variables.</doc>
+<status status="PASS" start="2024-03-04T11:33:50.775750" elapsed="0.000000"/>
+</kw>
+<kw name="Set Variable" owner="BuiltIn">
+<msg time="2024-03-04T11:33:50.776872" level="INFO">${start_time} = 17:56:40.793</msg>
+<var>${start_time}</var>
+<arg>${app.get('start_time')}</arg>
+<doc>Returns the given values which can then be assigned to a variables.</doc>
+<status status="PASS" start="2024-03-04T11:33:50.775750" elapsed="0.001122"/>
+</kw>
+<kw name="Set Variable" owner="BuiltIn">
+<msg time="2024-03-04T11:33:50.776872" level="INFO">${end_time} = 17:56:58.802</msg>
+<var>${end_time}</var>
+<arg>${app.get('end_time')}</arg>
+<doc>Returns the given values which can then be assigned to a variables.</doc>
+<status status="PASS" start="2024-03-04T11:33:50.776872" elapsed="0.000000"/>
+</kw>
+<kw name="Set Variable" owner="BuiltIn">
+<msg time="2024-03-04T11:33:50.778294" level="INFO">${lifespan} = N/As</msg>
+<var>${lifespan}</var>
+<arg>${app.get('lifespan', 'N/A')}s</arg>
+<doc>Returns the given values which can then be assigned to a variables.</doc>
+<status status="PASS" start="2024-03-04T11:33:50.776872" elapsed="0.001422"/>
+</kw>
+<kw name="Set Variable" owner="BuiltIn">
+<msg time="2024-03-04T11:33:50.778294" level="INFO">${app_output} = ['- application_3\n', '- app_path:', 'spotify.music\n', '- ts_app_started: 17:56:40.793\n', '- ts_app_closed:', '17:56:58.802\n', '- lifespan:', 'N/As\n']</msg>
+<var>${app_output}</var>
+<arg>- application_${index}\n</arg>
+<arg>- app_path:</arg>
+<arg>${package}\n</arg>
+<arg>- ts_app_started: ${start_time}\n</arg>
+<arg>- ts_app_closed:</arg>
+<arg>${end_time}\n</arg>
+<arg>- lifespan:</arg>
+<arg>${lifespan}\n</arg>
+<doc>Returns the given values which can then be assigned to a variables.</doc>
+<status status="PASS" start="2024-03-04T11:33:50.778294" elapsed="0.000000"/>
+</kw>
+<kw name="Set Variable" owner="BuiltIn">
+<msg time="2024-03-04T11:33:50.778294" level="INFO">${output} = applications:
+['- application_1\n', '- app_path:', 'sec.android.app.camera\n', '- ts_app_started: 17:56:07.504\n', '- ts_app_closed:', '17:56:30.882\n', '- lifespan:', 'N/As\n']
+['- application_2\n', ...</msg>
+<var>${output}</var>
+<arg>${output}${app_output}\n</arg>
+<doc>Returns the given values which can then be assigned to a variables.</doc>
+<status status="PASS" start="2024-03-04T11:33:50.778294" elapsed="0.000000"/>
+</kw>
+<kw name="Evaluate" owner="BuiltIn">
+<msg time="2024-03-04T11:33:50.779589" level="INFO">${index} = 4</msg>
+<var>${index}</var>
+<arg>${index} + 1</arg>
+<doc>Evaluates the given expression in Python and returns the result.</doc>
+<status status="PASS" start="2024-03-04T11:33:50.779589" elapsed="0.000000"/>
+</kw>
+<var name="${app}">{'package': 'spotify.music', 'start_time': '17:56:40.793', 'end_time': '17:56:58.802', 'duration': 18.0}</var>
+<status status="PASS" start="2024-03-04T11:33:50.775750" elapsed="0.003839"/>
+</iter>
+<iter>
+<kw name="Set Variable" owner="BuiltIn">
+<msg time="2024-03-04T11:33:50.780617" level="INFO">${package} = netflix.mediaclient</msg>
+<var>${package}</var>
+<arg>${app.get('package', 'N/A')}</arg>
+<doc>Returns the given values which can then be assigned to a variables.</doc>
+<status status="PASS" start="2024-03-04T11:33:50.779589" elapsed="0.001028"/>
+</kw>
+<kw name="Set Variable" owner="BuiltIn">
+<msg time="2024-03-04T11:33:50.780617" level="INFO">${start_time} = 17:56:29.534</msg>
+<var>${start_time}</var>
+<arg>${app.get('start_time')}</arg>
+<doc>Returns the given values which can then be assigned to a variables.</doc>
+<status status="PASS" start="2024-03-04T11:33:50.780617" elapsed="0.000000"/>
+</kw>
+<kw name="Set Variable" owner="BuiltIn">
+<msg time="2024-03-04T11:33:50.781643" level="INFO">${end_time} = 17:57:00.006</msg>
+<var>${end_time}</var>
+<arg>${app.get('end_time')}</arg>
+<doc>Returns the given values which can then be assigned to a variables.</doc>
+<status status="PASS" start="2024-03-04T11:33:50.780617" elapsed="0.001026"/>
+</kw>
+<kw name="Set Variable" owner="BuiltIn">
+<msg time="2024-03-04T11:33:50.782706" level="INFO">${lifespan} = N/As</msg>
+<var>${lifespan}</var>
+<arg>${app.get('lifespan', 'N/A')}s</arg>
+<doc>Returns the given values which can then be assigned to a variables.</doc>
+<status status="PASS" start="2024-03-04T11:33:50.781643" elapsed="0.001063"/>
+</kw>
+<kw name="Set Variable" owner="BuiltIn">
+<msg time="2024-03-04T11:33:50.782706" level="INFO">${app_output} = ['- application_4\n', '- app_path:', 'netflix.mediaclient\n', '- ts_app_started: 17:56:29.534\n', '- ts_app_closed:', '17:57:00.006\n', '- lifespan:', 'N/As\n']</msg>
+<var>${app_output}</var>
+<arg>- application_${index}\n</arg>
+<arg>- app_path:</arg>
+<arg>${package}\n</arg>
+<arg>- ts_app_started: ${start_time}\n</arg>
+<arg>- ts_app_closed:</arg>
+<arg>${end_time}\n</arg>
+<arg>- lifespan:</arg>
+<arg>${lifespan}\n</arg>
+<doc>Returns the given values which can then be assigned to a variables.</doc>
+<status status="PASS" start="2024-03-04T11:33:50.782706" elapsed="0.000000"/>
+</kw>
+<kw name="Set Variable" owner="BuiltIn">
+<msg time="2024-03-04T11:33:50.783782" level="INFO">${output} = applications:
+['- application_1\n', '- app_path:', 'sec.android.app.camera\n', '- ts_app_started: 17:56:07.504\n', '- ts_app_closed:', '17:56:30.882\n', '- lifespan:', 'N/As\n']
+['- application_2\n', ...</msg>
+<var>${output}</var>
+<arg>${output}${app_output}\n</arg>
+<doc>Returns the given values which can then be assigned to a variables.</doc>
+<status status="PASS" start="2024-03-04T11:33:50.782706" elapsed="0.001106"/>
+</kw>
+<kw name="Evaluate" owner="BuiltIn">
+<msg time="2024-03-04T11:33:50.783832" level="INFO">${index} = 5</msg>
+<var>${index}</var>
+<arg>${index} + 1</arg>
+<doc>Evaluates the given expression in Python and returns the result.</doc>
+<status status="PASS" start="2024-03-04T11:33:50.783832" elapsed="0.000000"/>
+</kw>
+<var name="${app}">{'package': 'netflix.mediaclient', 'start_time': '17:56:29.534', 'end_time': '17:57:00.006', 'duration': 30.0}</var>
+<status status="PASS" start="2024-03-04T11:33:50.779589" elapsed="0.004243"/>
+</iter>
+<iter>
+<kw name="Set Variable" owner="BuiltIn">
+<msg time="2024-03-04T11:33:50.783832" level="INFO">${package} = sec.android.app.popupcalculator</msg>
+<var>${package}</var>
+<arg>${app.get('package', 'N/A')}</arg>
+<doc>Returns the given values which can then be assigned to a variables.</doc>
+<status status="PASS" start="2024-03-04T11:33:50.783832" elapsed="0.000000"/>
+</kw>
+<kw name="Set Variable" owner="BuiltIn">
+<msg time="2024-03-04T11:33:50.784963" level="INFO">${start_time} = 17:56:59.524</msg>
+<var>${start_time}</var>
+<arg>${app.get('start_time')}</arg>
+<doc>Returns the given values which can then be assigned to a variables.</doc>
+<status status="PASS" start="2024-03-04T11:33:50.784963" elapsed="0.000000"/>
+</kw>
+<kw name="Set Variable" owner="BuiltIn">
+<msg time="2024-03-04T11:33:50.784963" level="INFO">${end_time} = 17:57:25.200</msg>
+<var>${end_time}</var>
+<arg>${app.get('end_time')}</arg>
+<doc>Returns the given values which can then be assigned to a variables.</doc>
+<status status="PASS" start="2024-03-04T11:33:50.784963" elapsed="0.000000"/>
+</kw>
+<kw name="Set Variable" owner="BuiltIn">
+<msg time="2024-03-04T11:33:50.786084" level="INFO">${lifespan} = N/As</msg>
+<var>${lifespan}</var>
+<arg>${app.get('lifespan', 'N/A')}s</arg>
+<doc>Returns the given values which can then be assigned to a variables.</doc>
+<status status="PASS" start="2024-03-04T11:33:50.786084" elapsed="0.000000"/>
+</kw>
+<kw name="Set Variable" owner="BuiltIn">
+<msg time="2024-03-04T11:33:50.786084" level="INFO">${app_output} = ['- application_5\n', '- app_path:', 'sec.android.app.popupcalculator\n', '- ts_app_started: 17:56:59.524\n', '- ts_app_closed:', '17:57:25.200\n', '- lifespan:', 'N/As\n']</msg>
+<var>${app_output}</var>
+<arg>- application_${index}\n</arg>
+<arg>- app_path:</arg>
+<arg>${package}\n</arg>
+<arg>- ts_app_started: ${start_time}\n</arg>
+<arg>- ts_app_closed:</arg>
+<arg>${end_time}\n</arg>
+<arg>- lifespan:</arg>
+<arg>${lifespan}\n</arg>
+<doc>Returns the given values which can then be assigned to a variables.</doc>
+<status status="PASS" start="2024-03-04T11:33:50.786084" elapsed="0.000000"/>
+</kw>
+<kw name="Set Variable" owner="BuiltIn">
+<msg time="2024-03-04T11:33:50.787200" level="INFO">${output} = applications:
+['- application_1\n', '- app_path:', 'sec.android.app.camera\n', '- ts_app_started: 17:56:07.504\n', '- ts_app_closed:', '17:56:30.882\n', '- lifespan:', 'N/As\n']
+['- application_2\n', ...</msg>
+<var>${output}</var>
+<arg>${output}${app_output}\n</arg>
+<doc>Returns the given values which can then be assigned to a variables.</doc>
+<status status="PASS" start="2024-03-04T11:33:50.786084" elapsed="0.001116"/>
+</kw>
+<kw name="Evaluate" owner="BuiltIn">
+<msg time="2024-03-04T11:33:50.787200" level="INFO">${index} = 6</msg>
+<var>${index}</var>
+<arg>${index} + 1</arg>
+<doc>Evaluates the given expression in Python and returns the result.</doc>
+<status status="PASS" start="2024-03-04T11:33:50.787200" elapsed="0.000000"/>
+</kw>
+<var name="${app}">{'package': 'sec.android.app.popupcalculator', 'start_time': '17:56:59.524', 'end_time': '17:57:25.200', 'duration': 25.0}</var>
+<status status="PASS" start="2024-03-04T11:33:50.783832" elapsed="0.003368"/>
+</iter>
+<iter>
+<kw name="Set Variable" owner="BuiltIn">
+<msg time="2024-03-04T11:33:50.788317" level="INFO">${package} = sec.android.app.clockpackage</msg>
+<var>${package}</var>
+<arg>${app.get('package', 'N/A')}</arg>
+<doc>Returns the given values which can then be assigned to a variables.</doc>
+<status status="PASS" start="2024-03-04T11:33:50.787200" elapsed="0.001117"/>
+</kw>
+<kw name="Set Variable" owner="BuiltIn">
+<msg time="2024-03-04T11:33:50.788317" level="INFO">${start_time} = 17:57:16.608</msg>
+<var>${start_time}</var>
+<arg>${app.get('start_time')}</arg>
+<doc>Returns the given values which can then be assigned to a variables.</doc>
+<status status="PASS" start="2024-03-04T11:33:50.788317" elapsed="0.000000"/>
+</kw>
+<kw name="Set Variable" owner="BuiltIn">
+<msg time="2024-03-04T11:33:50.789436" level="INFO">${end_time} = 17:57:59.906</msg>
+<var>${end_time}</var>
+<arg>${app.get('end_time')}</arg>
+<doc>Returns the given values which can then be assigned to a variables.</doc>
+<status status="PASS" start="2024-03-04T11:33:50.788317" elapsed="0.001119"/>
+</kw>
+<kw name="Set Variable" owner="BuiltIn">
+<msg time="2024-03-04T11:33:50.789436" level="INFO">${lifespan} = N/As</msg>
+<var>${lifespan}</var>
+<arg>${app.get('lifespan', 'N/A')}s</arg>
+<doc>Returns the given values which can then be assigned to a variables.</doc>
+<status status="PASS" start="2024-03-04T11:33:50.789436" elapsed="0.000000"/>
+</kw>
+<kw name="Set Variable" owner="BuiltIn">
+<msg time="2024-03-04T11:33:50.789436" level="INFO">${app_output} = ['- application_6\n', '- app_path:', 'sec.android.app.clockpackage\n', '- ts_app_started: 17:57:16.608\n', '- ts_app_closed:', '17:57:59.906\n', '- lifespan:', 'N/As\n']</msg>
+<var>${app_output}</var>
+<arg>- application_${index}\n</arg>
+<arg>- app_path:</arg>
+<arg>${package}\n</arg>
+<arg>- ts_app_started: ${start_time}\n</arg>
+<arg>- ts_app_closed:</arg>
+<arg>${end_time}\n</arg>
+<arg>- lifespan:</arg>
+<arg>${lifespan}\n</arg>
+<doc>Returns the given values which can then be assigned to a variables.</doc>
+<status status="PASS" start="2024-03-04T11:33:50.789436" elapsed="0.000000"/>
+</kw>
+<kw name="Set Variable" owner="BuiltIn">
+<msg time="2024-03-04T11:33:50.790552" level="INFO">${output} = applications:
+['- application_1\n', '- app_path:', 'sec.android.app.camera\n', '- ts_app_started: 17:56:07.504\n', '- ts_app_closed:', '17:56:30.882\n', '- lifespan:', 'N/As\n']
+['- application_2\n', ...</msg>
+<var>${output}</var>
+<arg>${output}${app_output}\n</arg>
+<doc>Returns the given values which can then be assigned to a variables.</doc>
+<status status="PASS" start="2024-03-04T11:33:50.790534" elapsed="0.000018"/>
+</kw>
+<kw name="Evaluate" owner="BuiltIn">
+<msg time="2024-03-04T11:33:50.790552" level="INFO">${index} = 7</msg>
+<var>${index}</var>
+<arg>${index} + 1</arg>
+<doc>Evaluates the given expression in Python and returns the result.</doc>
+<status status="PASS" start="2024-03-04T11:33:50.790552" elapsed="0.000000"/>
+</kw>
+<var name="${app}">{'package': 'sec.android.app.clockpackage', 'start_time': '17:57:16.608', 'end_time': '17:57:59.906', 'duration': 43.0}</var>
+<status status="PASS" start="2024-03-04T11:33:50.787200" elapsed="0.003352"/>
+</iter>
+<var>${app}</var>
+<value>@{data}</value>
+<status status="PASS" start="2024-03-04T11:33:50.767914" elapsed="0.022638"/>
+</for>
+<kw name="Create File" owner="OperatingSystem">
+<msg time="2024-03-04T11:33:50.792711" level="INFO" html="true">Created file '&lt;a href="file://C:\Users\cpopescu\GitHub\CatalinGP\Internship\Robotframework\output.yml"&gt;C:\Users\cpopescu\GitHub\CatalinGP\Internship\Robotframework\output.yml&lt;/a&gt;'.</msg>
+<arg>${filename}</arg>
+<arg>${output}</arg>
+<doc>Creates a file with the given content and encoding.</doc>
+<status status="PASS" start="2024-03-04T11:33:50.790552" elapsed="0.002159"/>
+</kw>
+<arg>${updated_data}</arg>
+<arg>${OUTPUT_FILE}</arg>
+<status status="PASS" start="2024-03-04T11:33:50.767914" elapsed="0.024797"/>
+</kw>
+<kw name="Generate Test Verdict">
+<kw name="Get Length" owner="BuiltIn">
+<msg time="2024-03-04T11:33:50.793801" level="INFO">Length is 6.</msg>
+<msg time="2024-03-04T11:33:50.793801" level="INFO">${total_apps} = 6</msg>
+<var>${total_apps}</var>
+<arg>${data}</arg>
+<doc>Returns and logs the length of the given item as an integer.</doc>
+<status status="PASS" start="2024-03-04T11:33:50.793801" elapsed="0.000000"/>
+</kw>
+<if>
+<branch type="IF" condition="${total_apps} == 0">
+<kw name="Log" owner="BuiltIn">
+<arg>No applications analyzed. Test INCONCLUSIVE.</arg>
+<doc>Logs the given message with the given level.</doc>
+<status status="NOT RUN" start="2024-03-04T11:33:50.793801" elapsed="0.000000"/>
+</kw>
+<return>
+<status status="NOT RUN" start="2024-03-04T11:33:50.794927" elapsed="0.000000"/>
+</return>
+<status status="NOT RUN" start="2024-03-04T11:33:50.793801" elapsed="0.001126"/>
+</branch>
+<status status="PASS" start="2024-03-04T11:33:50.793801" elapsed="0.001126"/>
+</if>
+<kw name="Create List" owner="BuiltIn">
+<msg time="2024-03-04T11:33:50.794927" level="INFO">${apps_below_threshold} = []</msg>
+<var>${apps_below_threshold}</var>
+<doc>Returns a list containing given items.</doc>
+<status status="PASS" start="2024-03-04T11:33:50.794927" elapsed="0.000000"/>
+</kw>
+<kw name="Create List" owner="BuiltIn">
+<msg time="2024-03-04T11:33:50.794927" level="INFO">${apps_above_threshold} = []</msg>
+<var>${apps_above_threshold}</var>
+<doc>Returns a list containing given items.</doc>
+<status status="PASS" start="2024-03-04T11:33:50.794927" elapsed="0.000000"/>
+</kw>
+<for flavor="IN">
+<iter>
+<kw name="Run Keyword If" owner="BuiltIn">
+<kw name="Append To List" owner="Collections">
+<arg>${apps_below_threshold}</arg>
+<arg>${app}</arg>
+<doc>Adds ``values`` to the end of ``list``.</doc>
+<status status="PASS" start="2024-03-04T11:33:50.796050" elapsed="0.000000"/>
+</kw>
+<arg>${app['duration']} &lt; 30</arg>
+<arg>Append To List</arg>
+<arg>${apps_below_threshold}</arg>
+<arg>${app}</arg>
+<arg>ELSE</arg>
+<arg>Append To List</arg>
+<arg>${apps_above_threshold}</arg>
+<arg>${app}</arg>
+<arg>AND IF</arg>
+<arg>${app['duration']} &gt; 30</arg>
+<arg>Log</arg>
+<arg>Warning: ${app['package']} was opened for more than 30 seconds. Lifespan: ${app['duration']} seconds.</arg>
+<doc>Runs the given keyword with the given arguments, if ``condition`` is true.</doc>
+<status status="PASS" start="2024-03-04T11:33:50.794927" elapsed="0.001123"/>
+</kw>
+<var name="${app}">{'package': 'sec.android.app.camera', 'start_time': '17:56:07.504', 'end_time': '17:56:30.882', 'duration': 23.0}</var>
+<status status="PASS" start="2024-03-04T11:33:50.794927" elapsed="0.001123"/>
+</iter>
+<iter>
+<kw name="Run Keyword If" owner="BuiltIn">
+<kw name="Append To List" owner="Collections">
+<arg>${apps_below_threshold}</arg>
+<arg>${app}</arg>
+<doc>Adds ``values`` to the end of ``list``.</doc>
+<status status="PASS" start="2024-03-04T11:33:50.797169" elapsed="0.000000"/>
+</kw>
+<arg>${app['duration']} &lt; 30</arg>
+<arg>Append To List</arg>
+<arg>${apps_below_threshold}</arg>
+<arg>${app}</arg>
+<arg>ELSE</arg>
+<arg>Append To List</arg>
+<arg>${apps_above_threshold}</arg>
+<arg>${app}</arg>
+<arg>AND IF</arg>
+<arg>${app['duration']} &gt; 30</arg>
+<arg>Log</arg>
+<arg>Warning: ${app['package']} was opened for more than 30 seconds. Lifespan: ${app['duration']} seconds.</arg>
+<doc>Runs the given keyword with the given arguments, if ``condition`` is true.</doc>
+<status status="PASS" start="2024-03-04T11:33:50.796050" elapsed="0.001119"/>
+</kw>
+<var name="${app}">{'package': 'android.vending', 'start_time': '17:56:33.783', 'end_time': '17:56:49.245', 'duration': 15.0}</var>
+<status status="PASS" start="2024-03-04T11:33:50.796050" elapsed="0.001119"/>
+</iter>
+<iter>
+<kw name="Run Keyword If" owner="BuiltIn">
+<kw name="Append To List" owner="Collections">
+<arg>${apps_below_threshold}</arg>
+<arg>${app}</arg>
+<doc>Adds ``values`` to the end of ``list``.</doc>
+<status status="PASS" start="2024-03-04T11:33:50.798287" elapsed="0.000000"/>
+</kw>
+<arg>${app['duration']} &lt; 30</arg>
+<arg>Append To List</arg>
+<arg>${apps_below_threshold}</arg>
+<arg>${app}</arg>
+<arg>ELSE</arg>
+<arg>Append To List</arg>
+<arg>${apps_above_threshold}</arg>
+<arg>${app}</arg>
+<arg>AND IF</arg>
+<arg>${app['duration']} &gt; 30</arg>
+<arg>Log</arg>
+<arg>Warning: ${app['package']} was opened for more than 30 seconds. Lifespan: ${app['duration']} seconds.</arg>
+<doc>Runs the given keyword with the given arguments, if ``condition`` is true.</doc>
+<status status="PASS" start="2024-03-04T11:33:50.797169" elapsed="0.001118"/>
+</kw>
+<var name="${app}">{'package': 'spotify.music', 'start_time': '17:56:40.793', 'end_time': '17:56:58.802', 'duration': 18.0}</var>
+<status status="PASS" start="2024-03-04T11:33:50.797169" elapsed="0.001118"/>
+</iter>
+<iter>
+<kw name="Run Keyword If" owner="BuiltIn">
+<kw name="Append To List" owner="Collections">
+<arg>${apps_above_threshold}</arg>
+<arg>${app}</arg>
+<arg>AND IF</arg>
+<arg>${app['duration']} &gt; 30</arg>
+<arg>Log</arg>
+<arg>Warning: ${app['package']} was opened for more than 30 seconds. Lifespan: ${app['duration']} seconds.</arg>
+<doc>Adds ``values`` to the end of ``list``.</doc>
+<status status="PASS" start="2024-03-04T11:33:50.799522" elapsed="0.001063"/>
+</kw>
+<arg>${app['duration']} &lt; 30</arg>
+<arg>Append To List</arg>
+<arg>${apps_below_threshold}</arg>
+<arg>${app}</arg>
+<arg>ELSE</arg>
+<arg>Append To List</arg>
+<arg>${apps_above_threshold}</arg>
+<arg>${app}</arg>
+<arg>AND IF</arg>
+<arg>${app['duration']} &gt; 30</arg>
+<arg>Log</arg>
+<arg>Warning: ${app['package']} was opened for more than 30 seconds. Lifespan: ${app['duration']} seconds.</arg>
+<doc>Runs the given keyword with the given arguments, if ``condition`` is true.</doc>
+<status status="PASS" start="2024-03-04T11:33:50.798287" elapsed="0.002298"/>
+</kw>
+<var name="${app}">{'package': 'netflix.mediaclient', 'start_time': '17:56:29.534', 'end_time': '17:57:00.006', 'duration': 30.0}</var>
+<status status="PASS" start="2024-03-04T11:33:50.798287" elapsed="0.002298"/>
+</iter>
+<iter>
+<kw name="Run Keyword If" owner="BuiltIn">
+<kw name="Append To List" owner="Collections">
+<arg>${apps_below_threshold}</arg>
+<arg>${app}</arg>
+<doc>Adds ``values`` to the end of ``list``.</doc>
+<status status="PASS" start="2024-03-04T11:33:50.801720" elapsed="0.000000"/>
+</kw>
+<arg>${app['duration']} &lt; 30</arg>
+<arg>Append To List</arg>
+<arg>${apps_below_threshold}</arg>
+<arg>${app}</arg>
+<arg>ELSE</arg>
+<arg>Append To List</arg>
+<arg>${apps_above_threshold}</arg>
+<arg>${app}</arg>
+<arg>AND IF</arg>
+<arg>${app['duration']} &gt; 30</arg>
+<arg>Log</arg>
+<arg>Warning: ${app['package']} was opened for more than 30 seconds. Lifespan: ${app['duration']} seconds.</arg>
+<doc>Runs the given keyword with the given arguments, if ``condition`` is true.</doc>
+<status status="PASS" start="2024-03-04T11:33:50.800585" elapsed="0.001135"/>
+</kw>
+<var name="${app}">{'package': 'sec.android.app.popupcalculator', 'start_time': '17:56:59.524', 'end_time': '17:57:25.200', 'duration': 25.0}</var>
+<status status="PASS" start="2024-03-04T11:33:50.800585" elapsed="0.001135"/>
+</iter>
+<iter>
+<kw name="Run Keyword If" owner="BuiltIn">
+<kw name="Append To List" owner="Collections">
+<arg>${apps_above_threshold}</arg>
+<arg>${app}</arg>
+<arg>AND IF</arg>
+<arg>${app['duration']} &gt; 30</arg>
+<arg>Log</arg>
+<arg>Warning: ${app['package']} was opened for more than 30 seconds. Lifespan: ${app['duration']} seconds.</arg>
+<doc>Adds ``values`` to the end of ``list``.</doc>
+<status status="PASS" start="2024-03-04T11:33:50.802847" elapsed="0.001125"/>
+</kw>
+<arg>${app['duration']} &lt; 30</arg>
+<arg>Append To List</arg>
+<arg>${apps_below_threshold}</arg>
+<arg>${app}</arg>
+<arg>ELSE</arg>
+<arg>Append To List</arg>
+<arg>${apps_above_threshold}</arg>
+<arg>${app}</arg>
+<arg>AND IF</arg>
+<arg>${app['duration']} &gt; 30</arg>
+<arg>Log</arg>
+<arg>Warning: ${app['package']} was opened for more than 30 seconds. Lifespan: ${app['duration']} seconds.</arg>
+<doc>Runs the given keyword with the given arguments, if ``condition`` is true.</doc>
+<status status="PASS" start="2024-03-04T11:33:50.801720" elapsed="0.002252"/>
+</kw>
+<var name="${app}">{'package': 'sec.android.app.clockpackage', 'start_time': '17:57:16.608', 'end_time': '17:57:59.906', 'duration': 43.0}</var>
+<status status="PASS" start="2024-03-04T11:33:50.801720" elapsed="0.002252"/>
+</iter>
+<var>${app}</var>
+<value>@{data}</value>
+<status status="PASS" start="2024-03-04T11:33:50.794927" elapsed="0.009045"/>
+</for>
+<kw name="Get Length" owner="BuiltIn">
+<msg time="2024-03-04T11:33:50.803972" level="INFO">Length is 4.</msg>
+<msg time="2024-03-04T11:33:50.803972" level="INFO">${apps_below_threshold_count} = 4</msg>
+<var>${apps_below_threshold_count}</var>
+<arg>${apps_below_threshold}</arg>
+<doc>Returns and logs the length of the given item as an integer.</doc>
+<status status="PASS" start="2024-03-04T11:33:50.803972" elapsed="0.000000"/>
+</kw>
+<kw name="Evaluate" owner="BuiltIn">
+<msg time="2024-03-04T11:33:50.803972" level="INFO">${percentage_below_threshold} = 66.66666666666667</msg>
+<var>${percentage_below_threshold}</var>
+<arg>100.0 * ${apps_below_threshold_count} / ${total_apps}</arg>
+<doc>Evaluates the given expression in Python and returns the result.</doc>
+<status status="PASS" start="2024-03-04T11:33:50.803972" elapsed="0.000000"/>
+</kw>
+<kw name="Run Keyword If" owner="BuiltIn">
+<kw name="Fail" owner="BuiltIn">
+<msg time="2024-03-04T11:33:50.805097" level="FAIL">Test FAILED: Percentage of apps below threshold is less than 75%</msg>
+<arg>Test FAILED: Percentage of apps below threshold is less than 75%</arg>
+<doc>Fails the test with the given message and optionally alters its tags.</doc>
+<status status="FAIL" start="2024-03-04T11:33:50.805097" elapsed="0.000000">Test FAILED: Percentage of apps below threshold is less than 75%</status>
+</kw>
+<arg>${percentage_below_threshold} &lt; 75</arg>
+<arg>Fail</arg>
+<arg>Test FAILED: Percentage of apps below threshold is less than 75%</arg>
+<arg>ELSE</arg>
+<arg>Log</arg>
+<arg>Test PASSED</arg>
+<doc>Runs the given keyword with the given arguments, if ``condition`` is true.</doc>
+<status status="FAIL" start="2024-03-04T11:33:50.805097" elapsed="0.000000">Test FAILED: Percentage of apps below threshold is less than 75%</status>
+</kw>
+<arg>${updated_data}</arg>
+<status status="FAIL" start="2024-03-04T11:33:50.793801" elapsed="0.011296">Test FAILED: Percentage of apps below threshold is less than 75%</status>
+</kw>
+<status status="FAIL" start="2024-03-04T11:33:50.646101" elapsed="0.160025">Test FAILED: Percentage of apps below threshold is less than 75%</status>
+</test>
+<status status="FAIL" start="2024-03-04T11:33:50.593574" elapsed="0.213582"/>
+</suite>
+<statistics>
+<total>
+<stat pass="0" fail="1" skip="0">All Tests</stat>
+</total>
+<tag>
+</tag>
+<suite>
+<stat pass="0" fail="1" skip="0" id="s1" name="Logcat">Logcat</stat>
+</suite>
+</statistics>
+<errors>
+</errors>
+</robot>

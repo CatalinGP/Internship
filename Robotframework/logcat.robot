@@ -12,9 +12,9 @@ ${OUTPUT_FILE}    output.yml
 *** Test Cases ***
 Analyze Lifespan of Android Applications
     ${data}=    Parse Logcat File    ${LOGCAT_FILE}
-    ${lifespans}=    Calculate Lifespan    ${data}
-    Output App Data To File    ${lifespans}    ${OUTPUT_FILE}
-    Generate Test Verdict      ${lifespans}
+    ${updated_data}=    Calculate Lifespan    ${data}
+    Output App Data To File    ${updated_data}    ${OUTPUT_FILE}
+    Generate Test Verdict      ${updated_data}
 
 *** Keywords ***
 Parse Logcat File
@@ -76,16 +76,14 @@ Fetch Time
 
 Calculate Lifespan
     [Arguments]    ${data}
-    ${lifespans}=    Create List
-    FOR    ${app}    IN    @{data}
-        Continue For Loop If    '${app['package']}' == '' or '${app['start_time']}' == '' or '${app['end_time']}' == ''
-        ${start_sec}=    Convert Time To Seconds    ${app['start_time']}
-        ${end_sec}=    Convert Time To Seconds    ${app['end_time']}
-        ${lifespan}=    Evaluate    ${end_sec} - ${start_sec}
-        ${app_lifespan}=    Create Dictionary    package=${app['package']}    lifespan=${lifespan}
-        Append To List    ${lifespans}    ${app_lifespan}
+    FOR    ${index}    IN RANGE   len(${data})
+        ${start}=    Convert Time    ${data}[${index}][start_time]    result_format=number    exclude_millis=yes
+        ${end}=    Convert Time    ${data}[${index}][end_time]    result_format=number    exclude_millis=yes
+        ${lifespan}=    Evaluate    ${end} - ${start}
+        Set To Dictionary    ${data}[${index}]    duration    ${lifespan}
     END
-    RETURN    ${lifespans}
+    Log    ${data}
+    RETURN    ${data}
 
 Output App Data To File
     [Arguments]    ${data}    ${filename}
@@ -108,35 +106,28 @@ Output App Data To File
     END
     Create File    ${filename}    ${output}
 
-Convert Time To Seconds
-    [Arguments]    ${time_str}
-    ${minutes}=    Get Substring    ${time_str}    3    5
-    ${seconds}=    Get Substring    ${time_str}    6    8
-    ${milliseconds}=    Get Substring    ${time_str}    9    12
-
-    ${minutes}=    Set Variable If    '${minutes}' == ''    0    ${minutes.lstrip("0")}
-    ${seconds}=    Set Variable If    '${seconds}' == ''    0    ${seconds.lstrip("0")}
-    ${milliseconds}=    Set Variable If    '${milliseconds}' == ''    0    ${milliseconds.lstrip("0")}
-
-    ${total_seconds}=    Evaluate    int(${minutes}) * 60 + int(${seconds}) + int(${milliseconds}) / 1000.0
-    RETURN    ${total_seconds}
-
 Generate Test Verdict
     [Arguments]    ${data}
     ${total_apps}=    Get Length    ${data}
     IF    ${total_apps} == 0
         Log    No applications analyzed. Test INCONCLUSIVE.
-    ELSE
-        ${apps_below_threshold}=    Evaluate    len([app for app in ${data} if app['lifespan'] < 30])
-        ${percentage_below_threshold}=    Evaluate    100.0 * ${apps_below_threshold} / ${total_apps}
-        ${apps_above_threshold}=    Evaluate    [app for app in ${data} if app['lifespan'] > 30]
-
-        FOR    ${app}    IN    @{apps_above_threshold}
-            Log    Warning: ${app['package']} was opened for more than 30 seconds. Lifespan: ${app['lifespan']} seconds.
-        END
-
-        Run Keyword If    ${percentage_below_threshold} < 75
-        ...    Fail    Test FAILED: Percentage of apps below threshold is less than 75%
-        ...    ELSE    Log    Test PASSED
-
+        RETURN
     END
+
+    ${apps_below_threshold}=    Create List
+    ${apps_above_threshold}=    Create List
+
+    FOR    ${app}    IN    @{data}
+        Run Keyword If    ${app['duration']} < 30
+        ...    Append To List    ${apps_below_threshold}    ${app}
+        ...    ELSE    Append To List    ${apps_above_threshold}    ${app}
+        ...    AND IF    ${app['duration']} > 30
+        ...    Log    Warning: ${app['package']} was opened for more than 30 seconds. Lifespan: ${app['duration']} seconds.
+    END
+
+    ${apps_below_threshold_count}=    Get Length    ${apps_below_threshold}
+    ${percentage_below_threshold}=    Evaluate    100.0 * ${apps_below_threshold_count} / ${total_apps}
+
+    Run Keyword If    ${percentage_below_threshold} < 75
+    ...    Fail    Test FAILED: Percentage of apps below threshold is less than 75%
+    ...    ELSE    Log    Test PASSED
