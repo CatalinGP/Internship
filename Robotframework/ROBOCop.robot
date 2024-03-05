@@ -4,76 +4,84 @@ Library    Collections
 Library    String
 
 *** Variables ***
-${INPUT_FILE}     ${CURDIR}/ccs2/RELIABILITY/TC_SWQUAL_CCS2_RELIABILITY_B2B_PA.robot
-@{KEYWORDS_TO_CHECK}    START TEST CASE
-...     SAVE CANDUMP LOGS
-...     START LOGCAT MONITOR
-...     START DLT MONITOR
-...     CHECK VIN AND PART ASSOCIATION
-...     CHECK VIN CONFIG ON
-...     SET VNEXT TIME AND DATE ON IVC
-...     SET PROP APLOG
-...     ENABLE IVI DEBUG LOGS
-...     REMOVE IVI APLOG
-...     REMOVE IVI DROPBOX CRASHES
-
+${INPUT_FILE}    ${CURDIR}/ccs2/RELIABILITY/TC_SWQUAL_CCS2_RELIABILITY_B2B_PA.robot
 
 *** Test Cases ***
-Trace undefined HLK's
-    Execute Check
+Investigate Undefined HLKs
+    ${RESOURCE_PATHS_DICT}=    Search Resource Paths    ${INPUT_FILE}
+#    Log List    ${RESOURCE_PATHS_DICT}
+    ${HLKS_DICT}=    Extract HLKs
+    Log Dictionary    ${HLKS_DICT}
+    Search Keywords In Files    ${RESOURCE_PATHS_DICT}    ${HLKS_DICT}
 
 *** Keywords ***
-Extract Resource File Paths
-    [Arguments]    ${input_file}
-    ${resource_paths}=    Create List
-    ${file_contents}=    Get File    ${input_file}
-    ${lines}=    Split To Lines    ${file_contents}
-    ${resource_lines}=    Create List
-
+Search Resource Paths
+    [Arguments]    ${file_path}
+    @{resources_list}=    Create List
+    ${content}=    Get File    ${file_path}    encoding=UTF-8
+    ${lines}=    Split To Lines    ${content}
     FOR    ${line}    IN    @{lines}
-        ${line}=    Strip String    ${line}
-        ${contains_resource}=    Run Keyword And Return Status    Should Contain    ${line}    Resource    ignore_case=True
-        IF    ${contains_resource}
-            Append To List    ${resource_lines}    ${line}
-        END
+        Run Keyword If    '${line}'.startswith('Resource')    Process Resource Line    ${line}    ${resources_list}
+    END
+    RETURN    ${resources_list}
+
+Process Resource Line
+    [Arguments]    ${line}    ${resources_list}
+    ${line_segments}=    Split String    ${line}    ${SPACE}
+    FOR    ${segment}    IN     @{line_segments}
+        ${segment}=    Strip String    ${segment}
+        Run Keyword If    '${segment}'.startswith('../')    Add Modified Segment To List    ${segment}    ${resources_list}
     END
 
-    FOR    ${line}    IN    @{resource_lines}
-        ${resource_path}=    Get Substring    ${line}    9
-        ${resource_path}=    Strip String    ${resource_path}
-        ${adjusted_path}=    Replace String    ${resource_path}    ../   ccs2/
-        Append To List    ${resource_paths}    ${adjusted_path}
-    END
-    RETURN    ${resource_paths}
+Add Modified Segment To List
+    [Arguments]    ${segment}    ${resources_list}
+    ${modified_segment}=    Replace String    ${segment}    ../    ccs2/
+    Append To List    ${resources_list}    ${modified_segment}
 
-Check Keywords In Resource Files
-    [Arguments]    ${resource_paths}    @{keywords_to_check}
-    ${missing_keywords}=    Create List    @{keywords_to_check}
-    FOR    ${path}    IN    @{resource_paths}
-        ${content}=    Get File    ${path}
-        ${lines}=    Split To Lines    ${content}
-        ${index}=    Set Variable    0
-        FOR    ${keyword}    IN    @{missing_keywords}
-            ${keyword_found}=    Set Variable    ${FALSE}
+Extract HLKs
+    ${test_setup_filename}=    Retrieve Test Setup Filename
+    ${hlks_dict}=    Get Uppercase Words From Test Setup    ${test_setup_filename}
+    RETURN    ${hlks_dict}
+
+Retrieve Test Setup Filename
+    ${content}=    Get File    ${INPUT_FILE}    encoding=UTF-8
+    ${line}=    Get Lines Containing String    ${content}    Test Setup
+    ${filename}=    Get Substring    ${line}    18
+    RETURN    ${filename}
+
+Get Uppercase Words From Test Setup
+    [Arguments]    ${marker}
+    ${content}=    Get File    ${INPUT_FILE}    encoding=UTF-8
+    ${lines}=    Split To Lines    ${content}
+    ${index}=    Get Index From List    ${lines}    ${marker}
+    Run Keyword If    ${index} == -1    Fail    Keyword not found in file
+    ${result_lines}=    Create Dictionary
+    FOR    ${i}    IN RANGE    ${index + 1}    len(${lines})
+        Exit For Loop If    '${lines[${i}]}' == ''
+        ${filtered_line}=    Evaluate    ' '.join([word for word in '''${lines[${i}]}'''.split() if word.isupper()])    re
+        Run Keyword If    '''${filtered_line}''' != ''    Set To Dictionary    ${result_lines}    ${filtered_line}    FALSE
+    END
+    RETURN    ${result_lines}
+
+Search Keywords In Files
+    [Arguments]    ${file_paths}    ${keywords_dict}
+    ${keys}=    Get Dictionary Keys    ${keywords_dict}
+    ${updated_dict}=    Create Dictionary
+    FOR    ${key}    IN    @{keys}
+        Set To Dictionary    ${updated_dict}    ${key}=False
+        FOR    ${file_path}    IN    @{file_paths}
+            File Should Exist    ${file_path}
+            ${content}=    Get File    ${file_path}    encoding=UTF-8
+            ${lines}=    Split To Lines    ${content}
             FOR    ${line}    IN    @{lines}
-                ${contains_keyword}=    Run Keyword And Return Status    Should Contain    ${line}    ${keyword}
-                Run Keyword If    ${contains_keyword}    Set Variable    ${TRUE}    AND    Exit For Loop
+                ${string_line}=    Convert To String    ${line}
+                ${found}=    Run Keyword And Return Status    Should Match    ${string_line}    ${key}
+                IF    ${found}
+                    Set To Dictionary    ${updated_dict}    ${key}=True
+                    Exit For Loop
+                END
             END
-            Run Keyword If    ${keyword_found}    Remove From List    ${missing_keywords}    ${index}
-            Run Keyword Unless    ${keyword_found}    Set Variable    ${index}+1    ${index}
+            Exit For Loop If    ${updated_dict}[${key}]
         END
     END
-    Log    ${missing_keywords}
-    RETURN    ${missing_keywords}
-
-Add Missing Keywords To Imposters
-    [Arguments]    @{missing_keywords}
-    ${imposters_file}=    Set Variable    ${CURDIR}/Imposters.robot
-    FOR    ${keyword}    IN    @{missing_keywords}
-        ${to_append}=    Catenate    SEPARATOR=\n    ${keyword}\n    \    [Arguments]    \${foo}\n    \    Keyword not defined, waiting for implementation.
-        Append To File    ${imposters_file}    ${to_append}
-    END
-
-Execute Check
-    ${resource_paths}=    Extract Resource File Paths    ${INPUT_FILE}
-    Check Keywords In Resource Files    ${resource_paths}    ${KEYWORDS_TO_CHECK}
+    Log Dictionary    ${updated_dict}
