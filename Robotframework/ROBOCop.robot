@@ -9,11 +9,10 @@ ${INPUT_FILE}    ${CURDIR}/ccs2/RELIABILITY/TC_SWQUAL_CCS2_RELIABILITY_B2B_PA.ro
 *** Test Cases ***
 Investigate Undefined HLKs
     ${RESOURCE_PATHS_DICT}=    Search Resource Paths    ${INPUT_FILE}
-#    Log List    ${RESOURCE_PATHS_DICT}
     ${HLKS_DICT}=    Extract HLKs
-    Log Dictionary    ${HLKS_DICT}
-    Search Keywords In Files    ${RESOURCE_PATHS_DICT}    ${HLKS_DICT}
-
+    ${HLKS_UNDEFINED}=    Search Keywords In Files    ${RESOURCE_PATHS_DICT}    ${HLKS_DICT}
+    Generate Imposters File    ${HLKS_UNDEFINED}
+    
 *** Keywords ***
 Search Resource Paths
     [Arguments]    ${file_path}
@@ -84,4 +83,17 @@ Search Keywords In Files
             Exit For Loop If    ${updated_dict}[${key}]
         END
     END
-    Log Dictionary    ${updated_dict}
+    RETURN    ${updated_dict}
+
+Generate Imposters File
+    [Arguments]    ${dictionary}
+    ${file_path}=    Set Variable    imposters.robot
+    FOR    ${key}    IN    ${dictionary.keys()}
+        ${value}=    Get From Dictionary    ${dictionary}    ${key}
+        Run Keyword If    ${value} == ${False}    Write Imposter Entry    ${file_path}    ${key}
+    END
+
+Write Imposter Entry
+    [Arguments]    ${file_path}    ${key}
+    ${content}=    Catenate    SEPARATOR=\n    ${key}\n    ...    [Arguments]    \${foo}\n    ...    Keyword not defined, waiting for implementation.\n
+    Append To File    ${file_path}    ${content}
