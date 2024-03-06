@@ -7,12 +7,9 @@ Library    String
 ${INPUT_FILE}    ${CURDIR}/ccs2/RELIABILITY/TC_SWQUAL_CCS2_RELIABILITY_B2B_PA.robot
 
 *** Test Cases ***
-Investigate Undefined HLKs
-    ${RESOURCE_PATHS_DICT}=    Search Resource Paths    ${INPUT_FILE}
-    ${HLKS_DICT}=    Extract HLKs
-    ${HLKS_UNDEFINED}=    Search Keywords In Files    ${RESOURCE_PATHS_DICT}    ${HLKS_DICT}
-    Generate Imposters File    ${HLKS_UNDEFINED}
-    
+HLKs Definition Check
+    Log Keyword Search Results As Pass Or Fail
+
 *** Keywords ***
 Search Resource Paths
     [Arguments]    ${file_path}
@@ -69,6 +66,7 @@ Search Keywords In Files
     FOR    ${key}    IN    @{keys}
         Set To Dictionary    ${updated_dict}    ${key}=False
         FOR    ${file_path}    IN    @{file_paths}
+            Continue For Loop If    ${updated_dict}[${key}]
             File Should Exist    ${file_path}
             ${content}=    Get File    ${file_path}    encoding=UTF-8
             ${lines}=    Split To Lines    ${content}
@@ -87,13 +85,23 @@ Search Keywords In Files
 
 Generate Imposters File
     [Arguments]    ${dictionary}
-    ${file_path}=    Set Variable    imposters.robot
-    FOR    ${key}    IN    ${dictionary.keys()}
+    ${file_path}=    Set Variable    Imposters.robot
+    FOR    ${key}    IN    @{dictionary.keys()}
         ${value}=    Get From Dictionary    ${dictionary}    ${key}
         Run Keyword If    ${value} == ${False}    Write Imposter Entry    ${file_path}    ${key}
     END
 
 Write Imposter Entry
     [Arguments]    ${file_path}    ${key}
-    ${content}=    Catenate    SEPARATOR=\n    ${key}\n    ...    [Arguments]    \${foo}\n    ...    Keyword not defined, waiting for implementation.\n
+    ${content}=    Catenate    SEPARATOR=\n    ${key}    [Arguments] \${foo}\    Keyword not defined, waiting for implementation.\n\n
     Append To File    ${file_path}    ${content}
+
+Log Keyword Search Results As Pass Or Fail
+    ${RESOURCE_PATHS_DICT}=    Search Resource Paths    ${INPUT_FILE}
+    ${HLKS_DICT}=    Extract HLKs
+    ${HLKS_UNDEFINED}=    Search Keywords In Files    ${RESOURCE_PATHS_DICT}    ${HLKS_DICT}
+    Generate Imposters File    ${HLKS_UNDEFINED}
+    FOR    ${test}    ${result}    IN    &{HLKS_UNDEFINED}
+        ${status}=    Set Variable If    '${result}' == 'True'    Passed    Failed
+        Log    ${test}: ${status}
+    END
