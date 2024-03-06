@@ -102,6 +102,5 @@ Log Keyword Search Results As Pass Or Fail
     ${HLKS_UNDEFINED}=    Search Keywords In Files    ${RESOURCE_PATHS_DICT}    ${HLKS_DICT}
     Generate Imposters File    ${HLKS_UNDEFINED}
     FOR    ${test}    ${result}    IN    &{HLKS_UNDEFINED}
-        ${status}=    Set Variable If    '${result}' == 'True'    Passed    Failed
-        Log    ${test}: ${status}
+        Run Keyword If    '${result}' != 'True'    Run Keyword And Continue On Failure    Fail    ${test} has failed
     END
